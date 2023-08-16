@@ -1,0 +1,6 @@
+@import './normalize.css';
+@import './vars.css';
+
+* {
+  font-family: 'Press Start 2P', cursive;
+}
