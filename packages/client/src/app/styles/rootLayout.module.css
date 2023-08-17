@@ -1,0 +1,37 @@
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 950px;
+}
+.headerLayout {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 40px;
+  background-color: #000;
+  color: #fff;
+}
+
+.footerLayout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  background-color: #000;
+  height: 40px;
+  font-size: 10px;
+  color: #858080;
+}
+
+.menuLayout a {
+  font-size: 9px;
+  margin-right: 10px;
+  text-decoration: none;
+  color: #858080;
+}
+
+.menuLayout a:hover {
+  color: #fff;
+}
