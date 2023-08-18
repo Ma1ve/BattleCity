@@ -15,6 +15,7 @@ import Login from '../pages/Login'
 import Profile from '../pages/Profile'
 import Registration from '../pages/Registration'
 import TopicForum from '../pages/TopicForum'
+import Page400 from '../pages/Page400'
 import Page404 from '../pages/Page404'
 import Page500 from '../pages/Page500'
 
@@ -27,6 +28,7 @@ export enum ERoutes {
   LEADERBOARD = 'leaderboard',
   FORUM = 'forum',
   TOPIC = 'topic',
+  ERROR400 = 'error400',
   ERROR404 = 'error404',
   ERROR500 = 'error500',
 }
@@ -48,6 +50,7 @@ const router = createBrowserRouter(
       <Route path={ERoutes.LEADERBOARD} element={<Leaderboard />} />
       <Route path={ERoutes.FORUM} element={<Forum />} />
       <Route path={ERoutes.TOPIC} element={<TopicForum />} />
+      <Route path={ERoutes.ERROR400} element={<Page400 />} />
       <Route path={ERoutes.ERROR404} element={<Page404 />} />
       <Route path={ERoutes.ERROR500} element={<Page500 />} />
       <Route path="*" element={<Page404 />} />

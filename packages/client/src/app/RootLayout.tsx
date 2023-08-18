@@ -16,6 +16,7 @@ const RootLayout = () => {
           <Link to={ERoutes.LEADERBOARD}>leaderboard</Link>
           <Link to={ERoutes.FORUM}>forum</Link>
           <Link to={ERoutes.TOPIC}>topic</Link>
+          <Link to={ERoutes.ERROR400}>page400</Link>
           <Link to={ERoutes.ERROR404}>page404</Link>
           <Link to={ERoutes.ERROR500}>page500</Link>
         </menu>
