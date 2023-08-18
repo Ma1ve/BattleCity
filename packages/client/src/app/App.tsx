@@ -18,6 +18,19 @@ import TopicForum from '../pages/TopicForum'
 import Page404 from '../pages/Page404'
 import Page500 from '../pages/Page500'
 
+export enum ERoutes {
+  INDEX = '/',
+  LOGIN = 'login',
+  PROFILE = 'profile',
+  REGISTRATION = 'registration',
+  GAME = 'game',
+  LEADERBOARD = 'leaderboard',
+  FORUM = 'forum',
+  TOPIC = 'topic',
+  ERROR404 = 'error404',
+  ERROR500 = 'error500',
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     // Статья, которая может помочь реплизовать ErrorBoundary в связке с react-router-dom используя errorElement https://reactrouter.com/en/main/route/error-element
@@ -28,16 +41,15 @@ const router = createBrowserRouter(
       element={<RootLayout />} /* errorElement={<ErrorBoundary />} */
     >
       <Route index element={<Main />} />
-      <Route path="forum" element={<Forum />} />
-      <Route path="topic" element={<TopicForum />} />
-      <Route path="game" element={<Game />} />
-      <Route path="leaderboard" element={<Leaderboard />} />
-      <Route path="login" element={<Login />} />
-      <Route path="profile" element={<Profile />} />
-      <Route path="registration" element={<Registration />} />
-      <Route path="page404" element={<Page404 />} />
-      <Route path="page500" element={<Page500 />} />
-
+      <Route path={ERoutes.LOGIN} element={<Login />} />
+      <Route path={ERoutes.PROFILE} element={<Profile />} />
+      <Route path={ERoutes.REGISTRATION} element={<Registration />} />
+      <Route path={ERoutes.GAME} element={<Game />} />
+      <Route path={ERoutes.LEADERBOARD} element={<Leaderboard />} />
+      <Route path={ERoutes.FORUM} element={<Forum />} />
+      <Route path={ERoutes.TOPIC} element={<TopicForum />} />
+      <Route path={ERoutes.ERROR404} element={<Page404 />} />
+      <Route path={ERoutes.ERROR500} element={<Page500 />} />
       <Route path="*" element={<Page404 />} />
     </Route>
   )
