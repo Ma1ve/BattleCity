@@ -1,0 +1,26 @@
+.errorPage {
+  height: calc(100vh - 80px);
+  background: url('../../shared/images/pageBackground.png');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.errorPageWrapper {
+  color: white;
+  text-align: center;
+}
+
+.errorNumber {
+  font-size: 80px;
+  margin-bottom: 25px;
+  filter: drop-shadow(5px 5px 5px rgb(162 61 255));
+}
+
+.errorText {
+  font-size: 30px;
+  margin-bottom: 25px;
+  filter: drop-shadow(5px 5px 5px rgb(162 61 255));
+}
