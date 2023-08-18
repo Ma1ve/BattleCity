@@ -1,2 +1,12 @@
 :root {
+  --main-filter-color: #a23dff;
+  /* header */
+  --header-layout-color: #000;
+  /* footer */
+  --footer-layout-color: #000;
+  --footer-text-color: #858080;
+
+  /* leaderbord */
+  --first-leaderboard-color: #fff;
+  --second-leaderboard-color: #d6a9ff;
 }
