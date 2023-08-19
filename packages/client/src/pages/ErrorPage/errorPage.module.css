@@ -16,11 +16,11 @@
 .errorNumber {
   font-size: 80px;
   margin-bottom: 25px;
-  filter: drop-shadow(5px 5px 5px rgb(162 61 255));
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
 }
 
 .errorText {
   font-size: 30px;
   margin-bottom: 25px;
-  filter: drop-shadow(5px 5px 5px rgb(162 61 255));
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
 }
