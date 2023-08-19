@@ -1,14 +1,7 @@
 .leaderboardPage {
-  height: calc(100vh - 80px);
-  background: url('../../shared/images/pageBackground.png');
-}
-
-.leaderboardTitle {
-  margin: 50px 0;
-  font-size: 30px;
-  filter: drop-shadow(5px 5px 5px var(--main-color));
-  color: white;
-  text-align: center;
+  width: var(--content-width);
+  height: var(--content-height);
+  background-color: var(--content-bg-color);
 }
 
 .leaderboardTable {

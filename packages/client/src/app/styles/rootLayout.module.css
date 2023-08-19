@@ -1,9 +1,9 @@
-.mainLayout {
+.wrapperLayout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   min-width: 950px;
 }
+
 .headerLayout {
   display: flex;
   align-items: center;
@@ -11,7 +11,19 @@
   width: 100%;
   height: 40px;
   background-color: var(--header-layout-color);
-  color: #fff;
+}
+
+.mainLayout {
+  height: calc(
+    100vh - var(--header-height) - var(--header-height)
+  ); /* Вычитаем высоту хедера и футера. */
+  min-height: var(
+    --min-contentarea-height
+  ); /* Соответствует высоте контента. */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../../shared/images/pageBackground.png');
 }
 
 .footerLayout {
@@ -22,16 +34,23 @@
   background-color: var(--footer-layout-color);
   height: 40px;
   font-size: 10px;
-  color: var(--footer-text-color);
+  color: var(--secondary-text-color);
 }
 
 .menuLayout a {
   font-size: 9px;
   margin-right: 10px;
   text-decoration: none;
-  color: #858080;
 }
 
 .menuLayout a:hover {
-  color: #fff;
+  color: var(--primary-text-color);
+}
+
+.inactive {
+  color: var(--secondary-text-color);
+}
+
+.active {
+  color: var(--primary-text-color);
 }
