@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import H1 from '../../shared/ui/H1'
 import styles from './leaderboard.module.css'
 
 interface ILoadrboard {
@@ -32,7 +32,7 @@ const Leaderboard = () => {
 
   return (
     <div className={styles.leaderboardPage}>
-      <div className={styles.leaderboardTitle}>Leaderboard</div>
+      <H1>Leaderboard</H1>
       <div className={styles.leaderboardTable}>
         <table>
           <thead>

@@ -1,11 +1,11 @@
 .errorPage {
-  height: calc(100vh - 80px);
-  background: url('../../shared/images/pageBackground.png');
   display: flex;
   justify-content: center;
   align-items: center;
-  justify-content: center;
   display: flex;
+  width: var(--content-width);
+  height: var(--content-height);
+  background-color: var(--content-bg-color);
 }
 
 .errorPageWrapper {
