@@ -3,9 +3,6 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  width: var(--content-width);
-  height: var(--content-height);
-  background-color: var(--content-bg-color);
 }
 
 .errorPageWrapper {
@@ -23,4 +20,15 @@
   font-size: 30px;
   margin-bottom: 25px;
   filter: drop-shadow(5px 5px 5px var(--main-filter-color));
+}
+
+.errorLink {
+  color: var(--link-text-color);
+  transition: 0.3s;
+}
+
+.errorLink:hover {
+  display: block;
+  transform: scale(103%);
+  color: var(--primary-text-color);
 }

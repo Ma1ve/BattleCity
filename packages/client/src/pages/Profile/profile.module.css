@@ -20,7 +20,7 @@
 }
 
 .profileChangePasswordButton {
-  color: var(--secondary-text-color);
+  color: var(--additional-text-color);
   height: 30px;
   border: 1px solid var(--secondary-text-color);
   cursor: pointer;
