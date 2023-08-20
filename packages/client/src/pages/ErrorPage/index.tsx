@@ -9,7 +9,7 @@ const ErrorPage = ({ code }: IErrorPage) => {
   const errorMessages = {
     '400': 'Bad Request',
     '404': 'Page Not Found',
-    '500': 'Internal Server Error',
+    '500': 'Server Error',
   }
 
   return (

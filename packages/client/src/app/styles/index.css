@@ -4,4 +4,5 @@
 * {
   font-family: 'Press Start 2P', cursive;
   color: var(--primary-text-color);
+  box-sizing: border-box;
 }
