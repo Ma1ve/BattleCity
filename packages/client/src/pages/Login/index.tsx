@@ -23,7 +23,7 @@ const Login = () => {
         <Formik {...{ onSubmit, initialValues }}>
           <Form>
             <Input name="login" />
-            <Input name="password" />
+            <Input name="password" type="password" />
             <Button type="submit">Войти</Button>
           </Form>
         </Formik>
