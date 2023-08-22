@@ -30,6 +30,14 @@
   --first-leaderboard-color: #fff;
   --second-leaderboard-color: #d6a9ff;
 
+  /* button */
+  --border-button-color: #fff;
+  --background-button-color: #000;
+  --hover-text-color: #a23dff;
+
+  /* input */
+  --text-input-color: #000;
+
   /* Forum */
   --forum-bg-color: #fff;
 
