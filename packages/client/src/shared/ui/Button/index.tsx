@@ -1,10 +1,9 @@
-import React, { FC } from 'react'
+import React, { ButtonHTMLAttributes, FC } from 'react'
 
 import styles from './button.module.css'
 
-interface IButton {
+interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'button' | 'submit' | 'reset' | undefined
-  children: React.ReactNode
 }
 
 const Button: FC<IButton> = ({ children, type, ...rest }) => (
