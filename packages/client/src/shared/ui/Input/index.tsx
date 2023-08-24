@@ -7,6 +7,7 @@ interface IInput {
   name: string
   label?: string
   type?: string
+  placeholder?: string
 }
 
 const Input = (props: IInput): JSX.Element => {

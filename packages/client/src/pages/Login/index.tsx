@@ -22,8 +22,8 @@ const Login = () => {
       <div className={styles.loginWrapper}>
         <Formik {...{ onSubmit, initialValues }}>
           <Form>
-            <Input name="login" />
-            <Input name="password" type="password" />
+            <Input name="login" placeholder="Логин" />
+            <Input name="password" type="password" placeholder="Пароль" />
             <Button type="submit">Войти</Button>
           </Form>
         </Formik>
