@@ -1,0 +1,50 @@
+.gameToStartWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--content-bg-color);
+  width: var(--content-width);
+  height: var(--content-height);
+}
+
+.gameToStartText > div {
+  font-size: 50px;
+}
+
+.loader {
+  width: 400px;
+  height: 30px;
+  background-color: black;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.loaderIcon {
+  height: 100%;
+  width: 30px;
+  z-index: 1;
+  position: relative;
+  top: 0;
+  left: -30px;
+  background-size: contain;
+  animation: tank 50ms linear infinite alternate, loader 6000ms linear infinite;
+}
+
+@keyframes tank {
+  0% {
+    background-image: url('../../shared/images/Tank_1.png');
+  }
+  100% {
+    background-image: url('../../shared/images/Tank_2.png');
+  }
+}
+
+@keyframes loader {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(460px);
+  }
+}

@@ -1,8 +1,8 @@
-import './main.module.css'
+//import styles from './gametostart.module.css'
 
 const Main = () => {
   return (
-    <div>
+    <div /* className={styles.mainWrapper} */>
       <div>Main</div>
     </div>
   )
