@@ -6,7 +6,11 @@ import { validationSchema } from '../libs/validationSchema'
 
 import styles from './login.module.css'
 
+import { useNavigate } from 'react-router-dom'
+
 const Login = () => {
+  const navigate = useNavigate()
+
   const initialValues = {
     login: '',
     password: '',
@@ -14,6 +18,7 @@ const Login = () => {
 
   const onSubmit = (values: Record<string, string>) => {
     console.log(values)
+    navigate('/game')
   }
 
   return (

@@ -6,8 +6,20 @@ import { validationSchema } from '../libs/validationSchema'
 
 import styles from './registration.module.css'
 
+import { getUserInfo } from '../../app/store/reducers/UserSlice'
+import { useAppDispatch } from '../../app/hooks/reducer'
+import { useNavigate } from 'react-router-dom'
+
+import { IUser } from '../../app/models/IUser'
+
+type IRegistrationData = Omit<IUser, 'id' | 'avatar' | 'display_name'>
+
 const Registration = () => {
-  const initialValues = {
+  const dispatch = useAppDispatch()
+
+  const navigate = useNavigate()
+
+  const initialValues: IRegistrationData = {
     first_name: '',
     second_name: '',
     login: '',
@@ -16,8 +28,12 @@ const Registration = () => {
     phone: '',
   }
 
-  const onSubmit = (values: Record<string, string>) => {
+  const onSubmit = (values: IRegistrationData) => {
     console.log(values)
+    // Тут мы должны отправить data - values на сервер
+    // Тут value уже выступает в виде data которая пришла нам с сервера поэтому она должна быть типа IUser
+    dispatch(getUserInfo(values as IUser))
+    navigate('/profile')
   }
 
   return (
