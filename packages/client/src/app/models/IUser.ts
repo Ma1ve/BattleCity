@@ -4,8 +4,15 @@ export interface IUser {
   second_name: string
   display_name: string
   login: string
-  avatar: string
+  avatar: null
   password: string
   phone: string
   email: string
 }
+
+export type TUserRegistrationData = Omit<
+  IUser,
+  'id' | 'avatar' | 'display_name'
+>
+
+export type TUserProfileData = Omit<IUser, 'id' | 'password'>

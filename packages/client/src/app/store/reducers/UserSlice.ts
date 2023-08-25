@@ -1,19 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUser } from '../../models/IUser'
+import { TUserProfileData } from '../../models/IUser'
 
 interface IUserState {
-  userInfo: IUser[]
+  userInfo: TUserProfileData[]
 }
 
 const initialState: IUserState = {
-  userInfo: [],
+  userInfo: [
+    {
+      first_name: 'Ivan',
+      second_name: 'Ivanov',
+      display_name: 'Vanya',
+      login: 'mylogin',
+      avatar: null,
+      phone: '+8 999 999 99 99',
+      email: 'test@gmail.com',
+    },
+  ],
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUserInfo: (state, action: PayloadAction<IUser>) => {
+    getUserInfo: (state, action: PayloadAction<TUserProfileData>) => {
       state.userInfo = [action.payload]
     },
   },

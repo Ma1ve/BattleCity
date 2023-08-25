@@ -10,16 +10,14 @@ import { getUserInfo } from '../../app/store/reducers/UserSlice'
 import { useAppDispatch } from '../../app/hooks/reducer'
 import { useNavigate } from 'react-router-dom'
 
-import { IUser } from '../../app/models/IUser'
-
-type IRegistrationData = Omit<IUser, 'id' | 'avatar' | 'display_name'>
+import { TUserProfileData, TUserRegistrationData } from '../../app/models/IUser'
 
 const Registration = () => {
   const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
 
-  const initialValues: IRegistrationData = {
+  const initialValues: TUserRegistrationData = {
     first_name: '',
     second_name: '',
     login: '',
@@ -28,11 +26,11 @@ const Registration = () => {
     phone: '',
   }
 
-  const onSubmit = (values: IRegistrationData) => {
+  const onSubmit = (values: TUserRegistrationData) => {
     console.log(values)
     // Тут мы должны отправить data - values на сервер
     // Тут value уже выступает в виде data которая пришла нам с сервера поэтому она должна быть типа IUser
-    dispatch(getUserInfo(values as IUser))
+    dispatch(getUserInfo(values as unknown as TUserProfileData))
     navigate('/profile')
   }
 
