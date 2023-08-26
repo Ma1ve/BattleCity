@@ -16,16 +16,12 @@ interface IModal {
 
 /** Компонент модального окна. */
 export const Modal = (props: IModal) => {
-  const handleBgClick = (e: MouseEvent) => {
-    const bg = document.querySelector('#modal-bg')
-    if (e.target === bg) {
-      props.close()
-    }
-  }
-
   return (
-    <div onClick={handleBgClick} className={styles.overlay} id="modal-bg">
-      <div className={styles.modalWrapper} style={{ width: props.width }}>
+    <div onClick={props.close} className={styles.overlay}>
+      <div
+        className={styles.modalWrapper}
+        style={{ width: props.width }}
+        onClick={e => e.stopPropagation()}>
         <div className={styles.modalHeaderWrapper}>
           <div className={styles.modalTitle}>{props.title}</div>
           <span
