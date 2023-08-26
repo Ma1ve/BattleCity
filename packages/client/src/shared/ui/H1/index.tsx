@@ -6,7 +6,7 @@ interface IH1 {
 }
 
 /** Компонент основного заголовка для разделов. */
-const H1 = (props: IH1) => {
+export const H1 = (props: IH1) => {
   return <div className={styles.title}>{props.children}</div>
 }
 

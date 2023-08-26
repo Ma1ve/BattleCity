@@ -1,0 +1,13 @@
+.registrationPage {
+  background-color: var(--content-bg-color);
+  width: var(--content-width);
+}
+
+.registrationForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 360px;
+  margin-bottom: 40px;
+}

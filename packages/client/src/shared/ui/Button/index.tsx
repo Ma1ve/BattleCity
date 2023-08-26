@@ -6,10 +6,8 @@ interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'button' | 'submit' | 'reset' | undefined
 }
 
-const Button: FC<IButton> = ({ children, type, ...rest }) => (
+export const Button: FC<IButton> = ({ children, type, ...rest }) => (
   <button className={styles.button} {...{ type }} {...rest}>
     {children}
   </button>
 )
-
-export default Button

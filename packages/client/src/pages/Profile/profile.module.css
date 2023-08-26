@@ -1,17 +1,22 @@
 .profileWrapper {
   background-color: var(--content-bg-color);
   width: var(--content-width);
-  height: var(--content-height);
 }
 
 .profileInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+  margin-bottom: 40px;
 }
 
 .profileInfoItem {
   margin-top: 30px;
+}
+
+.profileInfoItem:nth-child(5) {
+  margin-bottom: 60px;
 }
 
 .profileInfoItemValue {
@@ -19,18 +24,13 @@
   color: var(--primary-text-color);
 }
 
-.profileChangePasswordButton {
-  color: var(--additional-text-color);
-  height: 30px;
-  border: 1px solid var(--secondary-text-color);
-  cursor: pointer;
-  margin-top: 60px;
-  filter: drop-shadow(2px 2px 2px var(--main-filter-color));
-  border-radius: 5px;
-}
-
 .profileAvatar {
   height: 100px;
   width: 100px;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+.profileAvatar:hover {
+  transform: scale(104%);
 }

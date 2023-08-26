@@ -1,8 +1,7 @@
 import { Formik, Form } from 'formik'
 
-import Button from '../../shared/ui/Button'
+import { Button, Input } from '../../shared/ui'
 import H1 from '../../shared/ui/H1'
-import Input from '../../shared/ui/Input'
 
 import styles from './login.module.css'
 
@@ -21,9 +20,11 @@ const Login = () => {
       <H1>Login</H1>
       <div className={styles.loginWrapper}>
         <Formik {...{ onSubmit, initialValues }}>
-          <Form>
-            <Input name="login" placeholder="Логин" />
-            <Input name="password" type="password" placeholder="Пароль" />
+          <Form className={styles.loginForm}>
+            <div>
+              <Input name="login" placeholder="Логин" />
+              <Input name="password" type="password" placeholder="Пароль" />
+            </div>
             <Button type="submit">Войти</Button>
           </Form>
         </Formik>

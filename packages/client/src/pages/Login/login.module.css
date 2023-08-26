@@ -1,0 +1,15 @@
+.loginPage {
+  background-color: var(--content-bg-color);
+  width: var(--content-width);
+  display: flex;
+  flex-direction: column;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 170px;
+  margin-bottom: 40px;
+}
