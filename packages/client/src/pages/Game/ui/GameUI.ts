@@ -43,11 +43,9 @@ const getTankSpritePosition = (
 }
 
 class GameUI {
-  images: Images
-
-  frame: number
-
-  spriteImage: HTMLImageElement
+  public images: Images
+  public frame: number
+  private readonly spriteImage: HTMLImageElement
 
   constructor() {
     this.frame = 0
@@ -59,13 +57,7 @@ class GameUI {
     this.spriteImage = spriteImage
   }
 
-  createImage(path: string) {
-    const img = new Image()
-    img.src = path
-    return img
-  }
-
-  getSprites(): Images {
+  private getSprites(): Images {
     const tanks: Tank = {
       [TankColor.yellow]: {
         [TankType.basic]: {
@@ -437,7 +429,7 @@ class GameUI {
     return { tanks, bullet, animations, stage }
   }
 
-  drawImage({
+  public drawImage({
     ctx,
     spritePosition,
     canvasPosition,
@@ -462,7 +454,7 @@ class GameUI {
     )
   }
 
-  checkIntersection = ({
+  public checkIntersection = ({
     movedItemCoords,
     blockCoords,
     movementDirection,

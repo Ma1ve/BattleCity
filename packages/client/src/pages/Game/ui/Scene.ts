@@ -3,8 +3,8 @@ import { gameUI } from './GameUI'
 import { blockHeight, blockWidth } from '../shared/config/gameConstants'
 
 export class Scene {
-  sceneBlocks
-  ctx
+  public sceneBlocks
+  public ctx
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -14,7 +14,7 @@ export class Scene {
     this.ctx = ctx
   }
 
-  render() {
+  public render() {
     Object.entries(this.sceneBlocks).forEach(([key, coords]) => {
       if (!Array.isArray(coords)) {
         this.drawSceneImage({
@@ -33,7 +33,7 @@ export class Scene {
     })
   }
 
-  getItemPosition({
+  private getItemPosition({
     spritePosition,
     isXPos,
   }: {
@@ -43,7 +43,7 @@ export class Scene {
     return spritePosition * (isXPos ? blockWidth : blockHeight)
   }
 
-  drawSceneImage({
+  private drawSceneImage({
     x,
     y,
     stageItemName,
@@ -62,7 +62,7 @@ export class Scene {
     })
   }
 
-  getSceneBlocks() {
+  public getSceneBlocks() {
     return this.sceneBlocks
   }
 }

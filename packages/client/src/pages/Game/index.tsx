@@ -3,7 +3,7 @@ import {
   canvasWidth,
   frameInterval,
 } from './shared/config/gameConstants'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { gameUI } from './ui/GameUI'
 import { Tank } from './ui/Tank'
 import { Scene } from './ui/Scene'
@@ -15,9 +15,10 @@ const Game = () => {
 
   let lastTimestamp = 0
 
-  useEffect(() => {
-    const canvas = document.getElementById('canvas') as HTMLCanvasElement
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  useEffect(() => {
+    const canvas = canvasRef.current!
     const ctx = canvas.getContext('2d')!
 
     const scene = new Scene(ctx, scenesConfig[1])
@@ -28,6 +29,7 @@ const Game = () => {
       initialDirection: MovementDirection.up,
       initialPosition: { x: 4 * 32 * 1.5, y: 12 * 32 * 1.5 },
       controlKeys: {
+        //TODO: values (e.g. KeyW) should be replaced with keys from redux (user tank control settings)
         [MovementDirection.up]: 'KeyW',
         [MovementDirection.down]: 'KeyS',
         [MovementDirection.left]: 'KeyA',
@@ -71,7 +73,10 @@ const Game = () => {
 
   return (
     <div>
-      <canvas id={'canvas'} width={canvasWidth} height={canvasHeight}></canvas>
+      <canvas
+        ref={canvasRef}
+        width={canvasWidth}
+        height={canvasHeight}></canvas>
     </div>
   )
 }
