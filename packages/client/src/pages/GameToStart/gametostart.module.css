@@ -28,14 +28,15 @@
   top: 0;
   left: -30px;
   background-size: contain;
-  animation: tank 50ms linear infinite alternate, loader 6000ms linear infinite;
+  animation: tank 200ms steps(2) infinite, loader 6000ms linear infinite;
 }
 
 @keyframes tank {
-  0% {
+  0%,
+  100% {
     background-image: url('../../shared/images/Tank_1.png');
   }
-  100% {
+  50% {
     background-image: url('../../shared/images/Tank_2.png');
   }
 }
