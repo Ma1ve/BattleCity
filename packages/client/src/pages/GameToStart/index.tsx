@@ -1,15 +1,15 @@
 import H1 from '../../shared/ui/H1'
+import Loader from '../../shared/ui/Loader'
+import Title from '../../shared/ui/Title'
 import styles from './gametostart.module.css'
 
 const GameToStart = () => {
   return (
     <div className={styles.gameToStartWrapper}>
       <div className={styles.gameToStartText}>
-        <H1>Loading...</H1>
+        <Title className={styles.gameToStartTitle} text="Loading..." />
       </div>
-      <div className={styles.loader}>
-        <div className={styles.loaderIcon}></div>
-      </div>
+      <Loader />
     </div>
   )
 }

@@ -8,10 +8,10 @@
   height: var(--content-height);
 }
 
-.endGameText > div {
+.endGameTitle {
   font-size: 80px;
 }
 
-.score > div {
+.endGameScore {
   font-size: 30px;
 }
