@@ -7,6 +7,7 @@ import { validationSchema } from '../libs/validationSchema'
 import styles from './login.module.css'
 
 import { useNavigate } from 'react-router-dom'
+import { ERoutes } from '../../app/App'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -18,7 +19,7 @@ const Login = () => {
 
   const onSubmit = (values: Record<string, string>) => {
     console.log(values)
-    navigate('/game')
+    navigate(`/${ERoutes.GAME}`)
   }
 
   return (

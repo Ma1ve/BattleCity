@@ -4,7 +4,7 @@ export interface IUser {
   second_name: string
   display_name: string
   login: string
-  avatar: null
+  avatar: null | string
   password: string
   phone: string
   email: string

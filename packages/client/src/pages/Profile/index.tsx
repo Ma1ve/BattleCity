@@ -21,9 +21,10 @@ interface IUserInfo {
 /** Тип данных для вывода на странице профиля. */
 type TDisplayUserInfo = Omit<IUserInfo, 'id' | 'avatar'>
 
+import { selectUserInfo } from '../../app/store/reducers/UserSlice'
 
 const Profile = () => {
-  const [user] = useAppSelector(state => state.user.userInfo)
+  const user = useAppSelector(selectUserInfo)
 
   /** Признак открытия модального окна смены аватара. */
   const [showChangeAvatarModal, setShowChangeAvatarModal] =

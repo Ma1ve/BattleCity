@@ -20,6 +20,7 @@ import EndGame from '../pages/EndGame'
 import GameToStart from '../pages/GameToStart'
 
 import { useAppSelector } from './hooks/reducer'
+import { selectUserInfo } from './store/reducers/UserSlice'
 
 export enum ERoutes {
   INDEX = '/',
@@ -38,7 +39,7 @@ export enum ERoutes {
 }
 
 function App() {
-  const [user] = useAppSelector(state => state.user.userInfo)
+  const userInfo = useAppSelector(selectUserInfo)
 
   return (
     <div className="App">
@@ -54,7 +55,7 @@ function App() {
               <Route path={ERoutes.REGISTRATION} element={<Registration />} />
 
               {/* Данные роуты будут доступны, если пользователь зарегестрирован, потом можно это убрать */}
-              {user && (
+              {userInfo && (
                 <>
                   <Route path={ERoutes.PROFILE} element={<Profile />} />
                   <Route path={ERoutes.FORUM} element={<Forum />} />
