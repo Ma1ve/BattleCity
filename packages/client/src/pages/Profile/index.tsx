@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ButtonProfile, H1 } from '../../shared/ui/'
 import ChangePasswordModal from './ChangePasswordModal'
 import ChangeAvatarModal from './ChangeAvatarModal'
-import { omitObj } from '../../shared/lib'
+import { omitObject } from '../../shared/lib'
 import avatarStub from './../../shared/images/avatarStub.png'
 import styles from './profile.module.css'
 
@@ -49,7 +49,7 @@ const Profile = () => {
           alt="Change avatar"
         />
         {Object.entries(
-          omitObj(user, ['id', 'avatar']) as TDisplayUserInfo
+          omitObject(user, ['id', 'avatar']) as TDisplayUserInfo
         ).map((val, i) => {
           return (
             <div className={styles.profileInfoItem} key={i}>

@@ -2,7 +2,7 @@ import React from 'react'
 import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
 import { Modal, Button, Input } from './../../../shared/ui'
-import { UserActionsApi } from '../../../shared/api/UserActionsApi'
+import { UserAPI } from '../../../shared/api/UserApi'
 import styles from './changePasswordModal.module.css'
 
 export const validationSchema = Yup.object().shape({
@@ -13,10 +13,6 @@ export const validationSchema = Yup.object().shape({
     .max(40, 'Длина должна быть не более 40 символа')
     .required('Поле обязательно'),
   newPasswordRepeat: Yup.string()
-    .matches(/[A-Z]/, 'Хотя бы одна заглаваня буква')
-    .matches(/\d/, 'Хотя бы одна цифра')
-    .min(8, 'Длина не менее 8 символа')
-    .max(40, 'Длина должна быть не более 40 символа')
     .oneOf([Yup.ref('newPassword')], 'Пароли не совпадают')
     .required('Поле обязательно'),
 })
@@ -43,7 +39,7 @@ const ChangePasswordModal = ({ onClose }: IChangePasswordModal) => {
   }
 
   const onSubmit = (values: TNewPassword) => {
-    UserActionsApi.changePassword({
+    UserAPI.changePassword({
       oldPassword: values.oldPassword,
       newPassword: values.newPassword,
     })

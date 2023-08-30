@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react'
 import { Modal, Button } from './../../../shared/ui'
-import { UserActionsApi } from '../../../shared/api/UserActionsApi'
+import { UserAPI } from '../../../shared/api/UserApi'
 import avatarStub from './../../../shared/images/avatarStub.png'
 import styles from './changeAvatarModal.module.css'
 
@@ -29,7 +29,7 @@ const ChangeAvatarModal = ({ onClose }: IChangeAvatardModal) => {
     const formData = new FormData()
     formData.append('avatar', file, file.name)
 
-    UserActionsApi.changeAvatar(formData)
+    UserAPI.changeAvatar(formData)
 
     onClose()
   }
