@@ -1,0 +1,17 @@
+.endGameWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--content-bg-color);
+  width: var(--content-width);
+  height: var(--content-height);
+}
+
+.endGameTitle {
+  font-size: 80px;
+}
+
+.endGameScore {
+  font-size: 30px;
+}

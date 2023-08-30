@@ -45,6 +45,20 @@ const RootLayout = () => {
             game
           </NavLink>
           <NavLink
+            to={ERoutes.ENDGAME}
+            className={({ isActive }) =>
+              isActive ? styles.active : styles.inactive
+            }>
+            end game
+          </NavLink>
+          <NavLink
+            to={ERoutes.GAMETOSTART}
+            className={({ isActive }) =>
+              isActive ? styles.active : styles.inactive
+            }>
+            game to start
+          </NavLink>
+          <NavLink
             to={ERoutes.LEADERBOARD}
             className={({ isActive }) =>
               isActive ? styles.active : styles.inactive

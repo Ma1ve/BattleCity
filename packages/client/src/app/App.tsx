@@ -16,6 +16,8 @@ import Profile from '../pages/Profile'
 import Registration from '../pages/Registration/ui'
 import TopicForum from '../pages/TopicForum'
 import ErrorPage from '../pages/ErrorPage'
+import EndGame from '../pages/EndGame'
+import GameToStart from '../pages/GameToStart'
 
 export enum ERoutes {
   INDEX = '/',
@@ -26,6 +28,8 @@ export enum ERoutes {
   LEADERBOARD = 'leaderboard',
   FORUM = 'forum',
   TOPIC = 'topic',
+  ENDGAME = 'endgame',
+  GAMETOSTART = 'loading',
   ERROR400 = 'error400',
   ERROR404 = 'error404',
   ERROR500 = 'error500',
@@ -48,6 +52,8 @@ const router = createBrowserRouter(
       <Route path={ERoutes.LEADERBOARD} element={<Leaderboard />} />
       <Route path={ERoutes.FORUM} element={<Forum />} />
       <Route path={ERoutes.TOPIC} element={<TopicForum />} />
+      <Route path={ERoutes.ENDGAME} element={<EndGame />} />
+      <Route path={ERoutes.GAMETOSTART} element={<GameToStart />} />
       <Route path={ERoutes.ERROR400} element={<ErrorPage code="400" />} />
       <Route path={ERoutes.ERROR404} element={<ErrorPage code="404" />} />
       <Route path={ERoutes.ERROR500} element={<ErrorPage code="500" />} />
