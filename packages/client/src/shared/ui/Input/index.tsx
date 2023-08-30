@@ -10,7 +10,7 @@ interface IInput {
   placeholder?: string
 }
 
-const Input = (props: IInput): JSX.Element => {
+export const Input = (props: IInput): JSX.Element => {
   const { type, name, label, ...rest } = props
 
   const [field, { error, touched }] = useField(props)
@@ -43,5 +43,3 @@ const Input = (props: IInput): JSX.Element => {
     </div>
   )
 }
-
-export default Input

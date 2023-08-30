@@ -1,8 +1,7 @@
 import { Formik, Form } from 'formik'
 
-import Button from '../../../shared/ui/Button'
-import H1 from '../../../shared/ui/H1'
-import Input from '../../../shared/ui/Input'
+import { Button, Input, H1 } from '../../../shared/ui'
+
 import { validationSchema } from '../libs/validationSchema'
 
 import styles from './registration.module.css'
