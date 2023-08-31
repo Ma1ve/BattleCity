@@ -1,7 +1,0 @@
-.title {
-  margin: 40px 0;
-  font-size: 30px;
-  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
-  color: var(--primary-text-color);
-  text-align: center;
-}

@@ -4,6 +4,7 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom'
+import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
 
 import RootLayout from './RootLayout'
 
@@ -37,12 +38,12 @@ export enum ERoutes {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    // Статья, которая может помочь реплизовать ErrorBoundary в связке с react-router-dom используя errorElement https://reactrouter.com/en/main/route/error-element
-    // Проверьте названия маршрутов, пишите в группу, какой url можно им дать
-
     <Route
       path="/"
-      element={<RootLayout />} /* errorElement={<ErrorBoundary />} */
+      element={<RootLayout />}
+      errorElement={<RootLayout children={<ErrorBoundary />} />}
+      // Передаем в RootLayout, чтобы ErrorBound находился в "обертке"
+      // и при этом не пришлось бы передеавать его каждому роуту по отдельности.
     >
       <Route index element={<Main />} />
       <Route path={ERoutes.LOGIN} element={<Login />} />

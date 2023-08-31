@@ -1,4 +1,5 @@
-import Title from '../../shared/ui/Title'
+import { H1 } from '../../shared/ui'
+
 import styles from './endgame.module.css'
 
 const EndGame = () => {
@@ -6,8 +7,8 @@ const EndGame = () => {
 
   return (
     <div className={styles.endGameWrapper}>
-      <Title className={styles.endGameTitle} text="Game over" />
-      <Title className={styles.endGameScore} text={`Score: ${score}`} />
+      <H1 className={styles.endGameTitle} children="Game over" />
+      <H1 className={styles.endGameScore} children={`Score: ${score}`} />
     </div>
   )
 }

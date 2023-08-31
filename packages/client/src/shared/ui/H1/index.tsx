@@ -3,11 +3,14 @@ import styles from './h1.module.css'
 
 interface IH1 {
   children: React.ReactNode
+  className?: string
 }
 
 /** Компонент основного заголовка для разделов. */
 export const H1 = (props: IH1) => {
-  return <div className={styles.title}>{props.children}</div>
+  return (
+    <div className={`${styles.title} ${props.className}`}>{props.children}</div>
+  )
 }
 
 export default H1

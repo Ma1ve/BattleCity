@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import H1 from '../../shared/ui/H1'
 import styles from './main.module.css'
 

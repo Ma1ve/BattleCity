@@ -2,7 +2,11 @@ import { Outlet, NavLink } from 'react-router-dom'
 import { ERoutes } from './App'
 import styles from './styles/rootLayout.module.css'
 
-const RootLayout = () => {
+interface IRootLayout {
+  children?: React.ReactElement
+}
+
+const RootLayout = (props: IRootLayout) => {
   console.log(location.pathname)
   return (
     <div className={styles.wrapperLayout}>
@@ -103,7 +107,7 @@ const RootLayout = () => {
         </menu>
       </header>
       <main className={styles.mainLayout}>
-        <Outlet />
+        {props.children ? props.children : <Outlet />}
       </main>
       <footer className={styles.footerLayout}>
         V.E.I.S.A development &#169;
