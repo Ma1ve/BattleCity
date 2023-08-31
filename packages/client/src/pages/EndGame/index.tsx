@@ -1,4 +1,5 @@
-import Title from '../../shared/ui/Title'
+import { Title, ETitleSize } from '../../shared/ui'
+
 import styles from './endgame.module.css'
 
 const EndGame = () => {
@@ -6,8 +7,8 @@ const EndGame = () => {
 
   return (
     <div className={styles.endGameWrapper}>
-      <Title className={styles.endGameTitle} text="Game over" />
-      <Title className={styles.endGameScore} text={`Score: ${score}`} />
+      <Title size={ETitleSize.LG} children="Game over" />
+      <Title size={ETitleSize.SM} children={`Score: ${score}`} />
     </div>
   )
 }

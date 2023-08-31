@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { ButtonProfile } from '../../shared/ui/'
+import { ButtonProfile, Title } from '../../shared/ui/'
 import ChangePasswordModal from './ChangePasswordModal'
 import ChangeAvatarModal from './ChangeAvatarModal'
 import { omitObject } from '../../shared/lib'
-import H1 from '../../shared/ui/H1'
 
 import avatarStub from './../../shared/images/avatarStub.png'
 import styles from './profile.module.css'
@@ -16,6 +15,8 @@ interface IUserInfo {
   display_name: string
   login: string
   avatar: any
+  phone: string
+  email: string
 }
 
 /** Тип данных для вывода на странице профиля. */
@@ -36,7 +37,7 @@ const Profile = () => {
 
   return (
     <div className={styles.profileWrapper}>
-      <H1>Profile</H1>
+      <Title>Profile</Title>
       <div className={styles.profileInfo}>
         <img
           className={styles.profileAvatar}

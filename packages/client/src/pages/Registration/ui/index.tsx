@@ -1,17 +1,20 @@
 import { Formik, Form } from 'formik'
 
-import { Button, Input, H1 } from '../../../shared/ui'
+import { Button, Input, Title } from '../../../shared/ui'
 
 import { validationSchema } from '../libs/validationSchema'
 
 import styles from './registration.module.css'
 
-import { useActionCreators } from '../../app/hooks/reducer'
+import { useActionCreators } from '../../../app/hooks/reducer'
 import { useNavigate } from 'react-router-dom'
 
-import { TUserProfileData, TUserRegistrationData } from '../../app/models/IUser'
-import { ERoutes } from '../../app/App'
-import { userActions } from '../../app/store/reducers/UserSlice'
+import {
+  TUserProfileData,
+  TUserRegistrationData,
+} from '../../../app/models/IUser'
+import { ERoutes } from '../../../app/App'
+import { userActions } from '../../../app/store/reducers/UserSlice'
 
 const Registration = () => {
   const actions = useActionCreators(userActions)
@@ -37,7 +40,7 @@ const Registration = () => {
 
   return (
     <div className={styles.registrationPage}>
-      <H1>Registration</H1>
+      <Title>Registration</Title>
       <div className={styles.registrationWrapper}>
         <Formik {...{ onSubmit, initialValues, validationSchema }}>
           <Form>

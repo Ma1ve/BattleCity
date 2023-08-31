@@ -7,7 +7,3 @@
   width: var(--content-width);
   height: var(--content-height);
 }
-
-.gameToStartTitle {
-  font-size: 50px;
-}

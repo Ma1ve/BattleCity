@@ -1,13 +1,13 @@
 import { Formik, Form } from 'formik'
 
-import { Button, Input, H1 } from '../../../shared/ui'
+import { Button, Input, Title } from '../../../shared/ui'
 
 import { validationSchema } from '../libs/validationSchema'
 
 import styles from './login.module.css'
 
 import { useNavigate } from 'react-router-dom'
-import { ERoutes } from '../../app/App'
+import { ERoutes } from '../../../app/App'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ const Login = () => {
 
   return (
     <div className={styles.loginPage}>
-      <H1>Login</H1>
+      <Title>Login</Title>
       <div className={styles.loginWrapper}>
         <Formik {...{ onSubmit, initialValues, validationSchema }}>
           <Form>

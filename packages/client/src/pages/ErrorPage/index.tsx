@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import styles from './errorPage.module.css'
 
 interface IErrorPage {
-  code: '400' | '404' | '500'
+  code: '400' | '404' | '500' | 'Oops!'
 }
 
 const ErrorPage = ({ code }: IErrorPage) => {
@@ -10,6 +10,7 @@ const ErrorPage = ({ code }: IErrorPage) => {
     '400': 'Bad Request',
     '404': 'Page Not Found',
     '500': 'Server Error',
+    'Oops!': 'Something went wrong...',
   }
 
   return (

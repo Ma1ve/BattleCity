@@ -1,13 +1,12 @@
-import H1 from '../../shared/ui/H1'
+import { Title, ETitleSize } from '../../shared/ui'
 import Loader from '../../shared/ui/Loader'
-import Title from '../../shared/ui/Title'
 import styles from './gametostart.module.css'
 
 const GameToStart = () => {
   return (
     <div className={styles.gameToStartWrapper}>
       <div className={styles.gameToStartText}>
-        <Title className={styles.gameToStartTitle} text="Loading..." />
+        <Title size={ETitleSize.MD} children="Loading..." />
       </div>
       <Loader />
     </div>

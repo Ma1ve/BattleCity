@@ -4,6 +4,7 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom'
+import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
 
 import RootLayout from './RootLayout'
 
@@ -48,7 +49,10 @@ function App() {
           createRoutesFromElements(
             <Route
               path="/"
-              element={<RootLayout />} /* errorElement={<ErrorBoundary />} */
+              element={<RootLayout />}
+              errorElement={<RootLayout children={<ErrorBoundary />} />}
+              // Передаем в RootLayout, чтобы ErrorBound находился в "обертке"
+              // и при этом не пришлось бы передеавать его каждому роуту по отдельности.
             >
               <Route index element={<Main />} />
               <Route path={ERoutes.LOGIN} element={<Login />} />
