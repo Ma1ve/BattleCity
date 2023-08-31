@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import H1 from '../../shared/ui/H1'
+import { Title } from '../../shared/ui'
 
 import styles from './forum.module.css'
 
@@ -53,7 +53,7 @@ const Forum = () => {
 
   return (
     <div className={styles.forumPage}>
-      <H1>Forum</H1>
+      <Title>Forum</Title>
       <div className={styles.forumWrapper}>
         {forums.map((forum: IForum) => (
           <div key={forum.id} className={styles.forum}>

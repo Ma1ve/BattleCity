@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+yarn.lock
 
 node_modules/
 .env
@@ -13,3 +14,4 @@ node_modules/
 .vscode
 dist
 tmp
+

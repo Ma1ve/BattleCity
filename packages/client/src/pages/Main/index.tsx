@@ -1,4 +1,4 @@
-import H1 from '../../shared/ui/H1'
+import { Title } from '../../shared/ui'
 import styles from './main.module.css'
 
 type IMenuItem = {
@@ -28,7 +28,7 @@ const Main = () => {
 
   return (
     <div className={styles.mainWrapper}>
-      <H1>Battle City</H1>
+      <Title>Battle City</Title>
       <div className={styles.menu}>
         {menuItems.map((item: IMenuItem) => {
           return <div className={styles.menuItem}>{item.text}</div>

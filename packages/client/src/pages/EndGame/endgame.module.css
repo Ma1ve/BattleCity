@@ -7,11 +7,3 @@
   width: var(--content-width);
   height: var(--content-height);
 }
-
-.endGameTitle {
-  font-size: 80px;
-}
-
-.endGameScore {
-  font-size: 30px;
-}

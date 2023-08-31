@@ -24,6 +24,7 @@
   justify-content: center;
   align-items: center;
   background: url('../../shared/images/pageBackground.png');
+  opacity: 0.95;
 }
 
 .footerLayout {
