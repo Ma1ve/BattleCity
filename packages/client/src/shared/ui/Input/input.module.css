@@ -1,0 +1,20 @@
+.wrapper {
+  margin: 0 0 12px;
+}
+
+.input {
+  height: 35px;
+  color: var(--text-input-color);
+  padding: 12px 16px;
+}
+
+.error {
+  color: var(--danger-color);
+  font-size: 9px;
+  padding: 8px;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}

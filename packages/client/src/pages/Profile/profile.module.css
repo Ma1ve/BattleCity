@@ -1,0 +1,36 @@
+.profileWrapper {
+  background-color: var(--content-bg-color);
+  width: var(--content-width);
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.profileInfoItem {
+  margin-top: 30px;
+}
+
+.profileInfoItem:nth-child(7) {
+  margin-bottom: 60px;
+}
+
+.profileInfoItemValue {
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
+  color: var(--primary-text-color);
+}
+
+.profileAvatar {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profileAvatar:hover {
+  transform: scale(104%);
+}

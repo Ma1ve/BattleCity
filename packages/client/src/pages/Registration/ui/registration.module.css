@@ -1,0 +1,10 @@
+.registrationPage {
+  width: var(--content-width);
+  background-color: var(--content-bg-color);
+  padding: 36px 0 76px;
+}
+
+.registrationWrapper {
+  width: 400px;
+  margin: 0 auto;
+}
