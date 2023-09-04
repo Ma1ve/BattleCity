@@ -11,9 +11,9 @@ import {
 import { gameUI } from './GameUI'
 import {
   blockHeight,
-  blockHeightQuoter,
+  blockHeightQuarter,
   blockWidth,
-  blockWidthQuoter,
+  blockWidthQuarter,
 } from '../shared/config/gameConstants'
 import { Tank } from './Tank'
 import { Bullet } from './Bullet'
@@ -105,8 +105,8 @@ export class Scene {
           sceneBlockPositions: this.sceneBlocks,
           movementDirection: direction,
           movedItemSize: {
-            w: blockWidthQuoter * 1.5,
-            h: blockHeightQuoter * 1.5,
+            w: blockWidthQuarter * 1.5,
+            h: blockHeightQuarter * 1.5,
           },
         })
       ) {
