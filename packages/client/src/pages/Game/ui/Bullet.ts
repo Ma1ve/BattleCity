@@ -2,7 +2,8 @@ import { gameUI } from './GameUI'
 import {
   blockHeight,
   blockWidth,
-  blockWidthQuoter,
+  blockWidthQuarter,
+  blockHeightQuarter,
   bulletSpeed,
   spriteHeight,
   spriteWidth,
@@ -26,8 +27,8 @@ export class Bullet {
 
     const halfTankWidth = blockWidth / 2
     const halfTankHeight = blockHeight / 2
-    const halfBulletWidth = blockWidthQuoter / 2
-    const halfBulletHeight = blockWidthQuoter / 2
+    const halfBulletWidth = blockWidthQuarter / 2
+    const halfBulletHeight = blockHeightQuarter / 2
 
     switch (tankDirection) {
       case 'up':

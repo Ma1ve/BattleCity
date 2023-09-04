@@ -17,9 +17,9 @@ import {
 } from '../shared/types'
 import {
   blockHeight,
-  blockHeightQuoter,
+  blockHeightQuarter,
   blockWidth,
-  blockWidthQuoter,
+  blockWidthQuarter,
   canvasItemScale,
   spriteHeight,
   spriteWidth,
@@ -390,26 +390,26 @@ class GameUI {
       up: getSpriteItemPosition({
         x: 16,
         y: 0,
-        h: blockHeightQuoter,
-        w: blockWidthQuoter,
+        h: blockHeightQuarter,
+        w: blockWidthQuarter,
       }),
       right: getSpriteItemPosition({
         x: 16.5,
         y: 0,
-        h: blockHeightQuoter,
-        w: blockWidthQuoter,
+        h: blockHeightQuarter,
+        w: blockWidthQuarter,
       }),
       down: getSpriteItemPosition({
         x: 17,
         y: 0,
-        h: blockHeightQuoter,
-        w: blockWidthQuoter,
+        h: blockHeightQuarter,
+        w: blockWidthQuarter,
       }),
       left: getSpriteItemPosition({
         x: 17.5,
         y: 0,
-        h: blockHeightQuoter,
-        w: blockWidthQuoter,
+        h: blockHeightQuarter,
+        w: blockWidthQuarter,
       }),
     }
 
