@@ -9,10 +9,17 @@ import {
   Tank,
   TankColor,
   TankType,
+  Animation,
+  SceneBlockPositions,
+  DirectionKey,
+  Size,
+  Animations,
 } from '../shared/types'
 import {
   blockHeight,
+  blockHeightQuoter,
   blockWidth,
+  blockWidthQuoter,
   canvasItemScale,
   spriteHeight,
   spriteWidth,
@@ -21,15 +28,21 @@ import {
 const getSpriteItemPosition = ({
   x,
   y,
-  w = spriteWidth, //item width on sprite
-  h = spriteHeight, //item height on sprite
-}: {
+  h = spriteHeight, //item width on sprite
+  w = spriteWidth, //item height on sprite
+}: //
+{
   x: number
   y: number
-  w?: number
   h?: number
+  w?: number
 }): CoordsWithSizeCoords => {
-  return { x: x * w, y: y * h, w, h }
+  return {
+    x: x * spriteWidth, // * x position on canvas
+    y: y * spriteHeight, // * y position on canvas,
+    w: h, // spriteCountInOneFrame,
+    h: w, // / spriteCountInOneFrame,
+  }
 }
 
 const getTankSpritePosition = (
@@ -359,30 +372,13 @@ class GameUI {
       },
     }
 
-    const animations: Record<
-      'explosion-small' | 'explosion-big' | 'reborn',
-      CoordsWithSizeCoords[]
-    > = {
-      'explosion-small': [
+    const animations: Animation = {
+      [Animations.explosionSmall]: [
         getSpriteItemPosition({ x: 16, y: 8 }), //start
         getSpriteItemPosition({ x: 17, y: 8 }),
         getSpriteItemPosition({ x: 18, y: 8 }), //end
       ],
-      'explosion-big': [
-        getSpriteItemPosition({
-          x: 19,
-          y: 8,
-          w: spriteWidth * 2,
-          h: spriteHeight * 2,
-        }), //start
-        getSpriteItemPosition({
-          x: 21,
-          y: 8,
-          w: spriteWidth * 2,
-          h: spriteHeight * 2,
-        }), //end
-      ],
-      reborn: [
+      [Animations.reborn]: [
         getSpriteItemPosition({ x: 16, y: 6 }), //start
         getSpriteItemPosition({ x: 17, y: 6 }),
         getSpriteItemPosition({ x: 18, y: 6 }),
@@ -390,32 +386,32 @@ class GameUI {
       ],
     }
 
-    const bullet: Bullet = [
-      getSpriteItemPosition({
-        x: 20,
-        y: 6,
-        w: spriteWidth / 2,
-        h: spriteHeight / 2,
-      }), //up
-      getSpriteItemPosition({
-        x: 20,
-        y: 6,
-        w: spriteWidth / 2,
-        h: spriteHeight / 2,
-      }), //left
-      getSpriteItemPosition({
-        x: 20,
-        y: 6,
-        w: spriteWidth / 2,
-        h: spriteHeight / 2,
-      }), //down
-      getSpriteItemPosition({
-        x: 20,
-        y: 6,
-        w: spriteWidth / 2,
-        h: spriteHeight / 2,
-      }), //right
-    ]
+    const bullet: Bullet = {
+      up: getSpriteItemPosition({
+        x: 16,
+        y: 0,
+        h: blockHeightQuoter,
+        w: blockWidthQuoter,
+      }),
+      right: getSpriteItemPosition({
+        x: 16.5,
+        y: 0,
+        h: blockHeightQuoter,
+        w: blockWidthQuoter,
+      }),
+      down: getSpriteItemPosition({
+        x: 17,
+        y: 0,
+        h: blockHeightQuoter,
+        w: blockWidthQuoter,
+      }),
+      left: getSpriteItemPosition({
+        x: 17.5,
+        y: 0,
+        h: blockHeightQuoter,
+        w: blockWidthQuoter,
+      }),
+    }
 
     const stage: Stage = {
       brick: getSpriteItemPosition({ x: 8, y: 5.5 }),
@@ -458,41 +454,75 @@ class GameUI {
     movedItemCoords,
     blockCoords,
     movementDirection,
+    movedItemSize,
   }: {
     movedItemCoords: Coords
     blockCoords: Coords
     movementDirection: keyof typeof MovementDirection
+    movedItemSize: Size
   }) => {
+    const { h: movedItemHeight, w: movedItemWidth } = movedItemSize
     switch (movementDirection) {
       case MovementDirection.up:
         return (
           movedItemCoords.y > blockCoords.y * blockHeight && // intersection by x coord
           movedItemCoords.y < (blockCoords.y + 1) * blockHeight && // intersection by y coord
-          movedItemCoords.x + blockWidth > blockCoords.x * blockWidth && // intersection by right y coord
+          movedItemCoords.x + movedItemWidth > blockCoords.x * blockWidth && // intersection by right y coord
           movedItemCoords.x < (blockCoords.x + 1) * blockWidth // intersection by left y coord
         )
       case MovementDirection.down:
         return (
           movedItemCoords.y < blockCoords.y * blockHeight && // intersection by x coord
-          movedItemCoords.y + blockHeight > blockCoords.y * blockHeight && // intersection by y coord
-          movedItemCoords.x + blockWidth > blockCoords.x * blockWidth && // intersection by right y coord
+          movedItemCoords.y + movedItemHeight > blockCoords.y * blockHeight && // intersection by y coord
+          movedItemCoords.x + movedItemWidth > blockCoords.x * blockWidth && // intersection by right y coord
           movedItemCoords.x < (blockCoords.x + 1) * blockWidth // intersection by left y coord
         )
       case MovementDirection.left:
         return (
           movedItemCoords.x > blockCoords.x * blockWidth && // intersection by x coord
           movedItemCoords.x < (blockCoords.x + 1) * blockWidth && // intersection by x coord
-          movedItemCoords.y + blockHeight > blockCoords.y * blockHeight && // intersection by bottom y coord
+          movedItemCoords.y + movedItemHeight > blockCoords.y * blockHeight && // intersection by bottom y coord
           movedItemCoords.y < (blockCoords.y + 1) * blockHeight // intersection by top y coord
         )
       case MovementDirection.right:
         return (
-          movedItemCoords.x < blockCoords.x * blockWidth && // intersection by x coord
-          movedItemCoords.x + blockWidth > blockCoords.x * blockWidth && // intersection by x coord
-          movedItemCoords.y + blockHeight > blockCoords.y * blockHeight && // intersection by bottom y coord
-          movedItemCoords.y < (blockCoords.y + 1) * blockHeight // intersection by top y coord
+          movedItemCoords.x < blockCoords.x * blockWidth && // top left tank corner < top left block corner
+          movedItemCoords.x + movedItemWidth > blockCoords.x * blockWidth && // top right tank corner  > top left block corner
+          movedItemCoords.y + movedItemHeight > blockCoords.y * blockHeight && // bottom left tank corner > top block corner
+          movedItemCoords.y < (blockCoords.y + 1) * blockHeight // top left tank corner < block top right corner
         )
     }
+  }
+
+  checkSceneBlockIntersection = ({
+    movedItemCoords,
+    movementDirection,
+    sceneBlockPositions,
+    movedItemSize = { h: blockHeight, w: blockWidth },
+  }: {
+    movedItemCoords: Coords
+    movementDirection: DirectionKey
+    sceneBlockPositions: SceneBlockPositions
+    movedItemSize?: Size
+  }) => {
+    return Object.values(sceneBlockPositions).some(blockPositionData => {
+      if (Array.isArray(blockPositionData)) {
+        return blockPositionData.some(blockCoords =>
+          this.checkIntersection({
+            movedItemCoords,
+            blockCoords,
+            movementDirection,
+            movedItemSize,
+          })
+        )
+      }
+      return this.checkIntersection({
+        movedItemCoords,
+        blockCoords: blockPositionData,
+        movementDirection,
+        movedItemSize,
+      })
+    })
   }
 }
 

@@ -10,7 +10,10 @@ export const tankSpeed = {
   powerful: 4,
   armored: 4,
 }
+export const bulletSpeed = 12
 export const blockWidth = spriteWidth * canvasItemScale
 export const blockHeight = spriteWidth * canvasItemScale
+export const blockHeightQuoter = blockHeight / 4
+export const blockWidthQuoter = blockWidth / 4
 export const canvasWidth = columns * blockWidth
 export const canvasHeight = columns * blockHeight

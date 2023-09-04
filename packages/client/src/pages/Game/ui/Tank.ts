@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { gameUI } from './GameUI'
 import {
   blockHeight,
@@ -15,6 +16,7 @@ import {
   TankType,
   SceneBlockPositions,
   ControlKeys,
+  DirectionKey,
 } from '../shared/types'
 
 interface ITankProps<O extends TankOwner> {
@@ -23,10 +25,19 @@ interface ITankProps<O extends TankOwner> {
   tankType: TankType
   controlKeys?: ControlKeys
   initialDirection: MovementDirection
+  fireKey: string
   sceneBlockPositions: SceneBlockPositions
+  onFire: ({
+    tankPosition,
+    tankDirection,
+    tankId,
+  }: {
+    tankPosition: Coords
+    tankDirection: DirectionKey
+    tankId: string
+  }) => void
 }
 
-type TankDirectionKey = keyof typeof MovementDirection
 type TankTypeKey = keyof typeof TankType
 
 export class Tank<O extends TankOwner> {
@@ -37,9 +48,12 @@ export class Tank<O extends TankOwner> {
   public controlKeys
   public tankVariants
   public sprites // array of 2 tank sprites
-  public direction: TankDirectionKey // up left right down
+  public direction: DirectionKey // up left right down
   public tankType: TankTypeKey //basic fast powerful armored
   public sceneBlockPositions
+  public tankId
+  public fireKey
+  public onFire
   private keyPressSubscription?: (event: KeyboardEvent) => void
 
   constructor({
@@ -48,6 +62,8 @@ export class Tank<O extends TankOwner> {
     tankColor,
     tankType,
     controlKeys,
+    fireKey,
+    onFire,
     sceneBlockPositions,
   }: ITankProps<O>) {
     this.tankColor = tankColor
@@ -57,11 +73,17 @@ export class Tank<O extends TankOwner> {
 
     this.initialPosition = initialPosition
 
+    this.tankId = uuidv4()
+
     this.position = { ...this.initialPosition }
 
     this.tankVariants = gameUI.images.tanks[tankColor]
 
     this.direction = initialDirection
+
+    this.fireKey = fireKey
+
+    this.onFire = onFire
 
     this.tankType = tankType
 
@@ -72,7 +94,7 @@ export class Tank<O extends TankOwner> {
     this.subscribe()
   }
 
-  private move(direction: TankDirectionKey) {
+  private move(direction: DirectionKey) {
     let { x: newX, y: newY } = this.position
 
     // do not move tank in case it have not the same direction (just rotate)
@@ -115,24 +137,13 @@ export class Tank<O extends TankOwner> {
       newY = 0
     }
 
-    const hasIntersection = (blockPosition: Coords) => {
-      return gameUI.checkIntersection({
-        movedItemCoords: { x: newX, y: newY },
-        blockCoords: blockPosition,
-        movementDirection: direction,
-      })
-    }
+    const hasIntersection = gameUI.checkSceneBlockIntersection({
+      movedItemCoords: { x: newX, y: newY },
+      sceneBlockPositions: this.sceneBlockPositions,
+      movementDirection: direction,
+    })
 
-    const hasBlocksIntersection = () => {
-      return Object.values(this.sceneBlockPositions).some(blockPositionData => {
-        if (Array.isArray(blockPositionData)) {
-          return blockPositionData.some(hasIntersection)
-        }
-        return hasIntersection(blockPositionData)
-      })
-    }
-
-    if (!hasBlocksIntersection()) {
+    if (!hasIntersection) {
       this.position.y = newY
       this.position.x = newX
     }
@@ -140,14 +151,6 @@ export class Tank<O extends TankOwner> {
     this.activeSpriteIndex = this.activeSpriteIndex === 0 ? 1 : 0
 
     this.sprites = this.tankVariants[this.tankType][direction]
-  }
-
-  public setDirection(newDirection: MovementDirection) {
-    this.direction = newDirection
-  }
-
-  public setType(newTankType: TankType) {
-    this.tankType = newTankType
   }
 
   private subscribe() {
@@ -158,9 +161,17 @@ export class Tank<O extends TankOwner> {
     this.keyPressSubscription = (event: KeyboardEvent) => {
       const keyCode = event.code
 
+      if (keyCode === this.fireKey) {
+        this.onFire({
+          tankId: this.tankId,
+          tankDirection: this.direction,
+          tankPosition: this.position,
+        })
+      }
+
       for (const direction in this.controlKeys) {
         if (this.controlKeys[direction as MovementDirection] === keyCode) {
-          this.move(direction as TankDirectionKey)
+          this.move(direction as DirectionKey)
           break
         }
       }
@@ -173,7 +184,7 @@ export class Tank<O extends TankOwner> {
     if (!this.keyPressSubscription) {
       return
     }
-    document.removeEventListener('keypress', this.keyPressSubscription)
+    document.removeEventListener('keydown', this.keyPressSubscription)
   }
 
   public getSpriteForRender() {
