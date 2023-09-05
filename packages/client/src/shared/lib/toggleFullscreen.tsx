@@ -1,7 +1,7 @@
 import { Document, ScreenSize } from '../../features/models/types'
 
 export const toggleFullscreen = (
-  seScreenSize?: React.Dispatch<React.SetStateAction<ScreenSize>>
+  setScreenSize?: React.Dispatch<React.SetStateAction<ScreenSize>>
 ) => {
   const document = window.document as Document
   const elem = document.documentElement
@@ -20,8 +20,8 @@ export const toggleFullscreen = (
     } else if (elem.webkitRequestFullscreen) {
       elem.webkitRequestFullscreen((Element as any).ALLOW_KEYBOARD_INPUT)
     }
-    if (seScreenSize) {
-      seScreenSize(ScreenSize.LARGE)
+    if (setScreenSize) {
+      setScreenSize(ScreenSize.LARGE)
     }
   } else {
     if (document.exitFullscreen) {
@@ -33,8 +33,8 @@ export const toggleFullscreen = (
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen()
     }
-    if (seScreenSize) {
-      seScreenSize(ScreenSize.SMALL)
+    if (setScreenSize) {
+      setScreenSize(ScreenSize.SMALL)
     }
   }
 }

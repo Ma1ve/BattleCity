@@ -7,12 +7,12 @@ import { ScreenSize } from '../../models/types'
 import styles from './fullscreenButton.module.css'
 
 export const FullscreenButton = () => {
-  const [screenSize, seScreenSize] = useState(ScreenSize.SMALL)
+  const [screenSize, setScreenSize] = useState(ScreenSize.SMALL)
 
   return (
     <Button
       className={styles.fullScreenButton}
-      onClick={() => toggleFullscreen(seScreenSize)}
+      onClick={() => toggleFullscreen(setScreenSize)}
       title={
         screenSize === ScreenSize.SMALL
           ? 'Перейти в полноэкранный режим'
