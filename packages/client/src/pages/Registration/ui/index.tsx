@@ -15,6 +15,7 @@ import {
 } from '../../../app/models/IUser'
 import { ERoutes } from '../../../app/App'
 import { userActions } from '../../../app/store/reducers/UserSlice'
+import { AuthAPI } from '../../../shared/api/AuthApi'
 
 const Registration = () => {
   const actions = useActionCreators(userActions)
@@ -32,6 +33,7 @@ const Registration = () => {
 
   const onSubmit = (values: TUserRegistrationData) => {
     console.log(values)
+    AuthAPI.signup(values)
     // Тут мы должны отправить data - values на сервер
     // Тут value уже выступает в виде data которая пришла нам с сервера поэтому она должна быть типа IUser
     actions.getUserInfo(values as unknown as TUserProfileData)

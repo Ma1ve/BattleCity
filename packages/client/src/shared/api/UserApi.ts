@@ -7,7 +7,7 @@ class UserApi {
   protected createAxiosInstance(): AxiosInstance {
     return axios.create({
       baseURL: BASE_URL,
-      responseType: 'json',
+      // responseType: 'json',
       timeout: 5 * 1000,
     })
   }
@@ -56,6 +56,15 @@ class UserApi {
     } catch (error: any) {
       console.error('error: ', error?.response?.data)
       // TODO: обработка ошибок handleError(error.response?.data).
+    }
+  }
+
+  getUserData = async () => {
+    try {
+      const response = await this.instance.get(`/auth/user`)
+      return response
+    } catch (error: any) {
+      console.error('error: ', error?.response?.data)
     }
   }
 }

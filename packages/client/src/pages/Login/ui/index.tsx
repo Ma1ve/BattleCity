@@ -8,6 +8,9 @@ import styles from './login.module.css'
 
 import { useNavigate } from 'react-router-dom'
 import { ERoutes } from '../../../app/App'
+import { AuthAPI } from '../../../shared/api/AuthApi'
+import { TLoginData } from '../../../app/models/IUser'
+import { UserAPI } from '../../../shared/api/UserApi'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -17,8 +20,9 @@ const Login = () => {
     password: '',
   }
 
-  const onSubmit = (values: Record<string, string>) => {
-    console.log(values)
+  const onSubmit = (values: TLoginData) => {
+    AuthAPI.login(values)
+    UserAPI.getUserData()
     navigate(`/${ERoutes.GAME}`)
   }
 

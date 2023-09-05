@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import {
   RouterProvider,
   createBrowserRouter,
@@ -22,6 +23,7 @@ import GameToStart from '../pages/GameToStart'
 
 import { useAppSelector } from './hooks/reducer'
 import { selectUserInfo } from './store/reducers/UserSlice'
+import { UserAPI } from '../shared/api/UserApi'
 
 export enum ERoutes {
   INDEX = '/',
@@ -42,6 +44,10 @@ export enum ERoutes {
 function App() {
   const userInfo = useAppSelector(selectUserInfo)
 
+  useEffect(() => {
+    UserAPI.getUserData()
+  }, [])
+
   return (
     <div className="App">
       <RouterProvider
@@ -58,20 +64,17 @@ function App() {
               <Route path={ERoutes.LOGIN} element={<Login />} />
               <Route path={ERoutes.REGISTRATION} element={<Registration />} />
 
-              {/* Данные роуты будут доступны, если пользователь зарегестрирован, потом можно это убрать */}
               {userInfo && (
                 <>
                   <Route path={ERoutes.PROFILE} element={<Profile />} />
                   <Route path={ERoutes.FORUM} element={<Forum />} />
                   <Route path={ERoutes.TOPIC} element={<TopicForum />} />
+                  <Route path={ERoutes.GAME} element={<Game />} />
+                  <Route path={ERoutes.ENDGAME} element={<EndGame />} />
+                  <Route path={ERoutes.GAMETOSTART} element={<GameToStart />} />
+                  <Route path={ERoutes.LEADERBOARD} element={<Leaderboard />} />
                 </>
               )}
-
-              <Route path={ERoutes.GAME} element={<Game />} />
-              <Route path={ERoutes.ENDGAME} element={<EndGame />} />
-              <Route path={ERoutes.GAMETOSTART} element={<GameToStart />} />
-              <Route path={ERoutes.LEADERBOARD} element={<Leaderboard />} />
-
               <Route
                 path={ERoutes.ERROR400}
                 element={<ErrorPage code="400" />}

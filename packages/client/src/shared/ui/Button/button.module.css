@@ -1,6 +1,7 @@
 .button {
   outline: none;
   padding: 12px;
+  width: 100%;
   border-radius: 5px;
   background-color: var(--background-button-color);
   border: 2px solid var(--border-button-color);
