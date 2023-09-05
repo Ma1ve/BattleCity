@@ -22,6 +22,7 @@ import GameToStart from '../pages/GameToStart'
 
 import { useAppSelector } from './hooks/reducer'
 import { selectUserInfo } from './store/reducers/UserSlice'
+import { FullscreenButton } from '../features/ui/FullscreenButton'
 
 export enum ERoutes {
   INDEX = '/',
@@ -89,6 +90,7 @@ function App() {
           )
         )}
       />
+      <FullscreenButton />
     </div>
   )
 }
