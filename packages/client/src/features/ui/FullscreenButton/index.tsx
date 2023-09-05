@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AiOutlineFullscreen, AiOutlineFullscreenExit } from 'react-icons/ai'
 
 import { toggleFullscreen } from '../../../shared/lib/toggleFullscreen'
+import { Button } from '../../../shared/ui'
 import { ScreenSize } from '../../models/types'
 import styles from './fullscreenButton.module.css'
 
@@ -9,7 +10,7 @@ export const FullscreenButton = () => {
   const [screenSize, seScreenSize] = useState(ScreenSize.SMALL)
 
   return (
-    <button
+    <Button
       className={styles.fullScreenButton}
       onClick={() => toggleFullscreen(seScreenSize)}
       title={
@@ -19,6 +20,6 @@ export const FullscreenButton = () => {
       }>
       {screenSize === ScreenSize.SMALL && <AiOutlineFullscreen size={80} />}
       {screenSize === ScreenSize.LARGE && <AiOutlineFullscreenExit size={80} />}
-    </button>
+    </Button>
   )
 }
