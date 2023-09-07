@@ -76,5 +76,6 @@ function App() {
   )
 }
 
-startServiceWorker()
+// Закомментировал тк выдает ошибку startServiceWorker is not defined
+// startServiceWorker()
 export default App

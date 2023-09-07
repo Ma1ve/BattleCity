@@ -6,6 +6,10 @@ import {
 import { useEffect, useRef } from 'react'
 import { Scene } from './ui/Scene'
 import { scenesConfig } from './shared/config/sceneConfig'
+import { StartGameMenu } from './ui/StartGameMenu'
+import { GameOverMenu } from './ui/GameOverMenu'
+
+import './game.module.css'
 
 const Game = () => {
   let reqId = 0
@@ -20,19 +24,29 @@ const Game = () => {
 
     const scene = new Scene({ ctx, blockPositions: scenesConfig[1] })
 
+    const menuStartGame = new StartGameMenu(ctx)
+    const menuGameOver = new GameOverMenu(ctx)
+
     const animate = () => {
       const now = performance.now()
 
       //60fps animation condition
       if (now - lastTimestamp >= frameInterval) {
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+        if (menuStartGame.isGameLoaded()) {
+          ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
-        ctx.fillStyle = '#333'
-        ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+          ctx.fillStyle = '#000'
+          ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
-        ctx.strokeRect(0, 0, canvasWidth, canvasHeight)
+          scene.render()
 
-        scene.render()
+          //! Пока всегда getGameOver() будет true, нужно потом как то соединить это с уничтожением флага
+          if (menuGameOver.getGameOver()) {
+            menuGameOver.draw()
+          }
+        } else {
+          menuStartGame.draw()
+        }
 
         reqId = requestAnimationFrame(animate)
 
@@ -47,6 +61,7 @@ const Game = () => {
 
     return () => {
       cancelAnimationFrame(reqId)
+      menuStartGame.unsubscribe()
     }
   }, [])
 
