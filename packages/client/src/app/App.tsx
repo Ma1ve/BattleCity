@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
-import { startServiceWorker } from '../shared/lib'
 
 import RootLayout from './RootLayout'
 import Main from '../pages/Main'
@@ -78,5 +77,6 @@ function App() {
   )
 }
 
-//startServiceWorker()
+// Закомментировал тк выдает ошибку startServiceWorker is not defined
+// startServiceWorker()
 export default App
