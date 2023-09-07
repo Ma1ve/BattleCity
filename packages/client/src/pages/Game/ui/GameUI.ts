@@ -62,6 +62,9 @@ class GameUI {
   public frame: number
   private readonly spriteImage: HTMLImageElement
 
+  private activeSpriteIndex
+  private animationFrameCount
+
   constructor() {
     this.frame = 0
 
@@ -70,6 +73,9 @@ class GameUI {
     const spriteImage = new Image()
     spriteImage.src = sprite
     this.spriteImage = spriteImage
+
+    this.activeSpriteIndex = 0
+    this.animationFrameCount = 0
   }
 
   private getSprites(): Images {
@@ -548,6 +554,16 @@ class GameUI {
       intersectedBlockCoords,
       hasIntersection: !!intersectedBlockCoords,
     }
+  }
+
+  // Устанавливаем границу (frameCount) через сколько animationFrameCount будет обновление activeSpriteIndex
+  public changeSpriteIndex({ frameCount }: { frameCount: number }) {
+    this.animationFrameCount++
+    if (this.animationFrameCount > frameCount) {
+      this.animationFrameCount = 0
+      this.activeSpriteIndex = this.activeSpriteIndex === 0 ? 1 : 0
+    }
+    return this.activeSpriteIndex
   }
 }
 
