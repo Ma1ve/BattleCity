@@ -7,7 +7,6 @@ interface IRootLayout {
 }
 
 const RootLayout = (props: IRootLayout) => {
-  console.log(location.pathname)
   return (
     <div className={styles.wrapperLayout}>
       <header className={styles.headerLayout}>

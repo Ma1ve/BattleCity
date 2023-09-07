@@ -38,6 +38,15 @@ class AuthApi {
       console.error('error: ', error?.response?.data)
     }
   }
+
+  logout = async () => {
+    try {
+      const response = await this.instance.post(`logout`)
+      return response
+    } catch (error: any) {
+      console.error('error: ', error?.response?.data)
+    }
+  }
 }
 
 export const AuthAPI = new AuthApi()

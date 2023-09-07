@@ -23,6 +23,7 @@ interface IUserInfo {
 type TDisplayUserInfo = Omit<IUserInfo, 'id' | 'avatar'>
 
 import { selectUserInfo } from '../../app/store/reducers/UserSlice'
+import { AuthAPI } from '../../shared/api/AuthApi'
 
 const Profile = () => {
   const user = useAppSelector(selectUserInfo)
@@ -59,6 +60,7 @@ const Profile = () => {
           onClick={() => setShowChangePasswordModal(!showChangePasswordModal)}>
           Change password
         </ButtonProfile>
+        <ButtonProfile onClick={() => AuthAPI.logout()}>Logout</ButtonProfile>
       </div>
       {showChangeAvatarModal && (
         <ChangeAvatarModal onClose={() => setShowChangeAvatarModal(false)} />
