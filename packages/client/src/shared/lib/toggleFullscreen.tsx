@@ -9,7 +9,8 @@ export const toggleFullscreen = (
   if (
     !document.fullscreenElement &&
     !document.mozFullScreenElement &&
-    !document.msFullscreenElement
+    !document.msFullscreenElement &&
+    !document.webkitFullscreenElement
   ) {
     if (elem.requestFullscreen) {
       elem.requestFullscreen()
