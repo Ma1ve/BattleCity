@@ -9,6 +9,10 @@ import { Tank } from './ui/Tank'
 import { Scene } from './ui/Scene'
 import { TankColor, MovementDirection, TankType } from './shared/types'
 import { scenesConfig } from './shared/config/sceneConfig'
+import { StartGameMenu } from './ui/StartGameMenu'
+import { GameOverMenu } from './ui/GameOverMenu'
+
+import './game.module.css'
 
 const Game = () => {
   let reqId = 0
@@ -38,21 +42,31 @@ const Game = () => {
       sceneBlockPositions: scene.getSceneBlocks(),
     })
 
+    const menuStartGame = new StartGameMenu(ctx)
+    const menuGameOver = new GameOverMenu(ctx)
+
     const animate = () => {
       const now = performance.now()
 
       //60fps animation condition
       if (now - lastTimestamp >= frameInterval) {
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+        if (menuStartGame.isGameLoaded()) {
+          ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
-        ctx.fillStyle = '#333'
-        ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+          ctx.fillStyle = '#000'
+          ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
-        ctx.strokeRect(0, 0, canvasWidth, canvasHeight)
+          gameUI.drawImage({ ctx, ...player.getSpriteForRender() })
 
-        gameUI.drawImage({ ctx, ...player.getSpriteForRender() })
+          scene.render()
 
-        scene.render()
+          //! Пока всегда getGameOver() будет true, нужно потом как то соединить это с уничтожением флага
+          if (menuGameOver.getGameOver()) {
+            menuGameOver.draw()
+          }
+        } else {
+          menuStartGame.draw()
+        }
 
         reqId = requestAnimationFrame(animate)
 
@@ -68,6 +82,7 @@ const Game = () => {
     return () => {
       cancelAnimationFrame(reqId)
       player.unsubscribe()
+      menuStartGame.unsubscribe()
     }
   }, [])
 

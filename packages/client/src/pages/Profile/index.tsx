@@ -8,6 +8,7 @@ import avatarStub from './../../shared/images/avatarStub.png'
 import styles from './profile.module.css'
 
 import { useAppSelector } from '../../app/hooks/reducer'
+import { selectUserInfo } from '../../app/store/reducers/UserSlice'
 interface IUserInfo {
   id: number
   first_name: string
@@ -21,8 +22,6 @@ interface IUserInfo {
 
 /** Тип данных для вывода на странице профиля. */
 type TDisplayUserInfo = Omit<IUserInfo, 'id' | 'avatar'>
-
-import { selectUserInfo } from '../../app/store/reducers/UserSlice'
 
 const Profile = () => {
   const user = useAppSelector(selectUserInfo)
