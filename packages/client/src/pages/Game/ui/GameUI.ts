@@ -4,7 +4,7 @@ import {
   Images,
   MovementDirection,
   Coords,
-  CoordsWithSizeCoords,
+  CoordsWithSize,
   Stage,
   Tank,
   TankColor,
@@ -38,7 +38,7 @@ const getSpriteItemPosition = ({
   y: number
   w?: number
   h?: number
-}): CoordsWithSizeCoords => {
+}): CoordsWithSize => {
   return {
     x: x * spriteWidth, // x position on canvas
     y: y * spriteHeight, // y position on canvas,
@@ -50,7 +50,7 @@ const getSpriteItemPosition = ({
 const getTankSpritePosition = (
   firstCoords: Coords,
   secondCoords: Coords
-): [CoordsWithSizeCoords, CoordsWithSizeCoords] => {
+): [CoordsWithSize, CoordsWithSize] => {
   return [
     getSpriteItemPosition(firstCoords),
     getSpriteItemPosition(secondCoords),
@@ -433,7 +433,7 @@ class GameUI {
     canvasPosition,
   }: {
     ctx: CanvasRenderingContext2D
-    spritePosition: CoordsWithSizeCoords
+    spritePosition: CoordsWithSize
     canvasPosition: Coords
   }) {
     const { x: sx, y: sy, w: sw, h: sh } = spritePosition
