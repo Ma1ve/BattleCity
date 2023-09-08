@@ -16,6 +16,7 @@ import {
   blockWidthQuarter,
   canvasHeight,
   canvasWidth,
+  TankControlKeys,
 } from '../shared/config/gameConstants'
 import { Tank } from './Tank'
 import { Bullet } from './Bullet'
@@ -43,14 +44,8 @@ export class Scene {
       tankColor: TankColor.yellow,
       initialDirection: MovementDirection.up,
       initialPosition: { x: 4 * 32 * 1.5, y: 12 * 32 * 1.5 },
-      controlKeys: {
-        //TODO: values (e.g. KeyW) should be replaced with keys from redux (user tank control settings)
-        [MovementDirection.up]: 'KeyW',
-        [MovementDirection.down]: 'KeyS',
-        [MovementDirection.left]: 'KeyA',
-        [MovementDirection.right]: 'KeyD',
-      },
-      fireKey: 'Space',
+      controlKeys: TankControlKeys.movement,
+      fireKey: TankControlKeys.fire,
       sceneBlockPositions: this.sceneBlocks,
       onFire: ({
         tankPosition,
