@@ -48,13 +48,15 @@ export class Tank<O extends TankOwner> {
   public controlKeys
   public tankVariants
   public sprites // array of 2 tank sprites
-  public direction: DirectionKey // up left right down
-  public tankType: TankTypeKey //basic fast powerful armored
+  public direction: DirectionKey
+  public directionKeyPressed?: DirectionKey
+  public tankType: TankTypeKey
   public sceneBlockPositions
   public tankId
   public fireKey
   public onFire
   private keyPressSubscription?: (event: KeyboardEvent) => void
+  private keyUpSubscription?: (event: KeyboardEvent) => void
 
   constructor({
     initialPosition,
@@ -94,12 +96,16 @@ export class Tank<O extends TankOwner> {
     this.subscribe()
   }
 
-  private move(direction: DirectionKey) {
+  private move() {
     let { x: newX, y: newY } = this.position
 
-    // do not move tank in case it have not the same direction (just rotate)
-    if (direction === this.direction) {
-      switch (direction) {
+    if (!this.directionKeyPressed) {
+      return
+    }
+
+    if (this.directionKeyPressed === this.direction) {
+      // do not move tank in case it have not the same direction (just rotate)
+      switch (this.direction) {
         case MovementDirection.up: {
           newY = this.position.y - tankSpeed[this.tankType]
           break
@@ -119,7 +125,7 @@ export class Tank<O extends TankOwner> {
       }
     }
 
-    this.direction = direction
+    this.direction = this.directionKeyPressed
 
     if (newX + blockWidth > canvasWidth) {
       newX = canvasWidth - blockWidth
@@ -137,10 +143,10 @@ export class Tank<O extends TankOwner> {
       newY = 0
     }
 
-    const hasIntersection = gameUI.checkSceneBlockIntersection({
+    const { hasIntersection } = gameUI.checkSceneBlockIntersection({
       movedItemCoords: { x: newX, y: newY },
       sceneBlockPositions: this.sceneBlockPositions,
-      movementDirection: direction,
+      movementDirection: this.direction,
     })
 
     if (!hasIntersection) {
@@ -150,7 +156,7 @@ export class Tank<O extends TankOwner> {
 
     this.activeSpriteIndex = this.activeSpriteIndex === 0 ? 1 : 0
 
-    this.sprites = this.tankVariants[this.tankType][direction]
+    this.sprites = this.tankVariants[this.tankType][this.direction]
   }
 
   private subscribe() {
@@ -171,13 +177,27 @@ export class Tank<O extends TankOwner> {
 
       for (const direction in this.controlKeys) {
         if (this.controlKeys[direction as MovementDirection] === keyCode) {
-          this.move(direction as DirectionKey)
+          this.directionKeyPressed = direction as DirectionKey
+          break
+        }
+      }
+    }
+
+    this.keyUpSubscription = (event: KeyboardEvent) => {
+      const keyCode = event.code
+
+      for (const direction in this.controlKeys) {
+        if (this.controlKeys[direction as MovementDirection] === keyCode) {
+          if (direction === this.directionKeyPressed) {
+            this.directionKeyPressed = undefined
+          }
           break
         }
       }
     }
 
     document.addEventListener('keydown', this.keyPressSubscription)
+    document.addEventListener('keyup', this.keyUpSubscription)
   }
 
   public unsubscribe() {
@@ -187,7 +207,9 @@ export class Tank<O extends TankOwner> {
     document.removeEventListener('keydown', this.keyPressSubscription)
   }
 
-  public getSpriteForRender() {
+  public render() {
+    this.move()
+
     return {
       spritePosition: this.sprites[this.activeSpriteIndex],
       canvasPosition: this.position,
