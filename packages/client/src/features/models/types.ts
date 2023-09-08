@@ -2,6 +2,7 @@ export enum ScreenSize {
   SMALL = 'small',
   LARGE = 'large',
 }
+
 export interface Document {
   fullscreenElement?: Element | null
   exitFullscreen?: () => Promise<void>
