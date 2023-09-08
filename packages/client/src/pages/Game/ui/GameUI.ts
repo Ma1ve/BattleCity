@@ -36,14 +36,14 @@ const getSpriteItemPosition = ({
 {
   x: number
   y: number
-  h?: number
   w?: number
+  h?: number
 }): CoordsWithSizeCoords => {
   return {
-    x: x * spriteWidth, // * x position on canvas
-    y: y * spriteHeight, // * y position on canvas,
-    w: h, // spriteCountInOneFrame,
-    h: w, // / spriteCountInOneFrame,
+    x: x * spriteWidth, // x position on canvas
+    y: y * spriteHeight, // y position on canvas,
+    w: w, //item width on sprite
+    h: h, //item height on sprite
   }
 }
 
