@@ -55,7 +55,7 @@ export class Tank<O extends TankOwner> {
   public tankId
   public fireKey
   public onFire
-  private keyPressSubscription?: (event: KeyboardEvent) => void
+  private keyDownSubscription?: (event: KeyboardEvent) => void
   private keyUpSubscription?: (event: KeyboardEvent) => void
 
   constructor({
@@ -164,7 +164,7 @@ export class Tank<O extends TankOwner> {
       return
     }
 
-    this.keyPressSubscription = (event: KeyboardEvent) => {
+    this.keyDownSubscription = (event: KeyboardEvent) => {
       const keyCode = event.code
 
       if (keyCode === this.fireKey) {
@@ -196,15 +196,15 @@ export class Tank<O extends TankOwner> {
       }
     }
 
-    document.addEventListener('keydown', this.keyPressSubscription)
+    document.addEventListener('keydown', this.keyDownSubscription)
     document.addEventListener('keyup', this.keyUpSubscription)
   }
 
   public unsubscribe() {
-    if (!this.keyPressSubscription) {
-      return
+    if (this.keyDownSubscription && this.keyUpSubscription) {
+      document.removeEventListener('keydown', this.keyDownSubscription)
+      document.removeEventListener('keyup', this.keyUpSubscription)
     }
-    document.removeEventListener('keydown', this.keyPressSubscription)
   }
 
   public render() {
