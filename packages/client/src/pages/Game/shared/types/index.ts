@@ -72,4 +72,6 @@ export type SceneBlockPositions = {
   eagle: Coords
 }
 
+export type SceneBlockKeys = keyof SceneBlockPositions
+
 export type ControlKeys = Record<MovementDirection, string>

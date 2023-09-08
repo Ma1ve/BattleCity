@@ -14,9 +14,12 @@ import {
   blockHeightQuarter,
   blockWidth,
   blockWidthQuarter,
+  canvasHeight,
+  canvasWidth,
 } from '../shared/config/gameConstants'
 import { Tank } from './Tank'
 import { Bullet } from './Bullet'
+import { isCoordsArray } from '../shared/utils/isCoordsArray'
 
 export class Scene {
   public sceneBlocks
@@ -58,6 +61,9 @@ export class Scene {
         tankDirection: DirectionKey
         tankId: string
       }) => {
+        if (this.bullets[tankId]) {
+          return
+        }
         this.bullets[tankId] = new Bullet({ tankPosition, tankDirection })
       },
     })
@@ -85,7 +91,8 @@ export class Scene {
 
     Object.values(this.tanks).forEach(tankArray => {
       tankArray.forEach(tank => {
-        gameUI.drawImage({ ctx: this.ctx, ...tank.getSpriteForRender() })
+        const { spritePosition, canvasPosition } = tank.render()
+        gameUI.drawImage({ ctx: this.ctx, spritePosition, canvasPosition })
       })
     })
 
@@ -99,18 +106,39 @@ export class Scene {
         canvasPosition: { ...position },
       })
 
-      if (
+      const { sceneBlockKey, intersectedBlockCoords, hasIntersection } =
         gameUI.checkSceneBlockIntersection({
           movedItemCoords: position,
           sceneBlockPositions: this.sceneBlocks,
           movementDirection: direction,
           movedItemSize: {
-            w: blockWidthQuarter * 1.5,
-            h: blockHeightQuarter * 1.5,
+            w: blockWidthQuarter,
+            h: blockHeightQuarter,
           },
         })
+
+      if (
+        hasIntersection ||
+        position.x < 0 ||
+        position.y < 0 ||
+        position.x > canvasWidth ||
+        position.y > canvasHeight
       ) {
         delete this.bullets[tankId]
+      }
+
+      if (sceneBlockKey && intersectedBlockCoords) {
+        let searchedSceneBlock = this.sceneBlocks[sceneBlockKey]
+
+        if (isCoordsArray(searchedSceneBlock)) {
+          searchedSceneBlock = searchedSceneBlock.filter(
+            el => el !== intersectedBlockCoords
+          ) as Coords[]
+          ;(this.sceneBlocks[sceneBlockKey] as Coords[]) = searchedSceneBlock
+          return
+        }
+
+        delete this.sceneBlocks[sceneBlockKey]
       }
     })
   }

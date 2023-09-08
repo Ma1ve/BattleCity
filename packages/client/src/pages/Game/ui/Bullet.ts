@@ -83,6 +83,7 @@ export class Bullet {
 
   public render() {
     this.move()
+
     return {
       sprite: this.sprite,
       position: this.position,
