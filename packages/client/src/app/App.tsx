@@ -24,6 +24,7 @@ import GameToStart from '../pages/GameToStart'
 import { useAppSelector } from './hooks/reducer'
 import { selectUserInfo } from './store/reducers/UserSlice'
 import { AuthAPI } from '../shared/api/AuthApi'
+import { FullscreenButton } from '../features/ui/FullscreenButton'
 
 export enum ERoutes {
   INDEX = '/',
@@ -85,6 +86,7 @@ function App() {
         )}
       />
       <ToastContainer theme="dark" position="bottom-right" autoClose={5000} />
+      <FullscreenButton />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import React, { ButtonHTMLAttributes, FC } from 'react'
 import styles from './button.module.css'
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
-  type: 'button' | 'submit' | 'reset' | undefined
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export const Button: FC<IButton> = ({ children, type, ...rest }) => (
