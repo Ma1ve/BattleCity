@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import { toast } from 'react-toastify'
+
 import { TUserRegistrationData, TLoginData } from '../../app/models/IUser'
 import { AUTH_URL } from './consts'
 
@@ -23,7 +24,7 @@ class AuthApi {
   signup = async (data: TUserRegistrationData) => {
     try {
       const response = await this.instance.post(`signup`, data)
-      toast.success(JSON.stringify(response?.data))
+      toast.success('Пользователь зарегистрирован')
       return response
     } catch (error: any) {
       toast.error(error?.response?.data?.reason)
@@ -33,7 +34,7 @@ class AuthApi {
   login = async (data: TLoginData) => {
     try {
       const response = await this.instance.post(`signin`, data)
-      toast.success(JSON.stringify(response?.data))
+      toast.success('Вход выполнен')
       return response
     } catch (error: any) {
       toast.error(error?.response?.data?.reason)
@@ -43,24 +44,20 @@ class AuthApi {
   logout = async () => {
     try {
       const response = await this.instance.post(`logout`)
-      toast.success(JSON.stringify(response?.data))
+      toast.warning('Выполнен выход из профиля')
       return response
     } catch (error: any) {
-      toast.error(error?.response?.data?.reason, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      toast.error(error?.response?.data?.reason)
     }
   }
 
   getUserData = async () => {
     try {
       const response = await this.instance.get(`user`)
-      toast.success(JSON.stringify(response?.data))
+      toast.success('Данные профиля получены')
       return response
     } catch (error: any) {
-      toast.error(error?.response?.data?.reason, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      toast.error(error?.response?.data?.reason)
     }
   }
 }

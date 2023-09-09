@@ -9,14 +9,10 @@ import styles from './registration.module.css'
 import { useActionCreators } from '../../../app/hooks/reducer'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  TUserProfileData,
-  TUserRegistrationData,
-} from '../../../app/models/IUser'
-import { ERoutes } from '../../../app/App'
+import { TUserRegistrationData } from '../../../app/models/IUser'
 import { userActions } from '../../../app/store/reducers/UserSlice'
 import { AuthAPI } from '../../../shared/api/AuthApi'
-import { UserAPI } from '../../../shared/api/UserApi'
+import { ERoutes } from '../../../app/models/types'
 
 const Registration = () => {
   const actions = useActionCreators(userActions)
@@ -33,8 +29,9 @@ const Registration = () => {
   }
 
   const onSubmit = (values: TUserRegistrationData) => {
-    AuthAPI.signup(values)
-    actions.getUserInfo(values as unknown as TUserProfileData)
+    AuthAPI.signup(values).then(response =>
+      actions.setUserInfo(response as any)
+    )
     navigate(`/${ERoutes.PROFILE}`)
   }
 
@@ -51,6 +48,9 @@ const Registration = () => {
             <Input name="password" type="password" placeholder="Пароль" />
             <Input name="phone" placeholder="Телефон" />
             <Button type="submit">Зарегистрироваться</Button>
+            <Button type="submit" onClick={() => navigate(`/${ERoutes.LOGIN}`)}>
+              Уже есть аккаунт
+            </Button>
           </Form>
         </Formik>
       </div>

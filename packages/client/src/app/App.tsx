@@ -21,32 +21,17 @@ import TopicForum from '../pages/TopicForum'
 import ErrorPage from '../pages/ErrorPage'
 import EndGame from '../pages/EndGame'
 import GameToStart from '../pages/GameToStart'
-import { useAppSelector } from './hooks/reducer'
-import { selectUserInfo } from './store/reducers/UserSlice'
 import { AuthAPI } from '../shared/api/AuthApi'
 import { FullscreenButton } from '../features/ui/FullscreenButton'
-
-export enum ERoutes {
-  INDEX = '/',
-  LOGIN = 'login',
-  PROFILE = 'profile',
-  REGISTRATION = 'registration',
-  GAME = 'game',
-  LEADERBOARD = 'leaderboard',
-  FORUM = 'forum',
-  TOPIC = 'topic',
-  ENDGAME = 'endgame',
-  GAMETOSTART = 'loading',
-  ERROR400 = 'error400',
-  ERROR404 = 'error404',
-  ERROR500 = 'error500',
-}
+import { useActionCreators } from './hooks/reducer'
+import { userActions } from './store/reducers/UserSlice'
+import { ERoutes } from './models/types'
 
 function App() {
-  const userInfo = useAppSelector(selectUserInfo)
+  const actions = useActionCreators(userActions)
 
   useEffect(() => {
-    AuthAPI.getUserData()
+    AuthAPI.getUserData().then(response => actions.setUserInfo(response as any))
   }, [])
 
   return (

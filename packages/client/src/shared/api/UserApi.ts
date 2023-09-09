@@ -36,7 +36,7 @@ class UserApi {
         oldPassword,
         newPassword,
       })
-      toast.success(JSON.stringify(response?.data))
+      toast.success('Пароль изменён')
       return response
     } catch (error: any) {
       toast.error(error?.response?.data?.reason)
@@ -53,7 +53,7 @@ class UserApi {
         { data },
         { headers: { 'Content-Type': 'multipart/form-data' } }
       )
-      toast.success(JSON.stringify(response?.data))
+      toast.success('Аватар изменён')
       return response
     } catch (error: any) {
       toast.error(error?.response?.data?.reason)
