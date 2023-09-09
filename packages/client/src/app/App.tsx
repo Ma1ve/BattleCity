@@ -5,6 +5,8 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
 import RootLayout from './RootLayout'
@@ -82,6 +84,7 @@ function App() {
           )
         )}
       />
+      <ToastContainer theme="dark" />
     </div>
   )
 }

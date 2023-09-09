@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
-import { BASE_URL } from './consts'
+import { toast } from 'react-toastify'
+
+import { AUTH_URL, BASE_URL } from './consts'
 
 class UserApi {
   private instance: AxiosInstance
@@ -33,11 +35,14 @@ class UserApi {
         { oldPassword, newPassword },
         { headers: { 'Content-Type': 'application/json' } }
       )
-      console.log(response)
+      toast.success(response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
-      // TODO: обработка ошибок handleError(error.response?.data).
+      toast.error(error?.response?.data?.reason, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
     }
   }
 
@@ -51,22 +56,27 @@ class UserApi {
         { data },
         { headers: { 'Content-Type': 'multipart/form-data' } }
       )
-      console.log(response)
+      toast.success(response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
-      // TODO: обработка ошибок handleError(error.response?.data).
+      toast.error(error?.response?.data?.reason, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
     }
   }
 
   getUserData = async () => {
     try {
-      const response = await this.instance.get(`/auth/user`, {
+      const response = await axios.get(`${AUTH_URL}/user`, {
         headers: { 'Content-Type': 'application/json' },
       })
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
+      toast.error(error?.response?.data?.reason, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
     }
   }
 }

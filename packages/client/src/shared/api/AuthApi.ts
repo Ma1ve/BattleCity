@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import { toast } from 'react-toastify'
 import { TUserRegistrationData, TLoginData } from '../../app/models/IUser'
 import { AUTH_URL } from './consts'
 
@@ -22,9 +23,14 @@ class AuthApi {
       const response = await this.instance.post(`signup`, data, {
         headers: { 'Content-Type': 'application/json' },
       })
+      toast.success(response.data.id, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
+      toast.error(error?.response?.data?.reason, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
     }
   }
 
@@ -33,9 +39,14 @@ class AuthApi {
       const response = await this.instance.post(`signin`, data, {
         headers: { 'Content-Type': 'application/json' },
       })
+      toast.success(response.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
+      toast.error(error?.response?.data?.reason, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
     }
   }
 
@@ -44,7 +55,9 @@ class AuthApi {
       const response = await this.instance.post(`logout`)
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
+      toast.error(error?.response?.data?.reason, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
     }
   }
 }
