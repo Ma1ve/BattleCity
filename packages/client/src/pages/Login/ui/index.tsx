@@ -22,7 +22,7 @@ const Login = () => {
 
   const onSubmit = (values: TLoginData) => {
     AuthAPI.login(values)
-    UserAPI.getUserData()
+    AuthAPI.getUserData()
     navigate(`/${ERoutes.GAME}`)
   }
 

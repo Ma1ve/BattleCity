@@ -34,7 +34,6 @@ const Registration = () => {
 
   const onSubmit = (values: TUserRegistrationData) => {
     AuthAPI.signup(values)
-    UserAPI.getUserData()
     actions.getUserInfo(values as unknown as TUserProfileData)
     navigate(`/${ERoutes.PROFILE}`)
   }

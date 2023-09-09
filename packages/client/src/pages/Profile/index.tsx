@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ButtonProfile, Title } from '../../shared/ui/'
 import ChangePasswordModal from './ChangePasswordModal'
 import ChangeAvatarModal from './ChangeAvatarModal'
@@ -14,7 +14,7 @@ interface IUserInfo {
   second_name: string
   display_name: string
   login: string
-  avatar: any
+  avatar: string
   phone: string
   email: string
 }
@@ -27,6 +27,10 @@ import { AuthAPI } from '../../shared/api/AuthApi'
 
 const Profile = () => {
   const user = useAppSelector(selectUserInfo)
+
+  useEffect(() => {
+    AuthAPI.getUserData()
+  }, [])
 
   /** Признак открытия модального окна смены аватара. */
   const [showChangeAvatarModal, setShowChangeAvatarModal] =

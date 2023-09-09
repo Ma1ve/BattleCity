@@ -9,6 +9,8 @@ class AuthApi {
   protected createAxiosInstance(): AxiosInstance {
     return axios.create({
       baseURL: AUTH_URL,
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
       responseType: 'json',
       timeout: 5 * 1000,
     })
@@ -20,39 +22,40 @@ class AuthApi {
 
   signup = async (data: TUserRegistrationData) => {
     try {
-      const response = await this.instance.post(`signup`, data, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      toast.success(response.data.id, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      const response = await this.instance.post(`signup`, data)
+      toast.success(JSON.stringify(response?.data))
       return response
     } catch (error: any) {
-      toast.error(error?.response?.data?.reason, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      toast.error(error?.response?.data?.reason)
     }
   }
 
   login = async (data: TLoginData) => {
     try {
-      const response = await this.instance.post(`signin`, data, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      toast.success(response.data, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      const response = await this.instance.post(`signin`, data)
+      toast.success(JSON.stringify(response?.data))
       return response
     } catch (error: any) {
-      toast.error(error?.response?.data?.reason, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      toast.error(error?.response?.data?.reason)
     }
   }
 
   logout = async () => {
     try {
       const response = await this.instance.post(`logout`)
+      toast.success(JSON.stringify(response?.data))
+      return response
+    } catch (error: any) {
+      toast.error(error?.response?.data?.reason, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      })
+    }
+  }
+
+  getUserData = async () => {
+    try {
+      const response = await this.instance.get(`user`)
+      toast.success(JSON.stringify(response?.data))
       return response
     } catch (error: any) {
       toast.error(error?.response?.data?.reason, {

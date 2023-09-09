@@ -23,7 +23,7 @@ import EndGame from '../pages/EndGame'
 import GameToStart from '../pages/GameToStart'
 import { useAppSelector } from './hooks/reducer'
 import { selectUserInfo } from './store/reducers/UserSlice'
-import { UserAPI } from '../shared/api/UserApi'
+import { AuthAPI } from '../shared/api/AuthApi'
 
 export enum ERoutes {
   INDEX = '/',
@@ -45,7 +45,7 @@ function App() {
   const userInfo = useAppSelector(selectUserInfo)
 
   useEffect(() => {
-    UserAPI.getUserData()
+    AuthAPI.getUserData()
   }, [])
 
   return (
@@ -84,7 +84,7 @@ function App() {
           )
         )}
       />
-      <ToastContainer theme="dark" />
+      <ToastContainer theme="dark" position="bottom-right" autoClose={5000} />
     </div>
   )
 }

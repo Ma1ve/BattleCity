@@ -9,6 +9,8 @@ class UserApi {
   protected createAxiosInstance(): AxiosInstance {
     return axios.create({
       baseURL: BASE_URL,
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
       responseType: 'json',
       timeout: 5 * 1000,
     })
@@ -30,19 +32,14 @@ class UserApi {
     newPassword: string
   }) => {
     try {
-      const response = await this.instance.put(
-        `user/password`,
-        { oldPassword, newPassword },
-        { headers: { 'Content-Type': 'application/json' } }
-      )
-      toast.success(response?.data, {
-        position: toast.POSITION.BOTTOM_RIGHT,
+      const response = await this.instance.put(`user/password`, {
+        oldPassword,
+        newPassword,
       })
+      toast.success(JSON.stringify(response?.data))
       return response
     } catch (error: any) {
-      toast.error(error?.response?.data?.reason, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      toast.error(error?.response?.data?.reason)
     }
   }
 
@@ -56,27 +53,10 @@ class UserApi {
         { data },
         { headers: { 'Content-Type': 'multipart/form-data' } }
       )
-      toast.success(response?.data, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      toast.success(JSON.stringify(response?.data))
       return response
     } catch (error: any) {
-      toast.error(error?.response?.data?.reason, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
-    }
-  }
-
-  getUserData = async () => {
-    try {
-      const response = await axios.get(`${AUTH_URL}/user`, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      return response
-    } catch (error: any) {
-      toast.error(error?.response?.data?.reason, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      })
+      toast.error(error?.response?.data?.reason)
     }
   }
 }
