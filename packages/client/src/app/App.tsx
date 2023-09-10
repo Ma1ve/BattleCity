@@ -5,6 +5,7 @@ import {
   Route,
 } from 'react-router-dom'
 import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
+import { startServiceWorker } from '../shared/lib'
 
 import RootLayout from './RootLayout'
 
@@ -95,4 +96,5 @@ function App() {
   )
 }
 
+startServiceWorker()
 export default App
