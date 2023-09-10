@@ -9,6 +9,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
+import { startServiceWorker } from '../shared/lib'
+
 import RootLayout from './RootLayout'
 import Main from '../pages/Main'
 import Forum from '../pages/Forum'
@@ -76,4 +78,5 @@ function App() {
   )
 }
 
+//startServiceWorker()
 export default App
