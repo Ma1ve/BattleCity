@@ -17,6 +17,8 @@ import {
   Animations,
 } from '../shared/types'
 import {
+  battleCitySpriteHeight,
+  battleCitySpriteWidth,
   blockHeight,
   blockHeightQuarter,
   blockWidth,
@@ -26,7 +28,6 @@ import {
   spriteWidth,
 } from '../shared/config/gameConstants'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
-import { isSceneTankBlock } from '../shared/utils/IsSceneTankBlock'
 
 const getSpriteItemPosition = ({
   x,
@@ -434,7 +435,12 @@ class GameUI {
         x: 17,
         y: 14.5,
       }),
-      battleCity: { x: 8.5 * 32, y: 9.5 * 32, w: 420, h: 144 },
+      battleCity: {
+        x: 8 * spriteWidth,
+        y: 9.5 * spriteWidth,
+        w: battleCitySpriteWidth,
+        h: battleCitySpriteHeight,
+      },
     }
 
     return { tanks, bullet, animations, stage }
@@ -470,13 +476,11 @@ class GameUI {
     blockCoords,
     movementDirection,
     movedItemSize,
-    log,
   }: {
     movedItemCoords: Coords
     blockCoords: Coords
     movementDirection: keyof typeof MovementDirection
     movedItemSize: Size
-    log?: boolean
   }) => {
     const { h: movedItemHeight, w: movedItemWidth } = movedItemSize
 

@@ -21,12 +21,14 @@ import {
 import { Tank } from './Tank'
 import { Bullet } from './Bullet'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
+import { GameOverMenu } from './GameOverMenu'
 
 export class Scene {
   public sceneConfig: SceneConfig
   public ctx: CanvasRenderingContext2D
   public tanks: Record<TankOwner, Tank<TankOwner>[]> = { player: [], enemy: [] }
   public bullets: Record<string, Bullet>
+  public menuGameOver: GameOverMenu
 
   constructor({
     ctx,
@@ -38,6 +40,7 @@ export class Scene {
     this.sceneConfig = sceneConfig
     this.ctx = ctx
     this.bullets = {}
+    this.menuGameOver = new GameOverMenu(ctx)
 
     const player = new Tank<'player'>({
       tankType: TankType.basic,
@@ -71,6 +74,12 @@ export class Scene {
   }
 
   public render() {
+    if (!this.sceneConfig.blocks.eagle) {
+      this.menuGameOver.draw()
+
+      return
+    }
+
     Object.entries(this.sceneConfig.blocks).forEach(([key, coords]) => {
       if (key === 'tanks') {
         this.sceneConfig.blocks.tanks = []

@@ -7,7 +7,6 @@ import { useEffect, useRef } from 'react'
 import { Scene } from './ui/Scene'
 import { scenesConfig } from './shared/config/sceneConfig'
 import { StartGameMenu } from './ui/StartGameMenu'
-import { GameOverMenu } from './ui/GameOverMenu'
 
 import './game.module.css'
 
@@ -25,7 +24,6 @@ const Game = () => {
     const scene = new Scene({ ctx, sceneConfig: scenesConfig[1] })
 
     const menuStartGame = new StartGameMenu(ctx)
-    const menuGameOver = new GameOverMenu(ctx)
 
     const animate = () => {
       const now = performance.now()
@@ -39,11 +37,6 @@ const Game = () => {
           ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
           scene.render()
-
-          //! Пока всегда getGameOver() будет true, нужно потом как то соединить это с уничтожением флага
-          if (menuGameOver.getGameOver()) {
-            menuGameOver.draw()
-          }
         } else {
           menuStartGame.draw()
         }

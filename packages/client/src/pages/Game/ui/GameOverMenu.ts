@@ -109,8 +109,6 @@ export class GameOverMenu {
         x: canvasWidth / 2 - 55,
         y: this.positionY,
       },
-      sW: 100,
-      sH: 100,
     })
   }
 
@@ -203,7 +201,7 @@ export class GameOverMenu {
     })
 
     setTimeout(() => {
-      document.location.reload()
+      document.location.reload() //TODO убрать релоад
     }, 1000)
   }
 

@@ -1,4 +1,9 @@
-import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
+import {
+  battleCitySpriteWidth,
+  canvasHeight,
+  canvasWidth,
+  canvasWidthWithoutScale,
+} from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { LevelLoadingStage } from './LevelLoadingStage'
 import { gameUI } from './GameUI'
@@ -11,10 +16,10 @@ export class StartGameMenu {
   private levelLoadingStage: LevelLoadingStage
   private keyPressSubscription?: (event: KeyboardEvent) => void
 
-  private indentPressEnterTextByX
-  private indentVeisaTextByX
-  private battleCityTextIndentationByY
-  private alignmentTankCenter
+  private indentPressEnterTextByX = 320
+  private indentVeisaTextByX = 500
+  private battleCityTextIndentationByY = 40
+  private alignmentTankCenter = 35
 
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
@@ -29,11 +34,6 @@ export class StartGameMenu {
 
     // Подписываемся на событие
     this.subscribe()
-
-    this.indentPressEnterTextByX = 250
-    this.indentVeisaTextByX = 500
-    this.battleCityTextIndentationByY = 40
-    this.alignmentTankCenter = 25
   }
 
   public draw() {
@@ -69,11 +69,9 @@ export class StartGameMenu {
       ctx: this.ctx,
       spritePosition: gameUI.images.stage.battleCity,
       canvasPosition: {
-        x: 110,
+        x: (canvasWidthWithoutScale - battleCitySpriteWidth) / 2,
         y: this.positionY + this.battleCityTextIndentationByY,
       },
-      sW: 450,
-      sH: 144,
     })
 
     // Отображаем танчик
@@ -90,8 +88,6 @@ export class StartGameMenu {
           this.indentPressEnterTextByX -
           this.alignmentTankCenter,
       },
-      sH: 32,
-      sW: 32,
     })
 
     // Отрисовываем текст Press Enter
