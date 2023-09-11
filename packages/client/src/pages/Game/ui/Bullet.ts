@@ -8,7 +8,12 @@ import {
   spriteHeight,
   spriteWidth,
 } from '../shared/config/gameConstants'
-import { Coords, DirectionKey, MovementDirection } from '../shared/types'
+import {
+  Coords,
+  CoordsWithSize,
+  DirectionKey,
+  MovementDirection,
+} from '../shared/types'
 
 export interface IBulletProps {
   tankPosition: Coords
@@ -16,9 +21,10 @@ export interface IBulletProps {
 }
 
 export class Bullet {
-  public position
-  public direction
-  public sprite
+  public position: Coords
+  public direction: DirectionKey
+  public sprite: CoordsWithSize
+
   constructor({ tankPosition, tankDirection }: IBulletProps) {
     this.direction = tankDirection
 

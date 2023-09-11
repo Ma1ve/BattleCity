@@ -23,8 +23,8 @@ import { Bullet } from './Bullet'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
 
 export class Scene {
-  public sceneBlocks
-  public ctx
+  public sceneBlocks: SceneBlockPositions
+  public ctx: CanvasRenderingContext2D
   public tanks: Record<TankOwner, Tank<TankOwner>[]> = { player: [], enemy: [] }
   public bullets: Record<string, Bullet>
 
