@@ -8,4 +8,7 @@ export default {
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|svg)$": "identity-obj-proxy"
+  }
 }
