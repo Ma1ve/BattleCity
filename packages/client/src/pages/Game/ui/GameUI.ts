@@ -30,9 +30,10 @@ import { isCoordsArray } from '../shared/utils/isCoordsArray'
 const getSpriteItemPosition = ({
   x,
   y,
-  w = spriteWidth, //item width on sprite
-  h = spriteHeight, //item height on sprite
-}: {
+  h = spriteHeight, //item width on sprite
+  w = spriteWidth, //item height on sprite
+}: //
+{
   x: number
   y: number
   w?: number
