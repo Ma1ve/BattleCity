@@ -10,7 +10,7 @@ import {
   TankColor,
   TankType,
   Animation,
-  SceneBlockPositions,
+  SceneBlocks,
   SceneBlockKeys,
   DirectionKey,
   Size,
@@ -26,6 +26,7 @@ import {
   spriteWidth,
 } from '../shared/config/gameConstants'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
+import { isSceneTankBlock } from '../shared/utils/IsSceneTankBlock'
 
 const getSpriteItemPosition = ({
   x,
@@ -469,13 +470,16 @@ class GameUI {
     blockCoords,
     movementDirection,
     movedItemSize,
+    log,
   }: {
     movedItemCoords: Coords
     blockCoords: Coords
     movementDirection: keyof typeof MovementDirection
     movedItemSize: Size
+    log?: boolean
   }) => {
     const { h: movedItemHeight, w: movedItemWidth } = movedItemSize
+
     switch (movementDirection) {
       case MovementDirection.up:
         return (
@@ -484,6 +488,7 @@ class GameUI {
           movedItemCoords.x + movedItemWidth > blockCoords.x * blockWidth && // top right moved item corner > top right block corner
           movedItemCoords.x < (blockCoords.x + 1) * blockWidth // top left moved item corner < top right block corner
         )
+
       case MovementDirection.down:
         return (
           movedItemCoords.y < blockCoords.y * blockHeight && // top left moved item corner < bottom left block corner
@@ -516,7 +521,7 @@ class GameUI {
   }: {
     movedItemCoords: Coords
     movementDirection: DirectionKey
-    sceneBlockPositions: SceneBlockPositions
+    sceneBlockPositions: SceneBlocks
     movedItemSize?: Size
   }) => {
     const sceneBlockValues = Object.entries(sceneBlockPositions)
@@ -531,11 +536,18 @@ class GameUI {
 
       sceneBlockKey = blockKey as SceneBlockKeys
 
+      //tank coords was multiplied for canvas render
+      const getTankCoords = (blockCoords: Coords) => ({
+        x: blockCoords.x / blockWidth,
+        y: blockCoords.y / blockHeight,
+      })
+
       if (isCoordsArray(blockPositionData)) {
         intersectedBlockCoords = blockPositionData.find(blockCoords =>
           this.checkIntersection({
             movedItemCoords,
-            blockCoords,
+            blockCoords:
+              blockKey === 'tanks' ? getTankCoords(blockCoords) : blockCoords,
             movementDirection,
             movedItemSize,
           })

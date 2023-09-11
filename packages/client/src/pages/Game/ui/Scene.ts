@@ -1,12 +1,13 @@
 import {
   Stage,
-  SceneBlockPositions,
+  SceneConfig,
   TankType,
   TankColor,
   MovementDirection,
   TankOwner,
   Coords,
   DirectionKey,
+  SceneTankBlocks,
 } from '../shared/types'
 import { gameUI } from './GameUI'
 import {
@@ -23,19 +24,19 @@ import { Bullet } from './Bullet'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
 
 export class Scene {
-  public sceneBlocks: SceneBlockPositions
+  public sceneConfig: SceneConfig
   public ctx: CanvasRenderingContext2D
   public tanks: Record<TankOwner, Tank<TankOwner>[]> = { player: [], enemy: [] }
   public bullets: Record<string, Bullet>
 
   constructor({
     ctx,
-    blockPositions,
+    sceneConfig,
   }: {
     ctx: CanvasRenderingContext2D
-    blockPositions: SceneBlockPositions
+    sceneConfig: SceneConfig
   }) {
-    this.sceneBlocks = blockPositions
+    this.sceneConfig = sceneConfig
     this.ctx = ctx
     this.bullets = {}
 
@@ -43,36 +44,62 @@ export class Scene {
       tankType: TankType.basic,
       tankColor: TankColor.yellow,
       initialDirection: MovementDirection.up,
-      initialPosition: { x: 4 * 32 * 1.5, y: 12 * 32 * 1.5 },
+      initialPosition: { x: 4 * blockWidth, y: 12 * blockHeight },
       controlKeys: TankControlKeys.movement,
       fireKey: TankControlKeys.fire,
-      sceneBlockPositions: this.sceneBlocks,
-      onFire: ({
-        tankPosition,
-        tankDirection,
-        tankId,
-      }: {
-        tankPosition: Coords
-        tankDirection: DirectionKey
-        tankId: string
-      }) => {
-        if (this.bullets[tankId]) {
-          return
-        }
-        this.bullets[tankId] = new Bullet({ tankPosition, tankDirection })
-      },
+      sceneBlockPositions: this.sceneConfig.blocks,
+      onFire: this.onFire.bind(this),
+    })
+
+    const enemy = new Tank<'enemy'>({
+      tankType: TankType.basic,
+      tankColor: TankColor.silver,
+      initialDirection: MovementDirection.down,
+      initialPosition: { x: 4 * blockWidth, y: 0 },
+      sceneBlockPositions: this.sceneConfig.blocks,
     })
 
     this.tanks.player = [player]
+    this.tanks.enemy = [enemy]
+  }
+
+  private onFire({
+    tankPosition,
+    tankDirection,
+    tankId,
+  }: {
+    tankPosition: Coords
+    tankDirection: DirectionKey
+    tankId: string
+  }) {
+    if (this.bullets[tankId]) {
+      return
+    }
+    this.bullets[tankId] = new Bullet({ tankPosition, tankDirection })
   }
 
   public render() {
-    Object.entries(this.sceneBlocks).forEach(([key, coords]) => {
-      if (!Array.isArray(coords)) {
+    Object.entries(this.sceneConfig.blocks).forEach(([key, coords]) => {
+      if (key === 'tanks') {
+        this.sceneConfig.blocks.tanks = []
+        Object.values(this.tanks).forEach(tankArray => {
+          tankArray.forEach(tank => {
+            const { spritePosition, canvasPosition } = tank.render()
+
+            this.sceneConfig.blocks.tanks.push(canvasPosition)
+            gameUI.drawImage({ ctx: this.ctx, spritePosition, canvasPosition })
+          })
+        })
+
+        return
+      }
+
+      if (!isCoordsArray(coords)) {
         this.drawSceneImage({
           ...coords,
           stageItemName: key as keyof Stage,
         })
+
         return
       }
 
@@ -84,17 +111,11 @@ export class Scene {
       })
     })
 
-    Object.values(this.tanks).forEach(tankArray => {
-      tankArray.forEach(tank => {
-        const { spritePosition, canvasPosition } = tank.render()
-        gameUI.drawImage({ ctx: this.ctx, spritePosition, canvasPosition })
-      })
-    })
-
     const bullets = { ...this.bullets }
 
     Object.entries(bullets).forEach(([tankId, bullet]) => {
       const { sprite, position, direction } = bullet.render()
+
       gameUI.drawImage({
         ctx: this.ctx,
         spritePosition: sprite,
@@ -104,7 +125,7 @@ export class Scene {
       const { sceneBlockKey, intersectedBlockCoords, hasIntersection } =
         gameUI.checkSceneBlockIntersection({
           movedItemCoords: position,
-          sceneBlockPositions: this.sceneBlocks,
+          sceneBlockPositions: this.sceneConfig.blocks,
           movementDirection: direction,
           movedItemSize: {
             w: blockWidthQuarter,
@@ -123,29 +144,40 @@ export class Scene {
       }
 
       if (sceneBlockKey && intersectedBlockCoords) {
-        let searchedSceneBlock = this.sceneBlocks[sceneBlockKey]
+        if (sceneBlockKey === 'tanks') {
+          this.tanks.player = this.tanks.player.filter(
+            tank => tank.position !== intersectedBlockCoords
+          )
+
+          this.tanks.enemy = this.tanks.enemy.filter(
+            tank => tank.position !== intersectedBlockCoords
+          )
+        }
+
+        let searchedSceneBlock = this.sceneConfig.blocks[sceneBlockKey]
 
         if (isCoordsArray(searchedSceneBlock)) {
           searchedSceneBlock = searchedSceneBlock.filter(
             el => el !== intersectedBlockCoords
           ) as Coords[]
-          ;(this.sceneBlocks[sceneBlockKey] as Coords[]) = searchedSceneBlock
+          ;(this.sceneConfig.blocks[sceneBlockKey] as Coords[]) =
+            searchedSceneBlock
           return
         }
 
-        delete this.sceneBlocks[sceneBlockKey]
+        delete this.sceneConfig.blocks[sceneBlockKey]
       }
     })
   }
 
   private getItemPosition({
     spritePosition,
-    isXPos,
+    size,
   }: {
     spritePosition: number
-    isXPos: boolean
+    size: number
   }) {
-    return spritePosition * (isXPos ? blockWidth : blockHeight)
+    return spritePosition * size
   }
 
   private drawSceneImage({
@@ -161,13 +193,9 @@ export class Scene {
       ctx: this.ctx,
       spritePosition: gameUI.images.stage[stageItemName],
       canvasPosition: {
-        x: this.getItemPosition({ spritePosition: x, isXPos: true }),
-        y: this.getItemPosition({ spritePosition: y, isXPos: false }),
+        x: this.getItemPosition({ spritePosition: x, size: blockWidth }),
+        y: this.getItemPosition({ spritePosition: y, size: blockHeight }),
       },
     })
-  }
-
-  public getSceneBlocks() {
-    return this.sceneBlocks
   }
 }

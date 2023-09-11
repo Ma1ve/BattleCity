@@ -64,11 +64,19 @@ export enum MovementDirection {
 
 export type DirectionKey = keyof typeof MovementDirection
 
-export type SceneBlockPositions = {
-  brick: Coords[]
-  eagle: Coords
+export type SceneTankBlocks = Record<string, Coords>
+
+export type SceneConfig = {
+  blocks: {
+    brick: Coords[]
+    eagle: Coords
+    tanks: Coords[]
+  }
+  enemyTankMaxCount: number
 }
 
-export type SceneBlockKeys = keyof SceneBlockPositions
+export type SceneBlocks = SceneConfig['blocks']
+
+export type SceneBlockKeys = keyof SceneConfig['blocks']
 
 export type ControlKeys = Record<MovementDirection, string>

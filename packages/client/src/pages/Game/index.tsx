@@ -22,7 +22,7 @@ const Game = () => {
     const canvas = canvasRef.current!
     const ctx = canvas.getContext('2d')!
 
-    const scene = new Scene({ ctx, blockPositions: scenesConfig[1] })
+    const scene = new Scene({ ctx, sceneConfig: scenesConfig[1] })
 
     const menuStartGame = new StartGameMenu(ctx)
     const menuGameOver = new GameOverMenu(ctx)

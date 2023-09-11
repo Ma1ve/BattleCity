@@ -14,10 +14,10 @@ import {
   PlayerTankColor,
   TankOwner,
   TankType,
-  SceneBlockPositions,
   ControlKeys,
   DirectionKey,
-  CoordsWithSize,
+  SceneBlocks,
+  CoordsWithSize, SceneConfig
 } from '../shared/types'
 
 interface ITankProps<O extends TankOwner> {
@@ -26,9 +26,9 @@ interface ITankProps<O extends TankOwner> {
   tankType: TankType
   controlKeys?: ControlKeys
   initialDirection: MovementDirection
-  fireKey: string
-  sceneBlockPositions: SceneBlockPositions
-  onFire: ({
+  fireKey?: string
+  sceneBlockPositions: SceneBlocks
+  onFire?: ({
     tankPosition,
     tankDirection,
     tankId,
@@ -55,7 +55,7 @@ export class Tank<O extends TankOwner> {
   public direction: DirectionKey
   public directionKeyPressed?: DirectionKey
   public tankType: TankTypeKey
-  public sceneBlockPositions: SceneBlockPositions
+  public sceneBlockPositions: SceneBlocks
   public tankId: string
   public fireKey: string
   public onFire: ({
@@ -85,6 +85,14 @@ export class Tank<O extends TankOwner> {
       this.controlKeys = controlKeys
     }
 
+    if (fireKey) {
+      this.fireKey = fireKey
+    }
+
+    if (onFire) {
+      this.onFire = onFire
+    }
+
     this.initialPosition = initialPosition
 
     this.tankId = uuidv4()
@@ -94,10 +102,6 @@ export class Tank<O extends TankOwner> {
     this.tankVariants = gameUI.images.tanks[tankColor]
 
     this.direction = initialDirection
-
-    this.fireKey = fireKey
-
-    this.onFire = onFire
 
     this.tankType = tankType
 
@@ -180,11 +184,13 @@ export class Tank<O extends TankOwner> {
       const keyCode = event.code
 
       if (keyCode === this.fireKey) {
-        this.onFire({
-          tankId: this.tankId,
-          tankDirection: this.direction,
-          tankPosition: this.position,
-        })
+        if (this.onFire) {
+          this.onFire({
+            tankId: this.tankId,
+            tankDirection: this.direction,
+            tankPosition: this.position,
+          })
+        }
       }
 
       for (const direction in this.controlKeys) {
