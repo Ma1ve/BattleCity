@@ -6,8 +6,7 @@ import {
   MovementDirection,
   TankOwner,
   Coords,
-  DirectionKey,
-  SceneTankBlocks,
+  OnFireParams,
 } from '../shared/types'
 import { gameUI } from './GameUI'
 import {
@@ -57,21 +56,14 @@ export class Scene {
       initialDirection: MovementDirection.down,
       initialPosition: { x: 4 * blockWidth, y: 0 },
       sceneBlockPositions: this.sceneConfig.blocks,
+      onFire: this.onFire.bind(this),
     })
 
     this.tanks.player = [player]
     this.tanks.enemy = [enemy]
   }
 
-  private onFire({
-    tankPosition,
-    tankDirection,
-    tankId,
-  }: {
-    tankPosition: Coords
-    tankDirection: DirectionKey
-    tankId: string
-  }) {
+  private onFire({ tankPosition, tankDirection, tankId }: OnFireParams) {
     if (this.bullets[tankId]) {
       return
     }

@@ -80,3 +80,15 @@ export type SceneBlocks = SceneConfig['blocks']
 export type SceneBlockKeys = keyof SceneConfig['blocks']
 
 export type ControlKeys = Record<MovementDirection, string>
+
+export type OnFireParams = {
+  tankPosition: Coords
+  tankDirection: DirectionKey
+  tankId: string
+}
+
+export type OnFire = ({
+  tankPosition,
+  tankDirection,
+  tankId,
+}: OnFireParams) => void

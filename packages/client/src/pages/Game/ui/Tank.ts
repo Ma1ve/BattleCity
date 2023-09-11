@@ -17,7 +17,8 @@ import {
   ControlKeys,
   DirectionKey,
   SceneBlocks,
-  CoordsWithSize, SceneConfig
+  CoordsWithSize,
+  OnFire,
 } from '../shared/types'
 
 interface ITankProps<O extends TankOwner> {
@@ -28,15 +29,7 @@ interface ITankProps<O extends TankOwner> {
   initialDirection: MovementDirection
   fireKey?: string
   sceneBlockPositions: SceneBlocks
-  onFire?: ({
-    tankPosition,
-    tankDirection,
-    tankId,
-  }: {
-    tankPosition: Coords
-    tankDirection: DirectionKey
-    tankId: string
-  }) => void
+  onFire: OnFire
 }
 
 type TankTypeKey = keyof typeof TankType
@@ -57,16 +50,8 @@ export class Tank<O extends TankOwner> {
   public tankType: TankTypeKey
   public sceneBlockPositions: SceneBlocks
   public tankId: string
-  public fireKey: string
-  public onFire: ({
-    tankId,
-    tankDirection,
-    tankPosition,
-  }: {
-    tankId: string
-    tankDirection: DirectionKey
-    tankPosition: Coords
-  }) => void
+  public fireKey?: string
+  public onFire: OnFire
   private keyDownSubscription?: (event: KeyboardEvent) => void
   private keyUpSubscription?: (event: KeyboardEvent) => void
 
@@ -89,9 +74,7 @@ export class Tank<O extends TankOwner> {
       this.fireKey = fireKey
     }
 
-    if (onFire) {
-      this.onFire = onFire
-    }
+    this.onFire = onFire
 
     this.initialPosition = initialPosition
 
