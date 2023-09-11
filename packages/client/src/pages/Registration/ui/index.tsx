@@ -29,10 +29,12 @@ const Registration = () => {
   }
 
   const onSubmit = (values: TUserRegistrationData) => {
-    AuthAPI.signup(values).then(response =>
-      actions.setUserInfo(response as any)
+    AuthAPI.signup(values).then(() =>
+      AuthAPI.getUserData().then(response => {
+        actions.setUserInfo(response as any)
+        navigate(`/${ERoutes.GAME}`)
+      })
     )
-    navigate(`/${ERoutes.PROFILE}`)
   }
 
   return (

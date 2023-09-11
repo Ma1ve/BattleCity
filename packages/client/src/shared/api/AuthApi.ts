@@ -57,7 +57,7 @@ class AuthApi {
       toast.success('Данные профиля получены')
       return response
     } catch (error: any) {
-      toast.error(error?.response?.data?.reason)
+      console.error(error?.response?.data?.reason)
     }
   }
 }
