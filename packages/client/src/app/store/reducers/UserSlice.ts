@@ -3,27 +3,22 @@ import { TUserProfileData } from '../../models/IUser'
 import { RootState } from '..'
 
 interface IUserState {
-  userInfo: TUserProfileData
+  userInfo: TUserProfileData | null
 }
 
 const initialState: IUserState = {
-  userInfo: {
-    first_name: 'Ivan',
-    second_name: 'Ivanov',
-    display_name: 'Vanya',
-    login: 'mylogin',
-    avatar: null,
-    phone: '+8 999 999 99 99',
-    email: 'test@gmail.com',
-  },
+  userInfo: null,
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUserInfo: (state, action: PayloadAction<TUserProfileData>) => {
-      state.userInfo = action.payload
+    setUserInfo: (
+      state,
+      action: PayloadAction<{ data: TUserProfileData } | null>
+    ) => {
+      state.userInfo = action.payload?.data ?? null
     },
   },
 })

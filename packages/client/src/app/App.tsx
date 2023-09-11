@@ -1,13 +1,15 @@
+import React, { useEffect } from 'react'
 import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
   Route,
 } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
-
 import RootLayout from './RootLayout'
-
 import Main from '../pages/Main'
 import Forum from '../pages/Forum'
 import Game from '../pages/Game'
@@ -19,29 +21,18 @@ import TopicForum from '../pages/TopicForum'
 import ErrorPage from '../pages/ErrorPage'
 import EndGame from '../pages/EndGame'
 import GameToStart from '../pages/GameToStart'
-
-import { useAppSelector } from './hooks/reducer'
-import { selectUserInfo } from './store/reducers/UserSlice'
+import { AuthAPI } from '../shared/api/AuthApi'
 import { FullscreenButton } from '../features/ui/FullscreenButton'
-
-export enum ERoutes {
-  INDEX = '/',
-  LOGIN = 'login',
-  PROFILE = 'profile',
-  REGISTRATION = 'registration',
-  GAME = 'game',
-  LEADERBOARD = 'leaderboard',
-  FORUM = 'forum',
-  TOPIC = 'topic',
-  ENDGAME = 'endgame',
-  GAMETOSTART = 'loading',
-  ERROR400 = 'error400',
-  ERROR404 = 'error404',
-  ERROR500 = 'error500',
-}
+import { useActionCreators } from './hooks/reducer'
+import { userActions } from './store/reducers/UserSlice'
+import { ERoutes } from './models/types'
 
 function App() {
-  const userInfo = useAppSelector(selectUserInfo)
+  const actions = useActionCreators(userActions)
+
+  useEffect(() => {
+    AuthAPI.getUserData().then(response => actions.setUserInfo(response as any))
+  }, [])
 
   return (
     <div className="App">
@@ -51,28 +42,17 @@ function App() {
             <Route
               path="/"
               element={<RootLayout />}
-              errorElement={<RootLayout children={<ErrorBoundary />} />}
-              // Передаем в RootLayout, чтобы ErrorBound находился в "обертке"
-              // и при этом не пришлось бы передеавать его каждому роуту по отдельности.
-            >
+              errorElement={<RootLayout children={<ErrorBoundary />} />}>
               <Route index element={<Main />} />
               <Route path={ERoutes.LOGIN} element={<Login />} />
               <Route path={ERoutes.REGISTRATION} element={<Registration />} />
-
-              {/* Данные роуты будут доступны, если пользователь зарегестрирован, потом можно это убрать */}
-              {userInfo && (
-                <>
-                  <Route path={ERoutes.PROFILE} element={<Profile />} />
-                  <Route path={ERoutes.FORUM} element={<Forum />} />
-                  <Route path={ERoutes.TOPIC} element={<TopicForum />} />
-                </>
-              )}
-
+              <Route path={ERoutes.PROFILE} element={<Profile />} />
+              <Route path={ERoutes.FORUM} element={<Forum />} />
+              <Route path={ERoutes.TOPIC} element={<TopicForum />} />
               <Route path={ERoutes.GAME} element={<Game />} />
               <Route path={ERoutes.ENDGAME} element={<EndGame />} />
               <Route path={ERoutes.GAMETOSTART} element={<GameToStart />} />
               <Route path={ERoutes.LEADERBOARD} element={<Leaderboard />} />
-
               <Route
                 path={ERoutes.ERROR400}
                 element={<ErrorPage code="400" />}
@@ -90,6 +70,7 @@ function App() {
           )
         )}
       />
+      <ToastContainer theme="dark" position="bottom-right" autoClose={5000} />
       <FullscreenButton />
     </div>
   )

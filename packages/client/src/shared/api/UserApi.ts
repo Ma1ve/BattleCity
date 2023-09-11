@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
-import { BASE_URL } from './consts'
+import { toast } from 'react-toastify'
+
+import { AUTH_URL, BASE_URL } from './consts'
 
 class UserApi {
   private instance: AxiosInstance
@@ -7,6 +9,8 @@ class UserApi {
   protected createAxiosInstance(): AxiosInstance {
     return axios.create({
       baseURL: BASE_URL,
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
       responseType: 'json',
       timeout: 5 * 1000,
     })
@@ -28,16 +32,14 @@ class UserApi {
     newPassword: string
   }) => {
     try {
-      const response = await this.instance.put(
-        `user/password`,
-        { oldPassword, newPassword },
-        { headers: { 'Content-Type': 'application/json' } }
-      )
-      console.log(response)
+      const response = await this.instance.put(`user/password`, {
+        oldPassword,
+        newPassword,
+      })
+      toast.success('Пароль изменён')
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
-      // TODO: обработка ошибок handleError(error.response?.data).
+      toast.error(error?.response?.data?.reason)
     }
   }
 
@@ -51,11 +53,10 @@ class UserApi {
         { data },
         { headers: { 'Content-Type': 'multipart/form-data' } }
       )
-      console.log(response)
+      toast.success('Аватар изменён')
       return response
     } catch (error: any) {
-      console.error('error: ', error?.response?.data)
-      // TODO: обработка ошибок handleError(error.response?.data).
+      toast.error(error?.response?.data?.reason)
     }
   }
 }

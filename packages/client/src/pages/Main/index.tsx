@@ -31,7 +31,11 @@ const Main = () => {
       <Title>Battle City</Title>
       <div className={styles.menu}>
         {menuItems.map((item: IMenuItem) => {
-          return <div className={styles.menuItem}>{item.text}</div>
+          return (
+            <div className={styles.menuItem} key={item.id}>
+              {item.text}
+            </div>
+          )
         })}
       </div>
     </div>

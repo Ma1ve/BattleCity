@@ -9,12 +9,10 @@ import styles from './registration.module.css'
 import { useActionCreators } from '../../../app/hooks/reducer'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  TUserProfileData,
-  TUserRegistrationData,
-} from '../../../app/models/IUser'
-import { ERoutes } from '../../../app/App'
+import { TUserRegistrationData } from '../../../app/models/IUser'
 import { userActions } from '../../../app/store/reducers/UserSlice'
+import { AuthAPI } from '../../../shared/api/AuthApi'
+import { ERoutes } from '../../../app/models/types'
 
 const Registration = () => {
   const actions = useActionCreators(userActions)
@@ -31,11 +29,12 @@ const Registration = () => {
   }
 
   const onSubmit = (values: TUserRegistrationData) => {
-    console.log(values)
-    // Тут мы должны отправить data - values на сервер
-    // Тут value уже выступает в виде data которая пришла нам с сервера поэтому она должна быть типа IUser
-    actions.getUserInfo(values as unknown as TUserProfileData)
-    navigate(`/${ERoutes.PROFILE}`)
+    AuthAPI.signup(values).then(() =>
+      AuthAPI.getUserData().then(response => {
+        actions.setUserInfo(response as any)
+        navigate(`/${ERoutes.GAME}`)
+      })
+    )
   }
 
   return (
@@ -51,6 +50,9 @@ const Registration = () => {
             <Input name="password" type="password" placeholder="Пароль" />
             <Input name="phone" placeholder="Телефон" />
             <Button type="submit">Зарегистрироваться</Button>
+            <Button type="submit" onClick={() => navigate(`/${ERoutes.LOGIN}`)}>
+              Уже есть аккаунт
+            </Button>
           </Form>
         </Formik>
       </div>
