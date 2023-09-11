@@ -17,13 +17,13 @@ export interface IBulletProps {
 
 export class Bullet {
   public position
-  public direction // up left right down
+  public direction
   public sprite
   constructor({ tankPosition, tankDirection }: IBulletProps) {
     this.direction = tankDirection
 
-    let posX
-    let posY
+    let posX!: number
+    let posY!: number
 
     const halfTankWidth = blockWidth / 2
     const halfTankHeight = blockHeight / 2
@@ -31,19 +31,19 @@ export class Bullet {
     const halfBulletHeight = blockHeightQuarter / 2
 
     switch (tankDirection) {
-      case 'up':
+      case MovementDirection.up:
         posX = tankPosition.x + halfTankWidth - halfBulletWidth // center of a bullet should be in center of a tank
         posY = tankPosition.y
         break
-      case 'right':
+      case MovementDirection.right:
         posX = tankPosition.x + spriteWidth
         posY = tankPosition.y + halfTankHeight - halfBulletHeight
         break
-      case 'left':
+      case MovementDirection.left:
         posX = tankPosition.x
         posY = tankPosition.y + halfTankHeight - halfBulletHeight
         break
-      case 'down':
+      case MovementDirection.down:
         posX = tankPosition.x + halfTankWidth - halfBulletWidth // center of a bullet should be in center of a tank
         posY = tankPosition.y + spriteHeight
         break
