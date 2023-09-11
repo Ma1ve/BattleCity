@@ -17,6 +17,7 @@ import {
   SceneBlockPositions,
   ControlKeys,
   DirectionKey,
+  CoordsWithSize,
 } from '../shared/types'
 
 interface ITankProps<O extends TankOwner> {
@@ -41,20 +42,31 @@ interface ITankProps<O extends TankOwner> {
 type TankTypeKey = keyof typeof TankType
 
 export class Tank<O extends TankOwner> {
-  public initialPosition = { x: 0, y: 0 }
-  public position = { x: 0, y: 0 }
+  public initialPosition: Coords = { x: 0, y: 0 }
+  public position: Coords = { x: 0, y: 0 }
   public activeSpriteIndex = 0 // 0 || 1 tank sprites animation
-  public tankColor
-  public controlKeys
-  public tankVariants
-  public sprites // array of 2 tank sprites
+  public tankColor: PlayerTankColor | EnemyTankColor
+  public controlKeys?: ControlKeys
+  public tankVariants: Record<
+    TankType,
+    Record<MovementDirection, [CoordsWithSize, CoordsWithSize]>
+  >
+  public sprites: [CoordsWithSize, CoordsWithSize] // array of 2 tank sprites
   public direction: DirectionKey
   public directionKeyPressed?: DirectionKey
   public tankType: TankTypeKey
-  public sceneBlockPositions
-  public tankId
-  public fireKey
-  public onFire
+  public sceneBlockPositions: SceneBlockPositions
+  public tankId: string
+  public fireKey: string
+  public onFire: ({
+    tankId,
+    tankDirection,
+    tankPosition,
+  }: {
+    tankId: string
+    tankDirection: DirectionKey
+    tankPosition: Coords
+  }) => void
   private keyDownSubscription?: (event: KeyboardEvent) => void
   private keyUpSubscription?: (event: KeyboardEvent) => void
 
