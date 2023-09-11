@@ -428,6 +428,12 @@ class GameUI {
       river: getSpriteItemPosition({ x: 8, y: 7.5 }),
       eagle: getSpriteItemPosition({ x: 11, y: 7.5 }),
       eagleDamaged: getSpriteItemPosition({ x: 12, y: 7.5 }),
+      gameOver: { x: 16 * 32, y: 5.2 * 32, w: 62, h: 62 },
+      arrowAmountDestroyTanks: getSpriteItemPosition({
+        x: 17,
+        y: 14.5,
+      }),
+      battleCity: { x: 8.5 * 32, y: 9.5 * 32, w: 420, h: 144 },
     }
 
     return { tanks, bullet, animations, stage }
@@ -557,7 +563,7 @@ class GameUI {
   }
 
   // Устанавливаем границу (frameCount) через сколько animationFrameCount будет обновление activeSpriteIndex
-  public changeSpriteIndex({ frameCount }: { frameCount: number }) {
+  public animateSprite({ frameCount }: { frameCount: number }) {
     this.animationFrameCount++
     if (this.animationFrameCount > frameCount) {
       this.animationFrameCount = 0

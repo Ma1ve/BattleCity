@@ -2,12 +2,9 @@ import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { gameUI } from './GameUI'
 
-import sprite from '../../../shared/images/sprite.png'
-
 export class GameOverMenu {
   public ctx
   public positionY
-  public spriteImage
   public isGameOver
   public showScoreGameOver
   private canvasTextDrawer
@@ -16,15 +13,15 @@ export class GameOverMenu {
   private totalNumberOfDestroyedTanks
   private totalScoreIPlayer
 
+  private indentCanvasScoreByX
+  private startLineByX
+  private endLineByX
+  private startDrawingPositionTanksInfo
+
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
 
     this.positionY = canvasHeight // Позиция по Y, убираем надпись за canvas, назначая ей позицию canvasHeight
-
-    // Получаем спрайт (в дальнейшем нужно создавть отдельный класс, который будет это все делать, чтобы не дублировать код)
-    const spriteImage = new Image()
-    spriteImage.src = sprite
-    this.spriteImage = spriteImage
 
     this.showScoreGameOver = false // showScoreGameOver, когда true показывает canvas счёта
     this.isGameOver = true // isGameOver проверяем завершена ли игра, будет true, когда флаг сломали
@@ -36,28 +33,38 @@ export class GameOverMenu {
       {
         score: 100,
         countTanks: 3,
-        spriteTank: gameUI.images.tanks['silver']['basic']['up'][0],
+        spriteTank: gameUI.images.tanks.silver.basic.up[0],
       },
       {
         score: 200,
         countTanks: 2,
-        spriteTank: gameUI.images.tanks['silver']['fast']['up'][0],
+        spriteTank: gameUI.images.tanks.silver.fast.up[0],
       },
       {
         score: 300,
         countTanks: 3,
-        spriteTank: gameUI.images.tanks['silver']['powerful']['up'][0],
+        spriteTank: gameUI.images.tanks.silver.powerful.up[0],
       },
       {
         score: 200,
         countTanks: 1,
-        spriteTank: gameUI.images.tanks['silver']['armored']['up'][0],
+        spriteTank: gameUI.images.tanks.silver.armored.up[0],
       },
     ]
 
     // Задаем начальный отступ первого объекта в массиве tanksInfo, в дальнейшем,
     // чтобы каждый следующий объект имел отступ на 70 больше предыдущего
     this.lastY = 0
+
+    // Отступ на 180 всех полей, которые находятся в массиве tanksInfo
+    this.indentCanvasScoreByX = 180
+
+    // Координаты для отрисовки линия для подсчёта общего кол-ва уничтоженных танков
+    this.startLineByX = 270
+    this.endLineByX = 450
+
+    // Начальная позиция отрисовки объекта в массиве tanksInfo по Y
+    this.startDrawingPositionTanksInfo = 300
 
     // Подсчитываем общее количество уничтоженных таноков
     this.totalNumberOfDestroyedTanks = 0
@@ -97,13 +104,13 @@ export class GameOverMenu {
     // Отрисовываем надпись Game Over
     gameUI.drawImage({
       ctx: this.ctx,
-      spritePosition: { x: 16 * 32, y: 5.2 * 32, w: 62, h: 62 },
+      spritePosition: gameUI.images.stage.gameOver,
       canvasPosition: {
         x: canvasWidth / 2 - 55,
         y: this.positionY,
       },
-      Sw: 100,
-      Sh: 100,
+      sW: 100,
+      sH: 100,
     })
   }
 
@@ -114,32 +121,57 @@ export class GameOverMenu {
     this.ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
     // Отрисовываем самую верзнюю надпить 'HI-SCORE 20000'
-    this.canvasTextDrawer.drawTextCentered('HI-SCORE', 22, '#ff0000', 147, 100)
-    this.canvasTextDrawer.drawTextCentered('20000', 22, '#fdb750', 367, 100)
+    this.canvasTextDrawer.drawTextCentered({
+      text: 'HI-SCORE',
+      fontSize: 22,
+      color: '#ff0000',
+      x: 147,
+      y: 100,
+    })
+
+    this.canvasTextDrawer.drawTextCentered({
+      text: '20000',
+      fontSize: 22,
+      color: '#fdb750',
+      x: 367,
+      y: 100,
+    })
 
     // Отрисовываем надпись `STAGE (номер уровня)`
-    this.canvasTextDrawer.drawTextCentered(`STAGE ${1}`, 22, '#fff', null, 147)
-
+    this.canvasTextDrawer.drawTextCentered({
+      text: `STAGE ${1}`,
+      fontSize: 22,
+      color: '#fff',
+      y: 147,
+    })
+    // `STAGE ${1}`, 22, '#fff', null, 147
     // Отрисовываем `I-PLAYER` и его общий счёт (игрока)
-    this.canvasTextDrawer.drawTextCentered(`I-PLAYER`, 20, '#ff0000', 100, 200)
-    this.canvasTextDrawer.drawTextCentered(
-      `${this.totalScoreIPlayer}`,
-      20,
-      '#fdb750',
-      180,
-      250
-    )
+    this.canvasTextDrawer.drawTextCentered({
+      text: `I-PLAYER`,
+      fontSize: 20,
+      color: '#ff0000',
+      x: 100,
+      y: 200,
+    })
+
+    this.canvasTextDrawer.drawTextCentered({
+      text: `${this.totalScoreIPlayer}`,
+      fontSize: 20,
+      color: '#fdb750',
+      x: 180,
+      y: 250,
+    })
 
     // Перебираем массив this.tanksInfo и отображаем информацию, какие танки были уничтожены
     this.tanksInfo.map(({ score, countTanks, spriteTank }, index) => {
       const yOffset = 70 // Разница по Y между элементами
       const overallScore = countTanks * score // Подсчет общего score одного типа убитых танков
 
-      this.lastY = 300 + index * yOffset // Вычисляем Y на основе индекса
+      this.lastY = this.startDrawingPositionTanksInfo + index * yOffset // Вычисляем Y на основе индекса
 
       this.canvasTextDrawer.drawScorePts({
         overallScore,
-        x: 180, // Отступ слева
+        x: this.indentCanvasScoreByX, // Отступ слева
         y: this.lastY,
         countTanks,
         spriteTank,
@@ -150,9 +182,9 @@ export class GameOverMenu {
     this.canvasTextDrawer.drawLine({
       color: '#fff',
       width: 3,
-      moveToX: 270,
+      moveToX: this.startLineByX,
       moveToY: this.lastY + 20,
-      lineToX: 450,
+      lineToX: this.endLineByX,
       lineToY: this.lastY + 20,
     })
 
@@ -162,13 +194,13 @@ export class GameOverMenu {
     ).width
 
     // Отрисовываем общий счёт уничтоженых танков  `TOTAL (кол-во)`
-    this.canvasTextDrawer.drawTextCentered(
-      `TOTAL  ${this.totalNumberOfDestroyedTanks}`,
-      20,
-      '#fff',
-      180 - textWidthScorePts,
-      this.lastY + 50
-    )
+    this.canvasTextDrawer.drawTextCentered({
+      text: `TOTAL  ${this.totalNumberOfDestroyedTanks}`,
+      fontSize: 20,
+      color: '#fff',
+      x: 180 - textWidthScorePts,
+      y: this.lastY + 50,
+    })
 
     setTimeout(() => {
       document.location.reload()

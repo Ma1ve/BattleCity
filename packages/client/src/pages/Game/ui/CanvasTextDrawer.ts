@@ -1,4 +1,5 @@
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
+import { CoordsWithSizeCoords } from '../shared/types'
 import { gameUI } from './GameUI'
 
 interface IDrawPtsData {
@@ -8,7 +9,7 @@ interface IDrawPtsData {
   x: number
   y: number
   countTanks: number
-  spriteTank: any
+  spriteTank: CoordsWithSizeCoords
 }
 
 interface IDrawLine {
@@ -20,15 +21,43 @@ interface IDrawLine {
   lineToY: number
 }
 
+interface IDrawTextCenteredData {
+  text: string
+  fontSize: number
+  color: string
+  x?: number | null
+  y?: number | null
+}
+
 export class CanvasTextDrawer {
   public ctx
   public canvasWidth
   public canvasHeight
 
+  private arrowLineLength
+  private indentCanvasPtsByX
+  private indentCanvasCountTanks
+  private indentCanvasLineByX
+  private indentCanvasLineByY
+  private indentCanvasArrowByX
+  private indentCanvasArrowByY
+  private indentCanvasTankByX
+  private indentCanvasTankByY
+
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
     this.canvasWidth = canvasWidth
     this.canvasHeight = canvasHeight
+
+    this.arrowLineLength = 10
+    this.indentCanvasPtsByX = 20
+    this.indentCanvasCountTanks = 140
+    this.indentCanvasLineByX = 150
+    this.indentCanvasLineByY = 11
+    this.indentCanvasArrowByX = 135
+    this.indentCanvasArrowByY = 22
+    this.indentCanvasTankByX = 170
+    this.indentCanvasTankByY = 37
   }
 
   // Метод для настройки цвета и шрифта
@@ -43,13 +72,9 @@ export class CanvasTextDrawer {
     this.ctx.fillText(text, x, y)
   }
 
-  public drawTextCentered(
-    text: string,
-    fontSize: number,
-    color: string,
-    x?: number | null,
-    y?: number | null
-  ) {
+  public drawTextCentered(drawTextCenteredData: IDrawTextCenteredData) {
+    const { text, fontSize, color, x, y } = drawTextCenteredData
+
     this.setupTextStyle(fontSize, color)
 
     // Нахождение ширины текста
@@ -84,21 +109,23 @@ export class CanvasTextDrawer {
     // Если кол-во очков (PTS) становится двухзначным смещаем координату на textWidthScorePts
     const xC = x - textWidthScorePts
 
-    const xPts = x + 20
-    // Если кол-во танков становится двухзначным смещаем координату на textWidthCountTanks
-    const xCountTanks = x + 140 - textWidthCountTanks
+    // Отступ от score (PTS)
+    const xPts = x + this.indentCanvasPtsByX
 
-    // Переменные для отрисовки линии над TOTAL
-    const xLineStart = x + 150
-    const yLineStart = y - 11
+    // Если кол-во танков становится двухзначным смещаем координату на textWidthCountTanks
+    const xCountTanks = x + this.indentCanvasCountTanks - textWidthCountTanks
+
+    // Переменные для отрисовки линий для создания стрелки
+    const xLineStart = x + this.indentCanvasLineByX
+    const yLineStart = y - this.indentCanvasLineByY
 
     // Координаты стрелки по x и y
-    const xArrowCanvasPosition = x + 135
-    const yArrowCanvasPosition = y - 22
+    const xArrowCanvasPosition = x + this.indentCanvasArrowByX
+    const yArrowCanvasPosition = y - this.indentCanvasArrowByY
 
     // Координаты танка по x и y
-    const xTankCanvasPosition = x + 170
-    const yTankCanvasPosition = y - 37
+    const xTankCanvasPosition = x + this.indentCanvasTankByX
+    const yTankCanvasPosition = y - this.indentCanvasTankByY
 
     // Отрисовывает PTS пользователя (набранные очки)
     this.ctx.fillText(`${overallScore}`, xC, y)
@@ -113,14 +140,14 @@ export class CanvasTextDrawer {
       width: 5,
       moveToX: xLineStart,
       moveToY: yLineStart,
-      lineToX: xLineStart + 10,
+      lineToX: xLineStart + this.arrowLineLength,
       lineToY: yLineStart,
     })
 
     // Отрисовываем стрелку
     gameUI.drawImage({
       ctx: this.ctx,
-      spritePosition: { x: 17 * 32, y: 14.5 * 32, w: 16, h: 16 },
+      spritePosition: gameUI.images.stage.arrowAmountDestroyTanks,
       canvasPosition: { x: xArrowCanvasPosition, y: yArrowCanvasPosition },
     })
 
