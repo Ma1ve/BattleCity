@@ -45,11 +45,11 @@ export class LevelLoadingStage {
       this.ctx.fillStyle = '#4a4c51'
       this.ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
-      this.canvasTextDrawer.drawTextCentered(
-        `STAGE ${this.levelStage}`,
-        22,
-        '#000'
-      )
+      this.canvasTextDrawer.drawTextCentered({
+        text: `STAGE ${this.levelStage}`,
+        fontSize: 22,
+        color: '#000',
+      })
 
       //Тут будет загрузка игры, сделал setTimeout в 1 секунду, чтобы после анимации,
       // соединяющихся прямоугольников, показывалась на секунду надпись stage 1

@@ -19,6 +19,9 @@ enum StageKeys {
   river,
   eagle,
   eagleDamaged,
+  gameOver,
+  arrowAmountDestroyTanks,
+  battleCity,
 }
 
 export type Stage = Record<keyof typeof StageKeys, CoordsWithSize>
