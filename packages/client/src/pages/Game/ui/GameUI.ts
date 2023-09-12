@@ -384,9 +384,9 @@ class GameUI {
 
     const animations: Animation = {
       [Animations.explosionSmall]: [
-        getSpriteItemPosition({ x: 16, y: 8 }), //start
-        getSpriteItemPosition({ x: 17, y: 8 }),
-        getSpriteItemPosition({ x: 18, y: 8 }), //end
+        getSpriteItemPosition({ x: 16, y: 2 }), //start
+        getSpriteItemPosition({ x: 17, y: 2 }),
+        getSpriteItemPosition({ x: 18, y: 2 }), //end
       ],
       [Animations.reborn]: [
         getSpriteItemPosition({ x: 16, y: 6 }), //start
@@ -576,16 +576,6 @@ class GameUI {
       intersectedBlockCoords,
       hasIntersection: !!intersectedBlockCoords,
     }
-  }
-
-  // Устанавливаем границу (frameCount) через сколько animationFrameCount будет обновление activeSpriteIndex
-  public animateSprite({ frameCount }: { frameCount: number }) {
-    this.animationFrameCount++
-    if (this.animationFrameCount > frameCount) {
-      this.animationFrameCount = 0
-      this.activeSpriteIndex = this.activeSpriteIndex === 0 ? 1 : 0
-    }
-    return this.activeSpriteIndex
   }
 }
 

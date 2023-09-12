@@ -22,6 +22,8 @@ import { Tank } from './Tank'
 import { Bullet } from './Bullet'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
 import { GameOverMenu } from './GameOverMenu'
+import { SpriteAnimator } from './SpriteAnimator'
+import { v4 as uuidv4 } from 'uuid'
 
 export class Scene {
   public sceneConfig: SceneConfig
@@ -29,6 +31,8 @@ export class Scene {
   public tanks: Record<TankOwner, Tank<TankOwner>[]> = { player: [], enemy: [] }
   public bullets: Record<string, Bullet>
   public menuGameOver: GameOverMenu
+  public explosions: { [k in string]: { coords: Coords; draw: () => void } } =
+    {}
 
   constructor({
     ctx,
@@ -114,6 +118,10 @@ export class Scene {
 
     const bullets = { ...this.bullets }
 
+    Object.values(this.explosions).forEach(explosion => {
+      explosion.draw()
+    })
+
     Object.entries(bullets).forEach(([tankId, bullet]) => {
       const { sprite, position, direction } = bullet.render()
 
@@ -153,6 +161,26 @@ export class Scene {
           this.tanks.enemy = this.tanks.enemy.filter(
             tank => tank.position !== intersectedBlockCoords
           )
+
+          const explosionId = uuidv4()
+          const spriteAnimator = new SpriteAnimator()
+
+          this.explosions[explosionId] = {
+            coords: intersectedBlockCoords,
+            draw: () => {
+              gameUI.drawImage({
+                ctx: this.ctx,
+                spritePosition: spriteAnimator.animate({
+                  frameCount: 6,
+                  sprites: gameUI.images.animations.explosionSmall,
+                  onAnimationEnd: () => {
+                    delete this.explosions[explosionId]
+                  },
+                }),
+                canvasPosition: intersectedBlockCoords,
+              })
+            },
+          }
         }
 
         let searchedSceneBlock = this.sceneConfig.blocks[sceneBlockKey]

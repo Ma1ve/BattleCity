@@ -7,6 +7,7 @@ import {
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { LevelLoadingStage } from './LevelLoadingStage'
 import { gameUI } from './GameUI'
+import { SpriteAnimator } from './SpriteAnimator'
 
 export class StartGameMenu {
   public ctx
@@ -20,6 +21,7 @@ export class StartGameMenu {
   private indentVeisaTextByX = 500
   private battleCityTextIndentationByY = 40
   private alignmentTankCenter = 35
+  private spriteAnimator = new SpriteAnimator()
 
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
@@ -77,10 +79,10 @@ export class StartGameMenu {
     // Отображаем танчик
     gameUI.drawImage({
       ctx: this.ctx,
-      spritePosition:
-        gameUI.images.tanks.yellow.basic.right[
-          gameUI.animateSprite({ frameCount: 2 })
-        ],
+      spritePosition: this.spriteAnimator.animate({
+        frameCount: 4,
+        sprites: gameUI.images.tanks.yellow.basic.right,
+      }),
       canvasPosition: {
         x: 200,
         y:
