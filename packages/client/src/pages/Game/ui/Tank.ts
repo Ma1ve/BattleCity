@@ -20,6 +20,7 @@ import {
   CoordsWithSize,
   OnFire,
 } from '../shared/types'
+import { SpriteAnimator } from './SpriteAnimator'
 
 interface ITankProps<O extends TankOwner> {
   initialPosition: Coords
@@ -54,6 +55,7 @@ export class Tank<O extends TankOwner> {
   public onFire: OnFire
   private keyDownSubscription?: (event: KeyboardEvent) => void
   private keyUpSubscription?: (event: KeyboardEvent) => void
+  private spriteAnimator = new SpriteAnimator()
 
   constructor({
     initialPosition,
@@ -212,7 +214,7 @@ export class Tank<O extends TankOwner> {
     this.move()
 
     return {
-      spritePosition: gameUI.animateSprite({
+      spritePosition: this.spriteAnimator.animate({
         frameCount: 4,
         sprites: this.sprites,
         disabled: !this.directionKeyPressed,

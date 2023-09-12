@@ -384,9 +384,9 @@ class GameUI {
 
     const animations: Animation = {
       [Animations.explosionSmall]: [
-        getSpriteItemPosition({ x: 16, y: 8 }), //start
-        getSpriteItemPosition({ x: 17, y: 8 }),
-        getSpriteItemPosition({ x: 18, y: 8 }), //end
+        getSpriteItemPosition({ x: 16, y: 2 }), //start
+        getSpriteItemPosition({ x: 17, y: 2 }),
+        getSpriteItemPosition({ x: 18, y: 2 }), //end
       ],
       [Animations.reborn]: [
         getSpriteItemPosition({ x: 16, y: 6 }), //start
@@ -577,40 +577,6 @@ class GameUI {
       hasIntersection: !!intersectedBlockCoords,
     }
   }
-
-  // Устанавливаем границу (frameCount) через сколько animationFrameCount будет обновление activeSpriteIndex
-  public animateSprite = (function () {
-    let activeSpriteIndex = 0
-    let spriteMaxIndex: number
-    let currentFrame = 0
-
-    return ({
-      sprites,
-      frameCount,
-      disabled,
-    }: {
-      sprites: CoordsWithSize[]
-      frameCount: number
-      disabled?: boolean
-    }) => {
-      if (disabled) {
-        return sprites[0]
-      }
-      if (!spriteMaxIndex) {
-        spriteMaxIndex = sprites.length - 1
-      }
-
-      currentFrame++
-
-      if (currentFrame === frameCount) {
-        activeSpriteIndex =
-          activeSpriteIndex === spriteMaxIndex ? 0 : activeSpriteIndex + 1
-        currentFrame = 0
-      }
-
-      return sprites[activeSpriteIndex]
-    }
-  })()
 }
 
 export const gameUI = new GameUI()
