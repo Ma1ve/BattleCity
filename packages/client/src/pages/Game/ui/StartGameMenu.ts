@@ -77,10 +77,10 @@ export class StartGameMenu {
     // Отображаем танчик
     gameUI.drawImage({
       ctx: this.ctx,
-      spritePosition:
-        gameUI.images.tanks.yellow.basic.right[
-          gameUI.animateSprite({ frameCount: 2 })
-        ],
+      spritePosition: gameUI.animateSprite({
+        frameCount: 4,
+        sprites: gameUI.images.tanks.yellow.basic.right,
+      }),
       canvasPosition: {
         x: 200,
         y:

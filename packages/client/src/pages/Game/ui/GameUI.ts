@@ -579,14 +579,38 @@ class GameUI {
   }
 
   // Устанавливаем границу (frameCount) через сколько animationFrameCount будет обновление activeSpriteIndex
-  public animateSprite({ frameCount }: { frameCount: number }) {
-    this.animationFrameCount++
-    if (this.animationFrameCount > frameCount) {
-      this.animationFrameCount = 0
-      this.activeSpriteIndex = this.activeSpriteIndex === 0 ? 1 : 0
+  public animateSprite = (function () {
+    let activeSpriteIndex = 0
+    let spriteMaxIndex: number
+    let currentFrame = 0
+
+    return ({
+      sprites,
+      frameCount,
+      disabled,
+    }: {
+      sprites: CoordsWithSize[]
+      frameCount: number
+      disabled?: boolean
+    }) => {
+      if (disabled) {
+        return sprites[0]
+      }
+      if (!spriteMaxIndex) {
+        spriteMaxIndex = sprites.length - 1
+      }
+
+      currentFrame++
+
+      if (currentFrame === frameCount) {
+        activeSpriteIndex =
+          activeSpriteIndex === spriteMaxIndex ? 0 : activeSpriteIndex + 1
+        currentFrame = 0
+      }
+
+      return sprites[activeSpriteIndex]
     }
-    return this.activeSpriteIndex
-  }
+  })()
 }
 
 export const gameUI = new GameUI()

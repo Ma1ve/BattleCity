@@ -212,7 +212,11 @@ export class Tank<O extends TankOwner> {
     this.move()
 
     return {
-      spritePosition: this.sprites[this.activeSpriteIndex],
+      spritePosition: gameUI.animateSprite({
+        frameCount: 4,
+        sprites: this.sprites,
+        disabled: !this.directionKeyPressed,
+      }),
       canvasPosition: this.position,
     }
   }
