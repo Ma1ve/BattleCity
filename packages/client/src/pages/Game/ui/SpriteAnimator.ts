@@ -1,4 +1,3 @@
-// Ваш файл с классом
 import { CoordsWithSize } from '../shared/types'
 
 export class SpriteAnimator {
