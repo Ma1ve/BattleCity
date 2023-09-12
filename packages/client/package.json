@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
+    "uuid": "9.0.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.26",
+    "@types/uuid": "9.0.3",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",
