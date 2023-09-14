@@ -1,12 +1,12 @@
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
+import { gameController } from '../controllers/GameController'
 
 export class LevelLoadingStage {
   private ctx: CanvasRenderingContext2D
   private levelStage: number
   private startDrawRectangleUp: number
   private startDrawRectangleDown: number
-  private isGameStart: boolean
   private canvasTextDrawer: CanvasTextDrawer
 
   constructor(ctx: CanvasRenderingContext2D, levelStage: number) {
@@ -15,7 +15,6 @@ export class LevelLoadingStage {
 
     this.startDrawRectangleUp = 0
     this.startDrawRectangleDown = 0
-    this.isGameStart = false
 
     this.canvasTextDrawer = new CanvasTextDrawer(this.ctx)
   }
@@ -51,16 +50,7 @@ export class LevelLoadingStage {
         color: '#000',
       })
 
-      //Тут будет загрузка игры, сделал setTimeout в 1 секунду, чтобы после анимации,
-      // соединяющихся прямоугольников, показывалась на секунду надпись stage 1
-      setTimeout(() => {
-        this.isGameStart = true
-        this.isGameLoaded()
-      }, 1000)
+      gameController.setGameStart(true)
     }
-  }
-
-  public isGameLoaded() {
-    return this.isGameStart
   }
 }

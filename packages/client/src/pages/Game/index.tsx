@@ -7,8 +7,10 @@ import { useEffect, useRef } from 'react'
 import { Scene } from './ui/Scene'
 import { scenesConfig } from './shared/config/sceneConfig'
 import { StartGameMenu } from './ui/StartGameMenu'
+import { gameController } from './controllers/GameController'
 
 import './game.module.css'
+import { KeyPressSubscription } from './model/keyPressSubscription'
 
 const Game = () => {
   let reqId = 0
@@ -30,7 +32,7 @@ const Game = () => {
 
       //60fps animation condition
       if (now - lastTimestamp >= frameInterval) {
-        if (menuStartGame.isGameLoaded()) {
+        if (gameController.gameStart) {
           ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
           ctx.fillStyle = '#000'
@@ -54,7 +56,7 @@ const Game = () => {
 
     return () => {
       cancelAnimationFrame(reqId)
-      menuStartGame.unsubscribe()
+      menuStartGame.getKeyPressHandler.unsubscribe()
     }
   }, [])
 

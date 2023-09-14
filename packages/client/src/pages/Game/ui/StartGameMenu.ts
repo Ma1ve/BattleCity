@@ -7,20 +7,21 @@ import {
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { LevelLoadingStage } from './LevelLoadingStage'
 import { gameUI } from './GameUI'
+import { KeyPressSubscription } from '../model/keyPressSubscription'
+import { gameController } from '../controllers/GameController'
 import { SpriteAnimator } from './SpriteAnimator'
 
 export class StartGameMenu {
   public ctx
   public positionY
-  private isLoadingLevel
   private canvasTextDrawer
   private levelLoadingStage: LevelLoadingStage
-  private keyPressSubscription?: (event: KeyboardEvent) => void
 
-  private indentPressEnterTextByX = 320
-  private indentVeisaTextByX = 500
-  private battleCityTextIndentationByY = 40
-  private alignmentTankCenter = 35
+  private indentPressEnterTextByX
+  private indentVeisaTextByX
+  private battleCityTextIndentationByY
+  private alignmentTankCenter
+  private keyPressHandler
   private spriteAnimator = new SpriteAnimator()
 
   constructor(ctx: CanvasRenderingContext2D) {
@@ -28,18 +29,26 @@ export class StartGameMenu {
 
     this.positionY = canvasHeight // Позиция по Y, убираем надпись за canvas, назначая ей позицию canvasHeight
 
-    // Проверяет рисовать ли анимацию загрузку уровня
-    this.isLoadingLevel = false
-
     this.canvasTextDrawer = new CanvasTextDrawer(this.ctx)
     this.levelLoadingStage = new LevelLoadingStage(this.ctx, 1)
 
-    // Подписываемся на событие
-    this.subscribe()
+    this.indentPressEnterTextByX = 250
+    this.indentVeisaTextByX = 500
+    this.battleCityTextIndentationByY = 40
+    this.alignmentTankCenter = 25
+
+    this.keyPressHandler = new KeyPressSubscription(keyCode => {
+      // В этой функции вы можете выполнить необходимую логику на основе keyCode
+      if (keyCode === 'Enter' && this.positionY <= 80) {
+        gameController.setLoadingLevel(true)
+      }
+    })
+
+    this.keyPressHandler.subscribe()
   }
 
   public draw() {
-    if (this.isLoadingLevel) {
+    if (gameController.loadingLevel) {
       this.levelLoadingStage.draw()
     } else {
       this.drawGameMenu()
@@ -110,29 +119,7 @@ export class StartGameMenu {
     })
   }
 
-  // Если isGameLoaded true будет запускаться игра
-  public isGameLoaded() {
-    return this.levelLoadingStage.isGameLoaded()
-  }
-
-  private subscribe() {
-    this.keyPressSubscription = (event: KeyboardEvent) => {
-      const keyCode = event.code
-
-      // Делаю проверку пока не прошла анимация, при клике ничего не будет происходить
-      if ('Enter' === keyCode && this.positionY <= 80) {
-        this.isLoadingLevel = true
-      }
-    }
-
-    document.addEventListener('keydown', this.keyPressSubscription)
-  }
-
-  // Отписываемся от события, мы это делает в index.tsx, в return у useEffect
-  public unsubscribe() {
-    if (!this.keyPressSubscription) {
-      return
-    }
-    document.removeEventListener('keypress', this.keyPressSubscription)
+  get getKeyPressHandler() {
+    return this.keyPressHandler
   }
 }

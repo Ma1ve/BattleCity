@@ -82,7 +82,7 @@ export class CanvasTextDrawer {
 
     // Вычисление кординат x и y для расположения текста по центру
     const xC = x ? x : (this.canvasWidth - textWidth) / 2
-    const yC = y ? y : this.canvasHeight / 2 + fontSize / 2
+    const yC = y ? y : (this.canvasHeight + fontSize) / 2
 
     // Отрисовка текста по центру
     this.ctx.fillText(text, xC, yC)
