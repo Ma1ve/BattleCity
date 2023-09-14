@@ -1,12 +1,11 @@
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { gameUI } from './GameUI'
+import { gameController } from '../controllers/GameController'
 
 export class GameOverMenu {
   public ctx
   public positionY
-  public isGameOver
-  public showScoreGameOver
   private canvasTextDrawer
   private tanksInfo
   private lastY
@@ -22,9 +21,6 @@ export class GameOverMenu {
     this.ctx = ctx
 
     this.positionY = canvasHeight // Позиция по Y, убираем надпись за canvas, назначая ей позицию canvasHeight
-
-    this.showScoreGameOver = false // showScoreGameOver, когда true показывает canvas счёта
-    this.isGameOver = true // isGameOver проверяем завершена ли игра, будет true, когда флаг сломали
 
     this.canvasTextDrawer = new CanvasTextDrawer(this.ctx)
 
@@ -67,15 +63,13 @@ export class GameOverMenu {
     this.startDrawingPositionTanksInfo = 300
 
     // Подсчитываем общее количество уничтоженных таноков
-    this.totalNumberOfDestroyedTanks = 0
-    this.totalNumberOfDestroyedTanks += this.tanksInfo.reduce(
+    this.totalNumberOfDestroyedTanks = this.tanksInfo.reduce(
       (total, { countTanks }) => total + countTanks,
       0
     )
 
     // Подсчитываем общий счёт игрока он будет находится под I-PLAYER
-    this.totalScoreIPlayer = 0
-    this.totalScoreIPlayer += this.tanksInfo.reduce(
+    this.totalScoreIPlayer = this.tanksInfo.reduce(
       (total, { score, countTanks }) => total + score * countTanks,
       0
     )
@@ -83,7 +77,7 @@ export class GameOverMenu {
 
   // Проверяем showScoreGameOver нужно ли показывать счёт игрока
   public draw() {
-    if (this.showScoreGameOver) {
+    if (gameController.showScoreGameOver) {
       this.drawGameOverScore()
     } else {
       this.drawGameOver()
@@ -94,11 +88,7 @@ export class GameOverMenu {
     if (this.positionY > canvasHeight / 2) {
       this.positionY -= 6
     } else {
-      setTimeout(() => {
-        // Данная переменная будет true, только, когда анимация надписи game over закончится,
-        // я поместил setTimeout, чтобы еще 1 секунду надпись не двигалась, резко не исчезала.
-        this.showScoreGameOver = true
-      }, 1000)
+      gameController.setShowScoreGameOver(true)
     }
 
     // Отрисовываем надпись Game Over
@@ -144,7 +134,7 @@ export class GameOverMenu {
       color: '#fff',
       y: 147,
     })
-    // `STAGE ${1}`, 22, '#fff', null, 147
+
     // Отрисовываем `I-PLAYER` и его общий счёт (игрока)
     this.canvasTextDrawer.drawTextCentered({
       text: `I-PLAYER`,
@@ -202,13 +192,6 @@ export class GameOverMenu {
       y: this.lastY + 50,
     })
 
-    setTimeout(() => {
-      document.location.reload()
-    }, 1000)
-  }
-
-  // Тут мы получает переменную isGameOver, которая будет показывать нам, нужно ли показывать GAME OVER
-  public getGameOver() {
-    return this.isGameOver
+    gameController.reload()
   }
 }

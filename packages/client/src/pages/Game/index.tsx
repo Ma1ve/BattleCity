@@ -8,8 +8,10 @@ import { Scene } from './ui/Scene'
 import { scenesConfig } from './shared/config/sceneConfig'
 import { StartGameMenu } from './ui/StartGameMenu'
 import { GameOverMenu } from './ui/GameOverMenu'
+import { gameController } from './controllers/GameController'
 
 import './game.module.css'
+import { KeyPressSubscription } from './model/keyPressSubscription'
 
 const Game = () => {
   let reqId = 0
@@ -32,7 +34,7 @@ const Game = () => {
 
       //60fps animation condition
       if (now - lastTimestamp >= frameInterval) {
-        if (menuStartGame.isGameLoaded()) {
+        if (gameController.gameStart) {
           ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
           ctx.fillStyle = '#000'
@@ -41,7 +43,8 @@ const Game = () => {
           scene.render()
 
           //! Пока всегда getGameOver() будет true, нужно потом как то соединить это с уничтожением флага
-          if (menuGameOver.getGameOver()) {
+
+          if (gameController.isGameOver) {
             menuGameOver.draw()
           }
         } else {
@@ -61,7 +64,7 @@ const Game = () => {
 
     return () => {
       cancelAnimationFrame(reqId)
-      menuStartGame.unsubscribe()
+      menuStartGame.getKeyPressHandler.unsubscribe()
     }
   }, [])
 
