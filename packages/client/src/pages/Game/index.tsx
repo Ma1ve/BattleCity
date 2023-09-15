@@ -8,9 +8,9 @@ import { Scene } from './ui/Scene'
 import { scenesConfig } from './shared/config/sceneConfig'
 import { StartGameMenu } from './ui/StartGameMenu'
 import { gameController } from './controllers/GameController'
+import { GameController } from './controllers/GameController'
 
 import './game.module.css'
-import { KeyPressSubscription } from './model/keyPressSubscription'
 
 const Game = () => {
   let reqId = 0
@@ -25,7 +25,7 @@ const Game = () => {
 
     const scene = new Scene({ ctx, sceneConfig: scenesConfig[1] })
 
-    const menuStartGame = new StartGameMenu(ctx)
+    const gameController = new GameController(ctx)
 
     const animate = () => {
       const now = performance.now()
@@ -40,7 +40,7 @@ const Game = () => {
 
           scene.render()
         } else {
-          menuStartGame.draw()
+          gameController.drawStartGame()
         }
 
         reqId = requestAnimationFrame(animate)
@@ -56,7 +56,7 @@ const Game = () => {
 
     return () => {
       cancelAnimationFrame(reqId)
-      menuStartGame.getKeyPressHandler.unsubscribe()
+      gameController.getKeyPressHandler.unsubscribe()
     }
   }, [])
 

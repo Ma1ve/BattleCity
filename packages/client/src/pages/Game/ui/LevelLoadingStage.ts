@@ -1,6 +1,5 @@
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
-import { gameController } from '../controllers/GameController'
 
 export class LevelLoadingStage {
   private ctx: CanvasRenderingContext2D
@@ -49,8 +48,6 @@ export class LevelLoadingStage {
         fontSize: 22,
         color: '#000',
       })
-
-      gameController.setGameStart(true)
     }
   }
 }
