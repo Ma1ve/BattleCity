@@ -1,7 +1,6 @@
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { gameUI } from './GameUI'
-import { gameController } from '../controllers/GameController'
 
 export class GameOverMenu {
   public ctx
@@ -75,22 +74,10 @@ export class GameOverMenu {
     )
   }
 
-  // Проверяем showScoreGameOver нужно ли показывать счёт игрока
-  public draw() {
-    if (gameController.showScoreGameOver) {
-      this.drawGameOverScore()
-    } else {
-      this.drawGameOver()
-    }
-  }
-
-  private drawGameOver() {
+  public drawGameOver() {
     if (this.positionY > canvasHeight / 2) {
       this.positionY -= 6
-    } else {
-      gameController.setShowScoreGameOver(true)
     }
-
     // Отрисовываем надпись Game Over
     gameUI.drawImage({
       ctx: this.ctx,
@@ -105,7 +92,7 @@ export class GameOverMenu {
   }
 
   // Отрисовываем счёт игрока
-  private drawGameOverScore() {
+  public drawGameOverScore() {
     // Очищаем canvas
     this.ctx.fillStyle = '#020202'
     this.ctx.fillRect(0, 0, canvasWidth, canvasHeight)
@@ -191,7 +178,5 @@ export class GameOverMenu {
       x: 180 - textWidthScorePts,
       y: this.lastY + 50,
     })
-
-    gameController.reload()
   }
 }

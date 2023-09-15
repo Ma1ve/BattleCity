@@ -1,21 +1,16 @@
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
-import { LevelLoadingStage } from './LevelLoadingStage'
 import { gameUI } from './GameUI'
-import { KeyPressSubscription } from '../model/keyPressSubscription'
-import { gameController } from '../controllers/GameController'
 
 export class StartGameMenu {
   public ctx
   public positionY
   private canvasTextDrawer
-  private levelLoadingStage: LevelLoadingStage
 
   private indentPressEnterTextByX
   private indentVeisaTextByX
   private battleCityTextIndentationByY
   private alignmentTankCenter
-  private keyPressHandler
 
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
@@ -23,33 +18,15 @@ export class StartGameMenu {
     this.positionY = canvasHeight // Позиция по Y, убираем надпись за canvas, назначая ей позицию canvasHeight
 
     this.canvasTextDrawer = new CanvasTextDrawer(this.ctx)
-    this.levelLoadingStage = new LevelLoadingStage(this.ctx, 1)
 
     this.indentPressEnterTextByX = 250
     this.indentVeisaTextByX = 500
     this.battleCityTextIndentationByY = 40
     this.alignmentTankCenter = 25
-
-    this.keyPressHandler = new KeyPressSubscription(keyCode => {
-      // В этой функции вы можете выполнить необходимую логику на основе keyCode
-      if (keyCode === 'Enter' && this.positionY <= 80) {
-        gameController.setLoadingLevel(true)
-      }
-    })
-
-    this.keyPressHandler.subscribe()
-  }
-
-  public draw() {
-    if (gameController.loadingLevel) {
-      this.levelLoadingStage.draw()
-    } else {
-      this.drawGameMenu()
-    }
   }
 
   // Отрисовывает главное меню с анимациями
-  private drawGameMenu() {
+  public drawGameMenu() {
     // Очищаем  canvas
     this.ctx.fillStyle = '#020202'
     this.ctx.fillRect(0, 0, canvasWidth, canvasHeight)
@@ -114,9 +91,5 @@ export class StartGameMenu {
       color: '#fff',
       y: this.positionY + this.indentVeisaTextByX,
     })
-  }
-
-  get getKeyPressHandler() {
-    return this.keyPressHandler
   }
 }
