@@ -1,15 +1,18 @@
 import { Formik, Form } from 'formik'
-
-import { Button, Input, Title } from '../../../shared/ui'
-
-import { validationSchema } from '../libs/validationSchema'
-
-import styles from './login.module.css'
-
 import { useNavigate } from 'react-router-dom'
-import { ERoutes } from '../../../app/App'
+
+import { AuthAPI } from '../../../shared/api/AuthApi'
+import { TLoginData } from '../../../app/models/IUser'
+import { Button, Input, Title } from '../../../shared/ui'
+import { validationSchema } from '../libs/validationSchema'
+import styles from './login.module.css'
+import { useActionCreators } from '../../../app/hooks/reducer'
+import { userActions } from '../../../app/store/reducers/UserSlice'
+import { ERoutes } from '../../../app/models/types'
 
 const Login = () => {
+  const actions = useActionCreators(userActions)
+
   const navigate = useNavigate()
 
   const initialValues = {
@@ -17,9 +20,13 @@ const Login = () => {
     password: '',
   }
 
-  const onSubmit = (values: Record<string, string>) => {
-    console.log(values)
-    navigate(`/${ERoutes.GAME}`)
+  const onSubmit = (values: TLoginData) => {
+    AuthAPI.login(values).then(() =>
+      AuthAPI.getUserData().then(response => {
+        actions.setUserInfo(response as any)
+        navigate(`/${ERoutes.GAME}`)
+      })
+    )
   }
 
   return (
@@ -31,6 +38,11 @@ const Login = () => {
             <Input name="login" placeholder="Логин" />
             <Input name="password" type="password" placeholder="Пароль" />
             <Button type="submit">Войти</Button>
+            <Button
+              type="submit"
+              onClick={() => navigate(`/${ERoutes.REGISTRATION}`)}>
+              Нет аккаунта?
+            </Button>
           </Form>
         </Formik>
       </div>
