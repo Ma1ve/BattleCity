@@ -1,0 +1,10 @@
+.footerLayout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  background-color: var(--footer-layout-color);
+  height: 40px;
+  font-size: 10px;
+  color: var(--secondary-text-color);
+}

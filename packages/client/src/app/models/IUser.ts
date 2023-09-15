@@ -15,4 +15,9 @@ export type TUserRegistrationData = Omit<
   'id' | 'avatar' | 'display_name'
 >
 
+export type TLoginData = {
+  password: string
+  login: string
+}
+
 export type TUserProfileData = Omit<IUser, 'id' | 'password'>

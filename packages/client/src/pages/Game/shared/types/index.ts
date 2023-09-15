@@ -1,17 +1,16 @@
 export type TankOwner = 'player' | 'enemy'
 export type Coords = { x: number; y: number }
-export type CoordsWithSizeCoords = Coords & { w: number; h: number }
+export type Size = { h: number; w: number }
+export type CoordsWithSize = Coords & Size
 
-export type Animation = Record<
-  'explosion-small' | 'explosion-big' | 'reborn',
-  CoordsWithSizeCoords[]
->
-export type Bullet = [
-  CoordsWithSizeCoords,
-  CoordsWithSizeCoords,
-  CoordsWithSizeCoords,
-  CoordsWithSizeCoords
-]
+export enum Animations {
+  explosionSmall = 'explosionSmall',
+  reborn = 'reborn',
+}
+
+export type Animation = Record<Animations, CoordsWithSize[]>
+
+export type Bullet = Record<keyof typeof MovementDirection, CoordsWithSize>
 
 enum StageKeys {
   brick,
@@ -22,14 +21,11 @@ enum StageKeys {
   eagleDamaged,
 }
 
-export type Stage = Record<keyof typeof StageKeys, CoordsWithSizeCoords>
+export type Stage = Record<keyof typeof StageKeys, CoordsWithSize>
 
 export type Tank = Record<
   TankColor,
-  Record<
-    TankType,
-    Record<MovementDirection, [CoordsWithSizeCoords, CoordsWithSizeCoords]>
-  >
+  Record<TankType, Record<MovementDirection, [CoordsWithSize, CoordsWithSize]>>
 >
 
 export type Images = {
@@ -40,10 +36,10 @@ export type Images = {
 }
 
 export enum TankColor {
-  'yellow' = 'yellow',
-  'green' = 'green',
-  'silver' = 'silver',
-  'red' = 'red',
+  yellow = 'yellow',
+  green = 'green',
+  silver = 'silver',
+  red = 'red',
 }
 
 export type PlayerTankColor = TankColor.yellow | TankColor.green
@@ -63,9 +59,13 @@ export enum MovementDirection {
   right = 'right',
 }
 
+export type DirectionKey = keyof typeof MovementDirection
+
 export type SceneBlockPositions = {
   brick: Coords[]
   eagle: Coords
 }
+
+export type SceneBlockKeys = keyof SceneBlockPositions
 
 export type ControlKeys = Record<MovementDirection, string>
