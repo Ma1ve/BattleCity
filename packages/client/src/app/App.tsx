@@ -76,4 +76,5 @@ function App() {
   )
 }
 
+startServiceWorker()
 export default App
