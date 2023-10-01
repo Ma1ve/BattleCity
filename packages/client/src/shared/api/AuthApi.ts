@@ -72,7 +72,7 @@ class AuthApi {
       )
       return response.data.service_id
     } catch (error: unknown) {
-      toast.error(`Ошибка при получении service_id:`)
+      toast.error(`Ошибка при получении service_id`)
     }
   }
 
