@@ -32,18 +32,24 @@ function App() {
   const actions = useActionCreators(userActions)
   const authCode = new URLSearchParams(location.search).get('code')
 
+  const OAuth = async (code: string) => {
+    await AuthAPI.sendAuthCode(code, redirectUri)
+    Auth()
+  }
+
+  const Auth = async () => {
+    const userData = await AuthAPI.getUserData()
+    actions.setUserInfo(userData ?? null)
+  }
+
   useEffect(() => {
     if (authCode) {
-      AuthAPI.sendAuthCode(authCode, redirectUri)
-        .then(() => AuthAPI.getUserData())
-        .then(response => actions.setUserInfo(response ?? null))
+      OAuth(authCode)
     }
   }, [authCode])
 
   useEffect(() => {
-    AuthAPI.getUserData().then(response =>
-      actions.setUserInfo(response ?? null)
-    )
+    Auth()
   }, [])
 
   return (
