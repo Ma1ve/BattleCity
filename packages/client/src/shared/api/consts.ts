@@ -3,4 +3,4 @@ export const RESOURCES_URL = `${BASE_URL}resources`
 export const AUTH_URL = `${BASE_URL}auth`
 export const OAUTH_URL = `${BASE_URL}oauth/yandex`
 
-export const redirectUri = 'http://localhost:3000'
+export const redirectUri = window.location.origin
