@@ -26,9 +26,20 @@ import { FullscreenButton } from '../features/ui/FullscreenButton'
 import { useActionCreators } from './hooks/reducer'
 import { userActions } from './store/reducers/UserSlice'
 import { ERoutes } from './models/types'
+import { redirectUri } from '../shared/api/consts'
+import { TUserProfileData } from './models/IUser'
 
 function App() {
   const actions = useActionCreators(userActions)
+  const authCode = new URLSearchParams(location.search).get('code')
+
+  useEffect(() => {
+    if (authCode) {
+      AuthAPI.sendAuthCode(authCode, redirectUri)
+        .then(() => AuthAPI.getUserData())
+        .then(response => actions.setUserInfo(response))
+    }
+  }, [authCode])
 
   useEffect(() => {
     AuthAPI.getUserData().then(response => actions.setUserInfo(response as any))

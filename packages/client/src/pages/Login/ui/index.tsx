@@ -5,10 +5,11 @@ import { AuthAPI } from '../../../shared/api/AuthApi'
 import { TLoginData } from '../../../app/models/IUser'
 import { Button, Input, Title } from '../../../shared/ui'
 import { validationSchema } from '../libs/validationSchema'
-import styles from './login.module.css'
 import { useActionCreators } from '../../../app/hooks/reducer'
 import { userActions } from '../../../app/store/reducers/UserSlice'
 import { ERoutes } from '../../../app/models/types'
+import OAuth from '../../../features/ui/OAuth'
+import styles from './login.module.css'
 
 const Login = () => {
   const actions = useActionCreators(userActions)
@@ -43,6 +44,7 @@ const Login = () => {
               onClick={() => navigate(`/${ERoutes.REGISTRATION}`)}>
               Нет аккаунта?
             </Button>
+            <OAuth />
           </Form>
         </Formik>
       </div>

@@ -1,8 +1,12 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosError, AxiosInstance } from 'axios'
 import { toast } from 'react-toastify'
 
-import { TUserRegistrationData, TLoginData } from '../../app/models/IUser'
-import { AUTH_URL } from './consts'
+import {
+  TUserRegistrationData,
+  TLoginData,
+  TUserProfileData,
+} from '../../app/models/IUser'
+import { AUTH_URL, OAUTH_URL } from './consts'
 
 class AuthApi {
   private instance: AxiosInstance
@@ -51,13 +55,37 @@ class AuthApi {
     }
   }
 
-  getUserData = async () => {
+  getUserData = async (): Promise<{ data: TUserProfileData } | undefined> => {
     try {
       const response = await this.instance.get(`user`)
       toast.success('Данные профиля получены')
       return response
     } catch (error: any) {
       console.error(error?.response?.data?.reason)
+    }
+  }
+
+  getServiceId = async (redirectUri: string) => {
+    try {
+      const response = await this.instance.get(
+        `${OAUTH_URL}/service-id?redirect_uri=${redirectUri}`
+      )
+      return response.data.service_id
+    } catch (error: unknown) {
+      toast.error(`Ошибка при получении service_id:`)
+    }
+  }
+
+  sendAuthCode = async (code: string, redirect_uri: string) => {
+    try {
+      const data = JSON.stringify({
+        code,
+        redirect_uri,
+      })
+      const response = await this.instance.post(`${OAUTH_URL}`, data)
+      return response
+    } catch (error: unknown) {
+      toast.error(`Ошибка при отправке кода авторизации`)
     }
   }
 }
