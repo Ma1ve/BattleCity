@@ -31,7 +31,7 @@ const Registration = () => {
   const onSubmit = (values: TUserRegistrationData) => {
     AuthAPI.signup(values).then(() =>
       AuthAPI.getUserData().then(response => {
-        actions.setUserInfo(response as any)
+        actions.setUserInfo(response ?? null)
         navigate(`/${ERoutes.GAME}`)
       })
     )

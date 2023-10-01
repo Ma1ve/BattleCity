@@ -24,7 +24,7 @@ const Login = () => {
   const onSubmit = (values: TLoginData) => {
     AuthAPI.login(values).then(() =>
       AuthAPI.getUserData().then(response => {
-        actions.setUserInfo(response as any)
+        actions.setUserInfo(response ?? null)
         navigate(`/${ERoutes.GAME}`)
       })
     )
