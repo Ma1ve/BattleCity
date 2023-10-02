@@ -21,16 +21,16 @@ import {
 import { Tank } from './Tank'
 import { Bullet } from './Bullet'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
-import { GameOverMenu } from './GameOverMenu'
 import { SpriteAnimator } from './SpriteAnimator'
 import { v4 as uuidv4 } from 'uuid'
+import { GameController } from '../controllers/GameController'
 
 export class Scene {
   public sceneConfig: SceneConfig
   public ctx: CanvasRenderingContext2D
   public tanks: Record<TankOwner, Tank<TankOwner>[]> = { player: [], enemy: [] }
   public bullets: Record<string, Bullet>
-  public menuGameOver: GameOverMenu
+  public gameController: GameController
   public explosions: { [k in string]: { coords: Coords; draw: () => void } } =
     {}
 
@@ -44,7 +44,7 @@ export class Scene {
     this.sceneConfig = sceneConfig
     this.ctx = ctx
     this.bullets = {}
-    this.menuGameOver = new GameOverMenu(ctx)
+    this.gameController = new GameController(ctx)
 
     const player = new Tank<'player'>({
       tankType: TankType.basic,
@@ -79,7 +79,7 @@ export class Scene {
 
   public render() {
     if (!this.sceneConfig.blocks.eagle) {
-      this.menuGameOver.draw()
+      this.gameController.drawGameOverMenu()
 
       return
     }

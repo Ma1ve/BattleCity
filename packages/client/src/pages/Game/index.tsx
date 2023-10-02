@@ -6,8 +6,6 @@ import {
 import { useEffect, useRef } from 'react'
 import { Scene } from './ui/Scene'
 import { scenesConfig } from './shared/config/sceneConfig'
-import { StartGameMenu } from './ui/StartGameMenu'
-import { gameController } from './controllers/GameController'
 import { GameController } from './controllers/GameController'
 
 import './game.module.css'
@@ -56,7 +54,6 @@ const Game = () => {
 
     return () => {
       cancelAnimationFrame(reqId)
-      gameController.getKeyPressHandler.unsubscribe()
     }
   }, [])
 

@@ -57,9 +57,11 @@ export class StartGameMenu {
       ctx: this.ctx,
       spritePosition: gameUI.images.stage.battleCity,
       canvasPosition: {
-        x: (canvasWidthWithoutScale - battleCitySpriteWidth) / 2,
+        x: canvasWidthWithoutScale / 4,
         y: this.positionY + this.battleCityTextIndentationByY,
       },
+      Sh: 144,
+      Sw: 420,
     })
 
     // Отображаем танчик
@@ -76,6 +78,8 @@ export class StartGameMenu {
           this.indentPressEnterTextByX -
           this.alignmentTankCenter,
       },
+      Sh: 32,
+      Sw: 32,
     })
 
     // Отрисовываем текст Press Enter
