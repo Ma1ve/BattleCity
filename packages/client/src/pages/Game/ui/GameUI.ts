@@ -1,4 +1,5 @@
 import sprite from '../../../shared/images/sprite.png'
+
 import {
   Bullet,
   Images,
@@ -66,6 +67,8 @@ class GameUI {
   private animationFrameCount
 
   constructor() {
+    if (typeof window === 'undefined') return
+
     this.frame = 0
 
     this.images = this.getSprites()
