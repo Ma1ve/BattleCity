@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { GiSoundOn, GiSoundOff, GiNextButton } from 'react-icons/gi'
+import { GiSoundOn, GiSoundOff, GiNextButton } from 'react-icons/gi/index.js'
 import styles from './backgroundAudioArea.module.css'
 import bg_sound_1 from '../../../shared/sounds/bg_sound_1.mp3'
 import bg_sound_2 from '../../../shared/sounds/bg_sound_2.mp3'
@@ -9,11 +9,10 @@ import bg_sound_3 from '../../../shared/sounds/bg_sound_3.mp3'
 const DEFAULT_VOLUME = 0.2
 
 /** Список треков. */
-const bgSoundsList: HTMLAudioElement[] = [
-  new Audio(bg_sound_1),
-  new Audio(bg_sound_2),
-  new Audio(bg_sound_3),
-]
+const bgSoundsList: HTMLAudioElement[] =
+  typeof window !== 'undefined'
+    ? [new Audio(bg_sound_1), new Audio(bg_sound_2), new Audio(bg_sound_3)]
+    : []
 
 enum EAudioAreaActions {
   PLAY = 'PLAY',

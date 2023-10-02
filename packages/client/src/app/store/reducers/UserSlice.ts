@@ -1,11 +1,10 @@
-import {
-  /* createSlice, */ PayloadAction /* , createSelector */,
-} from '@reduxjs/toolkit'
+import { PayloadAction } from '@reduxjs/toolkit'
+
+import * as toolkitRaw from '@reduxjs/toolkit'
+const { createSlice, createSelector } = toolkitRaw.default ?? toolkitRaw
+
 import { TUserProfileData } from '../../models/IUser'
 import { RootState } from '..'
-import * as toolkitRaw from '@reduxjs/toolkit'
-
-const { createSelector, createSlice } = toolkitRaw.default ?? toolkitRaw
 
 interface IUserState {
   userInfo: TUserProfileData | null
@@ -20,7 +19,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (
-      state,
+      state: IUserState,
       action: PayloadAction<{ data: TUserProfileData } | null>
     ) => {
       state.userInfo = action.payload?.data ?? null
@@ -33,6 +32,9 @@ export const userActions = userSlice.actions
 // Создание селектора для получения данных пользователя
 export const selectUser = (state: RootState) => state.user.userInfo
 // Создание мемоизированного селектора с использованием createSelector
-export const selectUserInfo = createSelector([selectUser], userInfo => userInfo)
+export const selectUserInfo = createSelector(
+  [selectUser],
+  (userInfo: IUserState) => userInfo
+)
 
 export default userSlice.reducer

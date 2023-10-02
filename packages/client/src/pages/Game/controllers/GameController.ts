@@ -4,7 +4,7 @@ import { LevelLoadingStage } from '../ui/LevelLoadingStage'
 import { StartGameMenu } from '../ui/StartGameMenu'
 import { LeaderboardAPI } from '../../../shared/api/LeaderboardApi'
 import { toast } from 'react-toastify'
-import { store } from '../../../app/store'
+import { store } from '../../../entry-client'
 
 export class GameController {
   private ctx
