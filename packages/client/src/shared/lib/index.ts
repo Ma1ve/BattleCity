@@ -7,6 +7,7 @@ export const omitObject = (obj: Record<string, any>, keys: string[]) =>
 
 /** Функция инициирующая serviceWorker. */
 export function startServiceWorker() {
+  if (typeof window === 'undefined') return
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker

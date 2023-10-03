@@ -58,11 +58,13 @@ const getTankSpritePosition = (
 }
 
 class GameUI {
-  public images: Images
-  public frame: number
-  private readonly spriteImage: HTMLImageElement
+  public images: Images | undefined
+  public frame: number | undefined
+  private readonly spriteImage: HTMLImageElement | undefined
 
   constructor() {
+    if (typeof window === 'undefined') return
+
     this.frame = 0
 
     this.images = this.getSprites()

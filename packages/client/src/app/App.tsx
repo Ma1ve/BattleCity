@@ -26,6 +26,7 @@ import { FullscreenButton } from '../features/ui/FullscreenButton'
 import { useActionCreators } from './hooks/reducer'
 import { userActions } from './store/reducers/UserSlice'
 import { ERoutes } from './models/types'
+import { startServiceWorker } from '../shared/lib'
 
 function App() {
   const actions = useActionCreators(userActions)

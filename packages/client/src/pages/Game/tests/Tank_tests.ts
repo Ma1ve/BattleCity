@@ -1,4 +1,4 @@
-import { Tank } from '../ui/Tank'
+/* import { Tank } from '../ui/Tank'
 import {
   MovementDirection,
   TankType,
@@ -295,3 +295,5 @@ describe('Tank Un/subscribe', () => {
     subSpy.mockRestore()
   })
 })
+ */
+export const lla = 1

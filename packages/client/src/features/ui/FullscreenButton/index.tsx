@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import { AiOutlineFullscreen, AiOutlineFullscreenExit } from 'react-icons/ai'
+import {
+  AiOutlineFullscreen,
+  AiOutlineFullscreenExit,
+} from 'react-icons/ai/index.js'
 
 import { toggleFullscreen } from '../../../shared/lib/toggleFullscreen'
 import { Button } from '../../../shared/ui'
