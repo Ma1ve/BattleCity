@@ -4,6 +4,7 @@ import { LevelLoadingStage } from '../ui/LevelLoadingStage'
 import { StartGameMenu } from '../ui/StartGameMenu'
 import { LeaderboardAPI } from '../../../shared/api/LeaderboardApi'
 import { toast } from 'react-toastify'
+import { store } from '../../../app/store'
 
 export class GameController {
   private ctx
@@ -110,7 +111,13 @@ export class GameController {
     this.isGameOver = value
     if (value) {
       try {
-        await LeaderboardAPI.sendResult({ score })
+        const { display_name, first_name, id } = store.getState().user.userInfo!
+
+        await LeaderboardAPI.sendResult({
+          score,
+          name: display_name || first_name,
+          id,
+        })
       } catch (e: any) {
         toast.error(e?.response?.data?.reason)
       }

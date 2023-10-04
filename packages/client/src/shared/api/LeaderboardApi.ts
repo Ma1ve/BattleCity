@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 
 import { BASE_URL } from './consts'
-import { store } from '../../app/store'
 
 export type LeaderboardData = {
   veisaScore: number
@@ -35,14 +34,20 @@ class LeaderboardApi {
    * @param name
    * @param id
    */
-  sendResult = async ({ score }: { score: number }) => {
-    const { display_name, first_name, id } =
-      store.getState().user.userInfo || {}
+  sendResult = async ({
+    score,
+    name,
+    id,
+  }: {
+    score: number
+    name: string
+    id: number
+  }) => {
     await this.instance.post(`/leaderboard`, {
       data: {
-        name: display_name || first_name,
+        name,
+        id,
         veisaScore: score,
-        id: id,
       },
       ratingFieldName: this.ratingFieldName,
       teamName: this.teamName,
