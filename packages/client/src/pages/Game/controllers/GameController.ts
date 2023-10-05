@@ -2,6 +2,9 @@ import { KeyPressSubscription } from '../model/keyPressSubscription'
 import { GameOverMenu } from '../ui/GameOverMenu'
 import { LevelLoadingStage } from '../ui/LevelLoadingStage'
 import { StartGameMenu } from '../ui/StartGameMenu'
+import { LeaderboardAPI } from '../../../shared/api/LeaderboardApi'
+import { toast } from 'react-toastify'
+import { store } from '../../../app/store'
 
 export class GameController {
   private ctx
@@ -104,8 +107,21 @@ export class GameController {
   }
 
   // Метод для установки значения isGameOver
-  public setGameOver(value: boolean) {
+  public async setGameOver(value: boolean, score: number) {
     this.isGameOver = value
+    if (value) {
+      try {
+        const { display_name, first_name, id } = store.getState().user.userInfo!
+
+        await LeaderboardAPI.sendResult({
+          score,
+          name: display_name || first_name,
+          id,
+        })
+      } catch (e: any) {
+        toast.error(e?.response?.data?.reason)
+      }
+    }
   }
 
   public setShowScoreGameOver(value: boolean) {

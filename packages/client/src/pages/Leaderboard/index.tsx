@@ -1,34 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Title } from '../../shared/ui'
 import styles from './leaderboard.module.css'
-
-interface ILoadrboard {
-  id: number
-  name: string
-  score: number
-}
+import {
+  LeaderboardAPI,
+  LeaderboardData,
+} from '../../shared/api/LeaderboardApi'
+import { toast } from 'react-toastify'
 
 const Leaderboard = () => {
-  const [InfoLoadrboard, setInfoLoadrboard] = useState<ILoadrboard[]>([
-    { id: 1, name: 'Qwerty', score: 1000 },
-    { id: 2, name: 'Lorem', score: 920 },
-    { id: 3, name: 'TestT', score: 870 },
-    { id: 4, name: 'TestT', score: 770 },
-    { id: 5, name: 'TestT', score: 630 },
-    { id: 6, name: 'TestT', score: 570 },
-    { id: 7, name: 'TestT', score: 480 },
-    { id: 8, name: 'TestT', score: 340 },
-    { id: 9, name: 'TestT', score: 320 },
-    { id: 10, name: 'TestT', score: 310 },
-    { id: 11, name: 'TestT', score: 80 },
-    { id: 12, name: 'TestT', score: 70 },
-    { id: 13, name: 'TestT', score: 70 },
-    { id: 14, name: 'TestT', score: 70 },
-    { id: 15, name: 'TestT', score: 70 },
-    { id: 16, name: 'TestT', score: 70 },
-    { id: 17, name: 'TestT', score: 70 },
-    { id: 18, name: 'TestT', score: 70 },
-  ])
+  const [leaderboardInfo, setLeaderboardInfo] = useState<LeaderboardData[]>([])
+
+  useEffect(() => {
+    const getLeaderboard = async () => {
+      try {
+        const res = await LeaderboardAPI.getLeaderboard()
+
+        const leaderboardData = res.map(el => el.data)
+
+        setLeaderboardInfo(leaderboardData)
+      } catch (e: any) {
+        toast.error(e?.response?.data?.reason)
+      }
+    }
+
+    getLeaderboard()
+  }, [])
 
   return (
     <div className={styles.leaderboardPage}>
@@ -43,11 +39,11 @@ const Leaderboard = () => {
             </tr>
           </thead>
           <tbody>
-            {InfoLoadrboard.map((el: ILoadrboard, index: number) => (
+            {leaderboardInfo.map((el: LeaderboardData, index: number) => (
               <tr key={el.id}>
                 <td> {index + 1}</td>
                 <td>{el.name}</td>
-                <td>{el.score}</td>
+                <td>{el.veisaScore}</td>
               </tr>
             ))}
           </tbody>
