@@ -24,6 +24,7 @@ import EndGame from '../pages/EndGame'
 import GameToStart from '../pages/GameToStart'
 import { AuthAPI } from '../shared/api/AuthApi'
 import { FullscreenButton } from '../features/ui/FullscreenButton'
+import { BackgroundAudioArea } from '../features/ui/BackgroundAudioArea'
 import { useActionCreators } from './hooks/reducer'
 import { userActions } from './store/reducers/UserSlice'
 import { ERoutes } from './models/types'
@@ -71,6 +72,7 @@ function App() {
           )
         )}
       />
+      <BackgroundAudioArea />
       <ToastContainer theme="dark" position="bottom-right" autoClose={5000} />
       <FullscreenButton />
     </div>
