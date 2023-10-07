@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
   RouterProvider,
   createBrowserRouter,
@@ -33,15 +33,15 @@ function App() {
   const actions = useActionCreators(userActions)
   const authCode = new URLSearchParams(location.search).get('code')
 
-  const OAuth = async (code: string) => {
+  const OAuth = useCallback(async (code: string) => {
     await AuthAPI.sendAuthCode(code, redirectUri)
     Auth()
-  }
+  }, [])
 
-  const Auth = async () => {
+  const Auth = useCallback(async () => {
     const userData = await AuthAPI.getUserData()
     actions.setUserInfo(userData ?? null)
-  }
+  }, [])
 
   useEffect(() => {
     if (authCode) {
