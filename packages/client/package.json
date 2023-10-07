@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,14 +13,16 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.5.0",
+    "classnames": "^2.3.2",
     "dotenv": "^16.0.2",
-    "eslint-config-prettier": "^8.5.0",
     "formik": "^2.4.3",
-    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.10.1",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
+    "react-toastify": "^9.1.3",
     "uuid": "9.0.0",
     "yup": "^1.2.0"
   },
@@ -33,9 +36,8 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",
-    "axios": "^1.5.0",
-    "classnames": "^2.3.2",
     "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
     "jest": "^28",
     "jest-environment-jsdom": "^29.0.1",
     "lefthook": "^1.3.9",
@@ -44,7 +46,9 @@
     "typescript": "^4.8.0",
     "vite": "^3.0.7",
     "react-icons": "^4.10.1",
-    "react-toastify": "^9.1.3"
-  },
-  "license": "MIT"
+    "@types/sinon": "^10.0.16",
+    "esm": "^3.2.25",
+    "sinon": "^15.2.0",
+    "ts-sinon": "^2.0.2"
+  }
 }

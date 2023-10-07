@@ -86,8 +86,8 @@ export class GameOverMenu {
         x: canvasWidth / 2 - 55,
         y: this.positionY,
       },
-      sW: 100,
-      sH: 100,
+      Sw: 100,
+      Sh: 100,
     })
   }
 

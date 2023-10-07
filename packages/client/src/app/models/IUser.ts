@@ -20,4 +20,4 @@ export type TLoginData = {
   login: string
 }
 
-export type TUserProfileData = Omit<IUser, 'id' | 'password'>
+export type TUserProfileData = Omit<IUser, 'password'>

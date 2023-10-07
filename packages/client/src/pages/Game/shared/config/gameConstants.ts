@@ -12,13 +12,17 @@ export const tankSpeed = {
   powerful: 1,
   armored: 1,
 }
-export const bulletSpeed = 12
+export const bulletSpeed = 8
 export const blockWidth = spriteWidth * canvasItemScale
 export const blockHeight = spriteWidth * canvasItemScale
 export const blockHeightQuarter = blockHeight / 4
 export const blockWidthQuarter = blockWidth / 4
 export const canvasWidth = columns * blockWidth
+export const canvasWidthWithoutScale = columns * spriteWidth
+export const canvasHeightWithoutScale = columns * spriteHeight
 export const canvasHeight = columns * blockHeight
+export const battleCitySpriteWidth = 12 * spriteHeight
+export const battleCitySpriteHeight = 4.5 * spriteHeight
 
 export const TankControlKeys = {
   movement: {

@@ -21,7 +21,7 @@ const Game = () => {
     const canvas = canvasRef.current!
     const ctx = canvas.getContext('2d')!
 
-    const scene = new Scene({ ctx, blockPositions: scenesConfig[1] })
+    const scene = new Scene({ ctx, sceneConfig: scenesConfig[1] })
 
     const gameController = new GameController(ctx)
 
@@ -37,9 +37,6 @@ const Game = () => {
           ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
           scene.render()
-
-          //! Пока всегда getGameOver() будет true, нужно потом как то соединить это с уничтожением флага
-          gameController.drawGameOverMenu()
         } else {
           gameController.drawStartGame()
         }
@@ -57,7 +54,6 @@ const Game = () => {
 
     return () => {
       cancelAnimationFrame(reqId)
-      gameController.getKeyPressHandler.unsubscribe()
     }
   }, [])
 

@@ -10,13 +10,15 @@ import {
   TankColor,
   TankType,
   Animation,
-  SceneBlockPositions,
+  SceneBlocks,
   SceneBlockKeys,
   DirectionKey,
   Size,
   Animations,
 } from '../shared/types'
 import {
+  battleCitySpriteHeight,
+  battleCitySpriteWidth,
   blockHeight,
   blockHeightQuarter,
   blockWidth,
@@ -382,9 +384,9 @@ class GameUI {
 
     const animations: Animation = {
       [Animations.explosionSmall]: [
-        getSpriteItemPosition({ x: 16, y: 8 }), //start
-        getSpriteItemPosition({ x: 17, y: 8 }),
-        getSpriteItemPosition({ x: 18, y: 8 }), //end
+        getSpriteItemPosition({ x: 16, y: 2 }), //start
+        getSpriteItemPosition({ x: 17, y: 2 }),
+        getSpriteItemPosition({ x: 18, y: 2 }), //end
       ],
       [Animations.reborn]: [
         getSpriteItemPosition({ x: 16, y: 6 }), //start
@@ -433,7 +435,12 @@ class GameUI {
         x: 17,
         y: 14.5,
       }),
-      battleCity: { x: 8.5 * 32, y: 9.5 * 32, w: 420, h: 144 },
+      battleCity: {
+        x: 8 * spriteWidth,
+        y: 9.5 * spriteWidth,
+        w: battleCitySpriteWidth,
+        h: battleCitySpriteHeight,
+      },
     }
 
     return { tanks, bullet, animations, stage }
@@ -443,14 +450,14 @@ class GameUI {
     ctx,
     spritePosition,
     canvasPosition,
-    sW,
-    sH,
+    Sw,
+    Sh,
   }: {
     ctx: CanvasRenderingContext2D
     spritePosition: CoordsWithSize
     canvasPosition: Coords
-    sW?: number
-    sH?: number
+    Sw?: number
+    Sh?: number
   }) {
     const { x: sx, y: sy, w: sw, h: sh } = spritePosition
     const { x: cx, y: cy } = canvasPosition
@@ -463,8 +470,8 @@ class GameUI {
       sh,
       cx,
       cy,
-      sW ? sW : sw * canvasItemScale,
-      sH ? sH : sh * canvasItemScale
+      Sw ? Sw : sw * canvasItemScale,
+      Sh ? Sh : sh * canvasItemScale
     )
   }
 
@@ -480,6 +487,7 @@ class GameUI {
     movedItemSize: Size
   }) => {
     const { h: movedItemHeight, w: movedItemWidth } = movedItemSize
+
     switch (movementDirection) {
       case MovementDirection.up:
         return (
@@ -488,6 +496,7 @@ class GameUI {
           movedItemCoords.x + movedItemWidth > blockCoords.x * blockWidth && // top right moved item corner > top right block corner
           movedItemCoords.x < (blockCoords.x + 1) * blockWidth // top left moved item corner < top right block corner
         )
+
       case MovementDirection.down:
         return (
           movedItemCoords.y < blockCoords.y * blockHeight && // top left moved item corner < bottom left block corner
@@ -520,7 +529,7 @@ class GameUI {
   }: {
     movedItemCoords: Coords
     movementDirection: DirectionKey
-    sceneBlockPositions: SceneBlockPositions
+    sceneBlockPositions: SceneBlocks
     movedItemSize?: Size
   }) => {
     const sceneBlockValues = Object.entries(sceneBlockPositions)
@@ -535,11 +544,18 @@ class GameUI {
 
       sceneBlockKey = blockKey as SceneBlockKeys
 
+      //tank coords was multiplied for canvas render
+      const getTankCoords = (blockCoords: Coords) => ({
+        x: blockCoords.x / blockWidth,
+        y: blockCoords.y / blockHeight,
+      })
+
       if (isCoordsArray(blockPositionData)) {
         intersectedBlockCoords = blockPositionData.find(blockCoords =>
           this.checkIntersection({
             movedItemCoords,
-            blockCoords,
+            blockCoords:
+              blockKey === 'tanks' ? getTankCoords(blockCoords) : blockCoords,
             movementDirection,
             movedItemSize,
           })
@@ -567,7 +583,7 @@ class GameUI {
   }
 
   // Устанавливаем границу (frameCount) через сколько animationFrameCount будет обновление activeSpriteIndex
-  public animateSprite({ frameCount }: { frameCount: number }) {
+  public changeSpriteIndex({ frameCount }: { frameCount: number }) {
     this.animationFrameCount++
     if (this.animationFrameCount > frameCount) {
       this.animationFrameCount = 0

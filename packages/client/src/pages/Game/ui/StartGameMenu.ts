@@ -1,6 +1,12 @@
-import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
+import {
+  battleCitySpriteWidth,
+  canvasHeight,
+  canvasWidth,
+  canvasWidthWithoutScale,
+} from '../shared/config/gameConstants'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { gameUI } from './GameUI'
+import { SpriteAnimator } from './SpriteAnimator'
 
 export class StartGameMenu {
   public ctx
@@ -11,6 +17,7 @@ export class StartGameMenu {
   private indentVeisaTextByX
   private battleCityTextIndentationByY
   private alignmentTankCenter
+  private spriteAnimator = new SpriteAnimator()
 
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
@@ -50,20 +57,20 @@ export class StartGameMenu {
       ctx: this.ctx,
       spritePosition: gameUI.images.stage.battleCity,
       canvasPosition: {
-        x: 110,
+        x: canvasWidthWithoutScale / 4,
         y: this.positionY + this.battleCityTextIndentationByY,
       },
-      sW: 450,
-      sH: 144,
+      Sh: 144,
+      Sw: 420,
     })
 
     // Отображаем танчик
     gameUI.drawImage({
       ctx: this.ctx,
-      spritePosition:
-        gameUI.images.tanks.yellow.basic.right[
-          gameUI.animateSprite({ frameCount: 2 })
-        ],
+      spritePosition: this.spriteAnimator.animate({
+        frameCount: 4,
+        sprites: gameUI.images.tanks.yellow.basic.right,
+      }),
       canvasPosition: {
         x: 200,
         y:
@@ -71,8 +78,8 @@ export class StartGameMenu {
           this.indentPressEnterTextByX -
           this.alignmentTankCenter,
       },
-      sH: 32,
-      sW: 32,
+      Sh: 32,
+      Sw: 32,
     })
 
     // Отрисовываем текст Press Enter

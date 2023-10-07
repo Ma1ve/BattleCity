@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { ErrorBoundary } from '../shared/lib/ErrorBoundary'
+
 import RootLayout from './RootLayout'
 import Main from '../pages/Main'
 import Forum from '../pages/Forum'

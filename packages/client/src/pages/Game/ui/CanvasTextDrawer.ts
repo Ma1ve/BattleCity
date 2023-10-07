@@ -1,5 +1,5 @@
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
-import { CoordsWithSizeCoords } from '../shared/types'
+import { CoordsWithSize } from '../shared/types'
 import { gameUI } from './GameUI'
 
 interface IDrawPtsData {
@@ -9,7 +9,7 @@ interface IDrawPtsData {
   x: number
   y: number
   countTanks: number
-  spriteTank: CoordsWithSizeCoords
+  spriteTank: CoordsWithSize
 }
 
 interface IDrawLine {
