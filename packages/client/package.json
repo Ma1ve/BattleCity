@@ -9,7 +9,12 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ./"
+    "test": "jest ./",
+    "dev:ssr": "NODE_ENV=development node server.js",
+    "build:ssr": "yarn build:client && yarn build:server",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr ./src/entry-server.tsx",
+    "prod": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",

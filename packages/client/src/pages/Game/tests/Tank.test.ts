@@ -2,10 +2,12 @@ import { Tank } from '../ui/Tank'
 import {
   MovementDirection,
   TankType,
-  SceneBlockPositions,
   TankColor,
+  Coords,
+  DirectionKey,
+  SceneBlocks,
 } from '../shared/types'
-import { tankSpeed } from '../shared/config/gameConstants'
+import { TankControlKeys, tankSpeed } from '../shared/config/gameConstants'
 
 describe('Tank Class', () => {
   it('should create an instance of Tank with correct initial values', () => {
@@ -14,17 +16,30 @@ describe('Tank Class', () => {
     const tankColor = TankColor.green
     const tankType = TankType.basic
     const controlKeys = {
-      up: 'ArrowUp',
-      down: 'ArrowDown',
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
+      up: TankControlKeys.movement.up,
+      down: TankControlKeys.movement.down,
+      left: TankControlKeys.movement.left,
+      right: TankControlKeys.movement.right,
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const fireKey = TankControlKeys.fire
+    const onFire = ({
+      tankPosition,
+      tankDirection,
+      tankId,
+    }: {
+      tankPosition: Coords
+      tankDirection: DirectionKey
+      tankId: string
+    }) => {
+      return
+    }
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -34,6 +49,8 @@ describe('Tank Class', () => {
       tankType,
       controlKeys,
       sceneBlockPositions,
+      fireKey,
+      onFire,
     })
 
     // Проверяем, что свойства и методы инициализированы корректно
@@ -55,17 +72,30 @@ describe('Tank Move', () => {
     const tankColor = TankColor.green
     const tankType = TankType.basic
     const controlKeys = {
-      up: 'ArrowUp',
-      down: 'ArrowDown',
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
+      up: TankControlKeys.movement.up,
+      down: TankControlKeys.movement.down,
+      left: TankControlKeys.movement.left,
+      right: TankControlKeys.movement.right,
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const fireKey = TankControlKeys.fire
+    const onFire = ({
+      tankPosition,
+      tankDirection,
+      tankId,
+    }: {
+      tankPosition: Coords
+      tankDirection: DirectionKey
+      tankId: string
+    }) => {
+      return
+    }
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -75,25 +105,27 @@ describe('Tank Move', () => {
       tankType,
       controlKeys,
       sceneBlockPositions,
+      fireKey,
+      onFire,
     })
 
     // Проверяем начальное направление
     expect(tank.direction).toBe(initialDirection)
 
     // Изменяем направление танка на влево
-    tank.setDirection(MovementDirection.left)
+    tank.direction = MovementDirection.left
     expect(tank.direction).toBe(MovementDirection.left)
 
     // Изменяем направление танка на вверх
-    tank.setDirection(MovementDirection.up)
+    tank.direction = MovementDirection.up
     expect(tank.direction).toBe(MovementDirection.up)
 
     // Изменяем направление танка на вправо
-    tank.setDirection(MovementDirection.right)
+    tank.direction = MovementDirection.right
     expect(tank.direction).toBe(MovementDirection.right)
 
     // Изменяем направление танка на вниз
-    tank.setDirection(MovementDirection.down)
+    tank.direction = MovementDirection.down
     expect(tank.direction).toBe(MovementDirection.down)
   })
 })
@@ -105,17 +137,30 @@ describe('Tank Type', () => {
     const tankColor = TankColor.green
     const tankType = TankType.basic
     const controlKeys = {
-      up: 'ArrowUp',
-      down: 'ArrowDown',
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
+      up: TankControlKeys.movement.up,
+      down: TankControlKeys.movement.down,
+      left: TankControlKeys.movement.left,
+      right: TankControlKeys.movement.right,
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const fireKey = TankControlKeys.fire
+    const onFire = ({
+      tankPosition,
+      tankDirection,
+      tankId,
+    }: {
+      tankPosition: Coords
+      tankDirection: DirectionKey
+      tankId: string
+    }) => {
+      return
+    }
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -125,21 +170,23 @@ describe('Tank Type', () => {
       tankType,
       controlKeys,
       sceneBlockPositions,
+      fireKey,
+      onFire,
     })
 
     // Проверяем начальный тип танка
     expect(tank.tankType).toBe(tankType)
 
     // Изменяем тип танка на TankType.fast
-    tank.setType(TankType.fast)
+    tank.tankType = TankType.fast
     expect(tank.tankType).toBe(TankType.fast)
 
     // Изменяем тип танка на TankType.powerful
-    tank.setType(TankType.powerful)
+    tank.tankType = TankType.powerful
     expect(tank.tankType).toBe(TankType.powerful)
 
     // Изменяем тип танка на TankType.armored
-    tank.setType(TankType.armored)
+    tank.tankType = TankType.armored
     expect(tank.tankType).toBe(TankType.armored)
   })
 })
@@ -150,12 +197,31 @@ describe('Tank Intersection', () => {
     const initialDirection = MovementDirection.down
     const tankColor = TankColor.green
     const tankType = TankType.basic
-    const sceneBlockPositions: SceneBlockPositions = {
+    const controlKeys = {
+      up: TankControlKeys.movement.up,
+      down: TankControlKeys.movement.down,
+      left: TankControlKeys.movement.left,
+      right: TankControlKeys.movement.right,
+    }
+    const fireKey = TankControlKeys.fire
+    const onFire = ({
+      tankPosition,
+      tankDirection,
+      tankId,
+    }: {
+      tankPosition: Coords
+      tankDirection: DirectionKey
+      tankId: string
+    }) => {
+      return
+    }
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -163,13 +229,17 @@ describe('Tank Intersection', () => {
       initialDirection,
       tankColor,
       tankType,
+      controlKeys,
       sceneBlockPositions,
+      fireKey,
+      onFire,
     })
 
     const moveSpy = jest.spyOn(tank as any, 'move')
 
     // Вызываем метод
-    tank['move'](MovementDirection.right)
+    tank.directionKeyPressed = MovementDirection.right
+    tank['move']()
 
     // Проверяем вызовы и результат
     expect(moveSpy).toHaveBeenCalled()
@@ -184,12 +254,31 @@ describe('Tank Intersection', () => {
     const initialDirection = MovementDirection.down
     const tankColor = TankColor.green
     const tankType = TankType.basic
-    const sceneBlockPositions: SceneBlockPositions = {
+    const controlKeys = {
+      up: TankControlKeys.movement.up,
+      down: TankControlKeys.movement.down,
+      left: TankControlKeys.movement.left,
+      right: TankControlKeys.movement.right,
+    }
+    const fireKey = TankControlKeys.fire
+    const onFire = ({
+      tankPosition,
+      tankDirection,
+      tankId,
+    }: {
+      tankPosition: Coords
+      tankDirection: DirectionKey
+      tankId: string
+    }) => {
+      return
+    }
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -197,7 +286,10 @@ describe('Tank Intersection', () => {
       initialDirection,
       tankColor,
       tankType,
+      controlKeys,
       sceneBlockPositions,
+      fireKey,
+      onFire,
     })
 
     // Move down, tank should change position
@@ -205,7 +297,8 @@ describe('Tank Intersection', () => {
     const moveSpy = jest.spyOn(tank as any, 'move')
 
     // Вызываем метод
-    tank['move'](MovementDirection.down)
+    tank.directionKeyPressed = MovementDirection.down
+    tank['move']()
 
     const expectedPosition = {
       x: initialPosition.x,
@@ -228,17 +321,30 @@ describe('Tank Un/subscribe', () => {
     const tankColor = TankColor.green
     const tankType = TankType.basic
     const controlKeys = {
-      up: 'ArrowUp',
-      down: 'ArrowDown',
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
+      up: TankControlKeys.movement.up,
+      down: TankControlKeys.movement.down,
+      left: TankControlKeys.movement.left,
+      right: TankControlKeys.movement.right,
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const fireKey = TankControlKeys.fire
+    const onFire = ({
+      tankPosition,
+      tankDirection,
+      tankId,
+    }: {
+      tankPosition: Coords
+      tankDirection: DirectionKey
+      tankId: string
+    }) => {
+      return
+    }
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -248,11 +354,13 @@ describe('Tank Un/subscribe', () => {
       tankType,
       controlKeys,
       sceneBlockPositions,
+      fireKey,
+      onFire,
     })
 
-    const subSpy = jest.spyOn(tank as any, 'keyPressSubscription')
+    const subSpy = jest.spyOn(tank as any, 'keyDownSubscription')
 
-    expect(tank['keyPressSubscription']).not.toBeNull()
+    expect(tank['keyDownSubscription']).not.toBeNull()
 
     subSpy.mockRestore()
   })
@@ -262,17 +370,30 @@ describe('Tank Un/subscribe', () => {
     const tankColor = TankColor.green
     const tankType = TankType.basic
     const controlKeys = {
-      up: 'ArrowUp',
-      down: 'ArrowDown',
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
+      up: TankControlKeys.movement.up,
+      down: TankControlKeys.movement.down,
+      left: TankControlKeys.movement.left,
+      right: TankControlKeys.movement.right,
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const fireKey = TankControlKeys.fire
+    const onFire = ({
+      tankPosition,
+      tankDirection,
+      tankId,
+    }: {
+      tankPosition: Coords
+      tankDirection: DirectionKey
+      tankId: string
+    }) => {
+      return
+    }
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -282,9 +403,11 @@ describe('Tank Un/subscribe', () => {
       tankType,
       controlKeys,
       sceneBlockPositions,
+      fireKey,
+      onFire,
     })
 
-    const subSpy = jest.spyOn(tank as any, 'keyPressSubscription')
+    const subSpy = jest.spyOn(tank as any, 'keyUpSubscription')
 
     // Вызываем метод отписки
     tank.unsubscribe()

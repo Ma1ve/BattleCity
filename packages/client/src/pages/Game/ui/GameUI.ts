@@ -61,20 +61,23 @@ export const getTankSpritePosition = (
 
 class GameUI {
   public images: Images
-  public frame: number
+  public frame: number | undefined
+  //@ts-ignore
   private readonly spriteImage: HTMLImageElement
 
-  private activeSpriteIndex
-  private animationFrameCount
+  private activeSpriteIndex = 0
+  private animationFrameCount = 0
 
   constructor() {
+    if (typeof window !== 'undefined') {
+      const spriteImage = new Image()
+      spriteImage.src = sprite
+      this.spriteImage = spriteImage
+    }
+
     this.frame = 0
 
     this.images = this.getSprites()
-
-    const spriteImage = new Image()
-    spriteImage.src = sprite
-    this.spriteImage = spriteImage
 
     this.activeSpriteIndex = 0
     this.animationFrameCount = 0

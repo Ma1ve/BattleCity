@@ -1,6 +1,11 @@
-import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit'
+import {
+  /* createSlice, */ PayloadAction /* , createSelector */,
+} from '@reduxjs/toolkit'
 import { TUserProfileData } from '../../models/IUser'
 import { RootState } from '..'
+import * as toolkitRaw from '@reduxjs/toolkit'
+
+const { createSelector, createSlice } = toolkitRaw.default ?? toolkitRaw
 
 interface IUserState {
   userInfo: TUserProfileData | null

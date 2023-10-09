@@ -38,6 +38,13 @@ export type Images = {
   stage: Stage
 }
 
+export type Image = {
+  tanks: Tank
+  bullet: Bullet
+  animations: Animation
+  stage: Stage
+}
+
 export enum TankColor {
   yellow = 'yellow',
   green = 'green',
