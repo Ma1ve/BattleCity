@@ -2,10 +2,10 @@ import { Tank } from '../ui/Tank'
 import {
   MovementDirection,
   TankType,
-  SceneBlockPositions,
   TankColor,
   Coords,
   DirectionKey,
+  SceneBlocks,
 } from '../shared/types'
 import { TankControlKeys, tankSpeed } from '../shared/config/gameConstants'
 
@@ -33,12 +33,13 @@ describe('Tank Class', () => {
     }) => {
       return
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -88,12 +89,13 @@ describe('Tank Move', () => {
     }) => {
       return
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -152,12 +154,13 @@ describe('Tank Type', () => {
     }) => {
       return
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -212,12 +215,13 @@ describe('Tank Intersection', () => {
     }) => {
       return
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -268,12 +272,13 @@ describe('Tank Intersection', () => {
     }) => {
       return
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -333,12 +338,13 @@ describe('Tank Un/subscribe', () => {
     }) => {
       return
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({
@@ -352,7 +358,7 @@ describe('Tank Un/subscribe', () => {
       onFire,
     })
 
-    const subSpy = jest.spyOn(tank as any, 'keyPressSubscription')
+    const subSpy = jest.spyOn(tank as any, 'keyDownSubscription')
 
     expect(tank['keyDownSubscription']).not.toBeNull()
 
@@ -381,12 +387,13 @@ describe('Tank Un/subscribe', () => {
     }) => {
       return
     }
-    const sceneBlockPositions: SceneBlockPositions = {
+    const sceneBlockPositions: SceneBlocks = {
       brick: [
         { x: 50, y: 50 },
         { x: 60, y: 60 },
       ],
       eagle: { x: 6, y: 12 },
+      tanks: [],
     }
 
     const tank = new Tank({

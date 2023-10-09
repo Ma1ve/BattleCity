@@ -14,11 +14,13 @@ import {
   PlayerTankColor,
   TankOwner,
   TankType,
-  SceneBlockPositions,
   ControlKeys,
   DirectionKey,
+  SceneBlocks,
   CoordsWithSize,
+  OnFire,
 } from '../shared/types'
+import { SpriteAnimator } from './SpriteAnimator'
 
 interface ITankProps<O extends TankOwner> {
   initialPosition: Coords
@@ -26,17 +28,9 @@ interface ITankProps<O extends TankOwner> {
   tankType: TankType
   controlKeys?: ControlKeys
   initialDirection: MovementDirection
-  fireKey: string
-  sceneBlockPositions: SceneBlockPositions
-  onFire: ({
-    tankPosition,
-    tankDirection,
-    tankId,
-  }: {
-    tankPosition: Coords
-    tankDirection: DirectionKey
-    tankId: string
-  }) => void
+  fireKey?: string
+  sceneBlockPositions: SceneBlocks
+  onFire: OnFire
 }
 
 type TankTypeKey = keyof typeof TankType
@@ -55,20 +49,13 @@ export class Tank<O extends TankOwner> {
   public direction: DirectionKey
   public directionKeyPressed?: DirectionKey
   public tankType: TankTypeKey
-  public sceneBlockPositions: SceneBlockPositions
+  public sceneBlockPositions: SceneBlocks
   public tankId: string
-  public fireKey: string
-  public onFire: ({
-    tankId,
-    tankDirection,
-    tankPosition,
-  }: {
-    tankId: string
-    tankDirection: DirectionKey
-    tankPosition: Coords
-  }) => void
+  public fireKey?: string
+  public onFire: OnFire
   private keyDownSubscription?: (event: KeyboardEvent) => void
   private keyUpSubscription?: (event: KeyboardEvent) => void
+  private spriteAnimator = new SpriteAnimator()
 
   constructor({
     initialPosition,
@@ -85,6 +72,12 @@ export class Tank<O extends TankOwner> {
       this.controlKeys = controlKeys
     }
 
+    if (fireKey) {
+      this.fireKey = fireKey
+    }
+
+    this.onFire = onFire
+
     this.initialPosition = initialPosition
 
     this.tankId = uuidv4()
@@ -94,10 +87,6 @@ export class Tank<O extends TankOwner> {
     this.tankVariants = gameUI.images.tanks[tankColor]
 
     this.direction = initialDirection
-
-    this.fireKey = fireKey
-
-    this.onFire = onFire
 
     this.tankType = tankType
 
@@ -180,11 +169,13 @@ export class Tank<O extends TankOwner> {
       const keyCode = event.code
 
       if (keyCode === this.fireKey) {
-        this.onFire({
-          tankId: this.tankId,
-          tankDirection: this.direction,
-          tankPosition: this.position,
-        })
+        if (this.onFire) {
+          this.onFire({
+            tankId: this.tankId,
+            tankDirection: this.direction,
+            tankPosition: this.position,
+          })
+        }
       }
 
       for (const direction in this.controlKeys) {
@@ -223,7 +214,11 @@ export class Tank<O extends TankOwner> {
     this.move()
 
     return {
-      spritePosition: this.sprites[this.activeSpriteIndex],
+      spritePosition: this.spriteAnimator.animate({
+        frameCount: 4,
+        sprites: this.sprites,
+        disabled: !this.directionKeyPressed,
+      }),
       canvasPosition: this.position,
     }
   }
