@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
   RouterProvider,
   createBrowserRouter,
@@ -28,12 +28,30 @@ import { BackgroundAudioArea } from '../features/ui/BackgroundAudioArea'
 import { useActionCreators } from './hooks/reducer'
 import { userActions } from './store/reducers/UserSlice'
 import { ERoutes } from './models/types'
+import { redirectUri } from '../shared/api/consts'
 
 function App() {
   const actions = useActionCreators(userActions)
+  const authCode = new URLSearchParams(location.search).get('code')
+
+  const OAuth = useCallback(async (code: string) => {
+    await AuthAPI.sendAuthCode(code, redirectUri)
+    Auth()
+  }, [])
+
+  const Auth = useCallback(async () => {
+    const userData = await AuthAPI.getUserData()
+    actions.setUserInfo(userData ?? null)
+  }, [])
 
   useEffect(() => {
-    AuthAPI.getUserData().then(response => actions.setUserInfo(response as any))
+    if (authCode) {
+      OAuth(authCode)
+    }
+  }, [authCode])
+
+  useEffect(() => {
+    Auth()
   }, [])
 
   return (
