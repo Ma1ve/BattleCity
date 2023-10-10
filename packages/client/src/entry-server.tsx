@@ -1,17 +1,51 @@
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import App from './app/App'
-import { createStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
-import { TestApp } from './app/testApp'
+import { renderToString } from 'react-dom/server'
+import {
+  StaticHandlerContext,
+  StaticRouterProvider,
+  createStaticHandler,
+  createStaticRouter,
+} from 'react-router-dom/server'
 
-export async function render(url: string, cookies: Record<string, string>) {
-  const store = {}
-  const html = ReactDOMServer.renderToString(
-    <React.StrictMode>
-      <TestApp />
-    </React.StrictMode>
+import { Provider } from 'react-redux'
+
+import { createStore } from './app/store'
+import { createFetchRequest } from './createFetchRequest'
+
+import { routes } from './app/router/routes'
+
+import { IncomingMessage } from 'http'
+
+interface Props {
+  path: string
+  data: Record<string, unknown>
+  req: IncomingMessage
+}
+
+export const render = async ({ path, data, req }: Props) => {
+  const store = createStore(data)
+
+  const { query, dataRoutes } = createStaticHandler(routes)
+  const fetchRequest = createFetchRequest(req)
+  const context = await query(fetchRequest)
+
+  const router = createStaticRouter(dataRoutes, context as StaticHandlerContext)
+
+  const html = renderToString(
+    <Provider store={store}>
+      <StaticRouterProvider
+        router={router}
+        context={context as StaticHandlerContext}
+      />
+    </Provider>
   )
 
-  return { html, head: '' }
+  const state = `
+    <script>
+        window.__PREPARED_STATE__ = ${JSON.stringify(store.getState()).replace(
+          /</g,
+          '\\u003c'
+        )}
+    </script>`
+
+  return { html, state, head: '' }
 }

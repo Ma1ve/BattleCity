@@ -1,6 +1,7 @@
 import express from 'express'
 import fs from 'fs'
 import path from 'path'
+import cookieParser from 'cookie-parser'
 
 import { createServer as createSsrServer } from 'vite'
 
@@ -23,8 +24,6 @@ const getStyleSheets = async () => {
       allContent.push(content)
     }
 
-    console.log(1, allContent)
-
     return `<style type="text/css">${allContent.join('')}</style>`
   } catch (error) {
     console.log(error)
@@ -34,6 +33,7 @@ const getStyleSheets = async () => {
 
 async function createServer() {
   const app = express()
+  app.use(cookieParser())
 
   const vite = await createSsrServer({
     server: {
@@ -43,9 +43,7 @@ async function createServer() {
   })
 
   if (isProduction) {
-    // app.use((await import('compression')).default())
-
-    app.use(express.static('./dist/client', { index: false }))
+    app.use(express.static('dist/client', { index: false }))
   } else {
     app.use(vite.middlewares)
   }
@@ -57,7 +55,6 @@ async function createServer() {
     let render
 
     try {
-      // Если у нас mode develop
       if (!isProduction) {
         template = fs.readFileSync(path.resolve('./index.html'), 'utf-8')
 
@@ -65,16 +62,13 @@ async function createServer() {
 
         render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render
       } else {
-        // Если у нас mode production
         template = fs.readFileSync(
-          path.resolve('./dist/client/index.html'),
+          path.resolve('dist/client/index.html'),
           'utf-8'
         )
-        // в render достаем все из budle dist
+
         render = (await import('./dist/server/entry-server.js')).render
       }
-
-      // После того, как определились какой mode development/priduction
 
       const rendered = await render({
         path: url,
@@ -85,9 +79,9 @@ async function createServer() {
       const stylesSheets = isProduction ? await getStyleSheets() : ''
 
       const html = template
-        .replace("<!--app-html-->", rendered.html ?? '')
-        .replace("<!--app-state-->", rendered.state ?? '')
-        .replace("<!--app-head-->", stylesSheets ?? '')
+        .replace(`<!--app-html-->`, rendered.html ?? '')
+        .replace(`<!--app-state-->`, rendered.state ?? '')
+        .replace(`<!--app-head-->`, stylesSheets ?? '')
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (error) {
@@ -99,9 +93,9 @@ async function createServer() {
     }
   })
 
-  app.listen(5174)
+  app.listen(3000)
 }
 
 createServer().then(() => {
-  console.log('http://localhost:5174')
+  console.log('http://localhost:3000')
 })
