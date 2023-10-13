@@ -15,6 +15,14 @@ app.get('/', (_, res) => {
   res.json('👋 Howdy from the server :)')
 })
 
+app.get('/theme', (_, res) => {
+  res.json({ theme: 'light' })
+})
+
+app.post('/theme', (_, res) => {
+  res.json('ok')
+})
+
 app.listen(port, () => {
   console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
 })

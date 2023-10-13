@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { toast } from 'react-toastify'
 
 import {
@@ -86,6 +86,29 @@ class AuthApi {
       return response
     } catch (error: unknown) {
       toast.error(`Ошибка при отправке кода авторизации`)
+    }
+  }
+
+  getTheme = async (id: number) => {
+    try {
+      const response = await this.instance.get(
+        `http://localhost:3001/theme?${id}`
+      )
+      return response
+    } catch (error: unknown) {
+      toast.error(`Ошибка при получении темы`)
+    }
+  }
+
+  setTheme = async (id: number, theme: string) => {
+    try {
+      const response = await this.instance.post(`http://localhost:3001/theme`, {
+        id,
+        theme,
+      })
+      return response
+    } catch (error: unknown) {
+      toast.error(`Ошибка при cмене темы`)
     }
   }
 }

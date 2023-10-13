@@ -24,3 +24,7 @@
 .menuLayout a:hover {
   color: var(--primary-text-color);
 }
+
+.changedTheme {
+  cursor: pointer;
+}

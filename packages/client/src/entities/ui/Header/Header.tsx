@@ -1,10 +1,25 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { ERoutes } from '../../../app/models/types'
+import { useActionCreators, useAppSelector } from '../../../app/hooks/reducer'
 
+import { ERoutes, ETheme } from '../../../app/models/types'
+import {
+  selectUserTheme,
+  userActions,
+} from '../../../app/store/reducers/UserSlice'
+import themeIcon from '../../../shared/images/theme.svg'
 import styles from './Header.module.css'
 
 const Header = () => {
+  const theme = useAppSelector(selectUserTheme)
+  const actions = useActionCreators(userActions)
+
+  const changedTheme = () => {
+    actions.setTheme({
+      theme: `${theme === ETheme.DARK ? ETheme.LIGHT : ETheme.DARK}`,
+    })
+  }
+
   return (
     <header className={styles.headerLayout}>
       Tanks 1.0
@@ -87,6 +102,13 @@ const Header = () => {
           page500
         </NavLink>
       </menu>
+      <img
+        alt="Changed theme"
+        src={themeIcon}
+        className={styles.changedTheme}
+        onClick={() => changedTheme()}
+        title="Сменить тему"
+      />
     </header>
   )
 }
