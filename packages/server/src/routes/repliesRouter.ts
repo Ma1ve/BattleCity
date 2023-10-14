@@ -1,17 +1,22 @@
 import express, { Request, Response } from 'express'
 import { Reply } from '../models/forum/reply'
+import { celebrate, Joi } from 'celebrate'
 
-interface CreateReplyRequest {
-  content: string
-}
+const createReplySchema = Joi.object({
+  content: Joi.string().required(),
+  author: Joi.string().required(),
+})
 
 const router = express.Router()
 
 router.post(
   '/:topicId/comments/:commentId/replies',
+  celebrate({
+    body: createReplySchema,
+  }),
   async (req: Request, res: Response) => {
     try {
-      const { content } = req.body as CreateReplyRequest
+      const { content, author } = req.body
       const topicId = parseInt(req.params.topicId, 10) // ID темы из URL
       const commentId = parseInt(req.params.commentId, 10) // ID комментария из URL
 
@@ -19,6 +24,7 @@ router.post(
       // @ts-ignore
       const newReply = await Reply.create({
         content,
+        author,
         topicId,
         commentId,
       })

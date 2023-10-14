@@ -24,6 +24,12 @@ export class Reply extends Model<Reply> {
   })
   content: string
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  author: string
+
   // Отношение многие к одному с моделью Topic
   @ForeignKey(() => Topic)
   @Column
