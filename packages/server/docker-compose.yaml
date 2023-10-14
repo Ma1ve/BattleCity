@@ -1,0 +1,56 @@
+version: "3"
+services:
+  veisa:
+    build:
+      context: .
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/veisa
+      NODE_ENV: development
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    restart: always
+    networks:
+      - awesome
+  postgres:
+    container_name: custom_name # Можно и не указывать, тогда будет взято за основу название сервиса: `postgres`
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: antonastreiko
+      POSTGRES_PASSWORD: newPassword
+      POSTGRES_DB: veisa
+    networks:
+      - awesome
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:4.18
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "postgres", "5432" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  pgadmin-data:
+
+networks:
+  awesome:
+    driver: bridge
