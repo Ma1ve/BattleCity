@@ -1,44 +1,32 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
 
-import Themes from "../models/Themes";
+import Themes from '../models/Themes'
 
-export const setTheme = async (
-    request: Request, 
-    response: Response
-  ) => {
-    const { theme, id } = request.body;
-    
-    try {
-        await (Themes as any).upsert({
-          theme,
-          userId: id
-        });
+export const setTheme = async (request: Request, response: Response) => {
+  const { theme, id } = request.body
 
-        response.status(201).json({ theme });
-    } catch (error) {
-        response.status(500).json(
-          { error: "Не удалось сменить тему" }
-        );
-    }
-};
+  try {
+    await (Themes as any).upsert({
+      theme,
+      userId: id,
+    })
 
-export const getTheme = async (
-    request: Request, 
-    response: Response
-  ) => {
-    const userId = request.query["id"];
+    response.status(201).json({ theme })
+  } catch (error) {
+    response.status(500).json({ error: 'Не удалось сменить тему' })
+  }
+}
 
-    try {
-        const theme = await (Themes as any).findOne({
-            where: { userId }
-        });
+export const getTheme = async (request: Request, response: Response) => {
+  const userId = request.query['id']
 
-        response.status(201).json(
-          { theme }
-        );
-    } catch (error) {
-        response.status(500).json(
-          { error: "Не удалось получить тему" }
-        );
-    }
-};
+  try {
+    const theme = await (Themes as any).findOne({
+      where: { userId },
+    })
+
+    response.status(201).json({ theme })
+  } catch (error) {
+    response.status(500).json({ error: 'Не удалось получить тему' })
+  }
+}

@@ -5,10 +5,10 @@
   "scripts": {
     "build": "tsc --p ./tsconfig.prod.json",
     "preview": "node ./dist/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ."
+    "test": "jest .",
+    "dev": "cross-env NODE_ENV=development nodemon -L"
   },
   "dependencies": {
     "celebrate": "^15.0.1",

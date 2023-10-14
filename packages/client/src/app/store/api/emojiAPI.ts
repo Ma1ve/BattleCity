@@ -1,4 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+// For production
+import pkg from '@reduxjs/toolkit/dist/query/react/index.js'
+const { fetchBaseQuery } = pkg
+
+// For development
+// import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
+import * as toolkitRaw from '@reduxjs/toolkit/dist/query/react'
+const { createApi } = toolkitRaw.default ?? toolkitRaw
+
 import { EmojiResponseData } from '../../models/IEmoji'
 
 const { BASE_URL } = import.meta.env

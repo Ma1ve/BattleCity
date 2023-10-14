@@ -1,26 +1,26 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
-import { Topic } from './src/models/forum/topic'
-import { Reply } from './src/models/forum/reply'
-import { Comment } from './src/models/forum/comment'
-import Themes from './models/Themes'
-import Users from './models/Users'
+import { Topic } from './models/forum/topic'
+import { Reply } from './models/forum/reply'
+import { Comment } from './models/forum/comment'
+import Themes from '../models/Themes'
+import Users from '../models/Users'
 
 const {
   POSTGRES_PORT,
   POSTGRES_DB,
   POSTGRES_PASSWORD,
   POSTGRES_USER,
-  POSTGRES_HOST
+  POSTGRES_HOST,
 } = process.env
 
 const sequelizeOptions: SequelizeOptions = {
-    dialect: 'postgres',
-    host: POSTGRES_HOST,
-    username: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
-    database: POSTGRES_DB,
-    port: Number(POSTGRES_PORT),
-    models: [Themes, Users],
+  dialect: 'postgres',
+  host: POSTGRES_HOST,
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
+  port: Number(POSTGRES_PORT),
+  models: [Themes, Users],
 }
 
 export async function createSequelizeConnection() {

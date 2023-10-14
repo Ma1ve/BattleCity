@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ./",
-    "dev:ssr": "NODE_ENV=development node server.js",
+    "dev:ssr": "yarn build:ssr && NODE_ENV=development node server.js",
     "build:ssr": "yarn build:client && yarn build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr src/entry-server.tsx",
