@@ -1,11 +1,14 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { Topic } from './src/models/forum/topic'
+import { Reply } from './src/models/forum/reply'
+import { Comment } from './src/models/forum/comment'
 import Themes from './models/Themes'
 import Users from './models/Users'
 
-const { 
-  POSTGRES_PORT, 
-  POSTGRES_DB, 
-  POSTGRES_PASSWORD, 
+const {
+  POSTGRES_PORT,
+  POSTGRES_DB,
+  POSTGRES_PASSWORD,
   POSTGRES_USER,
   POSTGRES_HOST
 } = process.env
@@ -22,7 +25,7 @@ const sequelizeOptions: SequelizeOptions = {
 
 export async function createSequelizeConnection() {
   const sequelize = new Sequelize(sequelizeOptions)
-  sequelize.addModels([Themes, Users])
+  sequelize.addModels([Themes, Users, Topic, Comment, Reply])
 
   try {
     await sequelize.authenticate()
