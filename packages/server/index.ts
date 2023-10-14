@@ -23,6 +23,8 @@ const port = Number(process.env.SERVER_PORT) || 3001
 createClientAndConnect()
 dbConnect()
 
+app.use(express.json())
+
 app.use('/topics', topicsRouter)
 app.use('/comments', commentsRouter)
 app.use('/replies', repliesRouter)

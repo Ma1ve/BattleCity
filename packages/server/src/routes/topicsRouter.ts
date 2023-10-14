@@ -1,35 +1,32 @@
 import express, { Request, Response } from 'express'
-import { Topic } from '../../dist/models/topic.model'
 import { Comment } from '../models/forum/comment'
-import { celebrate, Joi } from 'celebrate'
+import { celebrate, Joi, Segments } from 'celebrate'
+import { Topic } from '../models/forum/topic'
 
 const router = express.Router()
 
-const createTopicSchema = Joi.object({
-  title: Joi.string().required(),
-  author: Joi.string().required(),
+const createTopicSchema = celebrate({
+  [Segments.BODY]: Joi.object().keys({
+    author: Joi.string().required(),
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+  }),
 })
 
-router.post(
-  '/',
-  celebrate({
-    body: createTopicSchema,
-  }),
-  async (req: Request, res: Response) => {
-    try {
-      const { title, author, content } = req.body
+router.post('/', createTopicSchema, async (req: Request, res: Response) => {
+  try {
+    const { title, author, content } = req.body
 
-      // новый топик с данными из запроса
-      // @ts-ignore
-      const newTopic = await Topic.create({ title, author, content })
+    // новый топик с данными из запроса
+    // @ts-ignore
+    const newTopic = await Topic.create({ title, author, content })
 
-      res.status(201).json(newTopic)
-    } catch (error) {
-      console.error('Ошибка при создании топика:', error)
-      res.status(500).json({ error: 'Ошибка сервера' })
-    }
+    res.status(200).json(newTopic)
+  } catch (error) {
+    console.error('Ошибка при создании топика:', error)
+    res.status(500).json({ error: 'Ошибка сервера' })
   }
-)
+})
 
 router.get('/', async (_, res: Response) => {
   try {

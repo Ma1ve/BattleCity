@@ -1,19 +1,25 @@
 import express, { Request, Response } from 'express'
 import { Comment } from '../models/forum/comment'
-import { celebrate, Joi } from 'celebrate'
+import { celebrate, Joi, Segments } from 'celebrate'
 
-const createCommentSchema = Joi.object({
-  content: Joi.string().required(),
-  author: Joi.string().required(),
+const createCommentSchema = celebrate({
+  [Segments.BODY]: Joi.object().keys({
+    content: Joi.string().required(),
+    author: Joi.string().required(),
+  }),
+})
+
+const getCommentsSchema = celebrate({
+  [Segments.PARAMS]: Joi.object().keys({
+    topicId: Joi.number().required(),
+  }),
 })
 
 const router = express.Router()
 
 router.post(
   '/:topicId/comments',
-  celebrate({
-    body: createCommentSchema,
-  }),
+  createCommentSchema,
   async (req: Request, res: Response) => {
     try {
       const { content, author } = req.body
@@ -27,7 +33,9 @@ router.post(
         topicId,
       })
 
-      res.status(201).json(newComment)
+      console.log('newComment', newComment)
+
+      res.status(200).json(newComment)
     } catch (error) {
       console.error('Ошибка при создании комментария:', error)
       res.status(500).json({ error: 'Ошибка сервера' })
@@ -35,20 +43,24 @@ router.post(
   }
 )
 
-router.get('/:topicId', async (req: Request, res: Response) => {
-  try {
-    const topicId = req.params.topicId // id топика из параметров запроса
+router.get(
+  '/:topicId',
+  getCommentsSchema,
+  async (req: Request, res: Response) => {
+    try {
+      const topicId = req.params.topicId // id топика из параметров запроса
 
-    // все комменты с фильтрацией по topicId
-    const comments = await Comment.findAll({
-      where: { topicId: topicId },
-    })
+      // все комменты с фильтрацией по topicId
+      const comments = await Comment.findAll({
+        where: { topicId: topicId },
+      })
 
-    res.status(200).json(comments)
-  } catch (error) {
-    console.error('Ошибка при получении комментариев:', error)
-    res.status(500).json({ error: 'Ошибка сервера' })
+      res.status(200).json(comments)
+    } catch (error) {
+      console.error('Ошибка при получении комментариев:', error)
+      res.status(500).json({ error: 'Ошибка сервера' })
+    }
   }
-})
+)
 
 export default router
