@@ -23,6 +23,12 @@ export class Comment extends Model<Comment> {
   })
   content: string
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  author: string
+
   // отношение многие к одному с моделью Topic
   @ForeignKey(() => Topic)
   @Column

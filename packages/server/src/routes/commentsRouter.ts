@@ -1,30 +1,39 @@
 import express, { Request, Response } from 'express'
 import { Comment } from '../models/forum/comment'
+import { celebrate, Joi } from 'celebrate'
 
-interface CreateCommentRequest {
-  content: string
-}
+const createCommentSchema = Joi.object({
+  content: Joi.string().required(),
+  author: Joi.string().required(),
+})
 
 const router = express.Router()
 
-router.post('/:topicId/comments', async (req: Request, res: Response) => {
-  try {
-    const { content } = req.body as CreateCommentRequest
-    const topicId = parseInt(req.params.topicId, 10) // ID топика из url
+router.post(
+  '/:topicId/comments',
+  celebrate({
+    body: createCommentSchema,
+  }),
+  async (req: Request, res: Response) => {
+    try {
+      const { content, author } = req.body
+      const topicId = parseInt(req.params.topicId, 10) // ID топика из url
 
-    // новый комментарий с данными из запроса
-    // @ts-ignore
-    const newComment = await Comment.create({
-      content,
-      topicId,
-    })
+      // новый комментарий с данными из запроса
+      // @ts-ignore
+      const newComment = await Comment.create({
+        content,
+        author,
+        topicId,
+      })
 
-    res.status(201).json(newComment)
-  } catch (error) {
-    console.error('Ошибка при создании комментария:', error)
-    res.status(500).json({ error: 'Ошибка сервера' })
+      res.status(201).json(newComment)
+    } catch (error) {
+      console.error('Ошибка при создании комментария:', error)
+      res.status(500).json({ error: 'Ошибка сервера' })
+    }
   }
-})
+)
 
 router.get('/:topicId', async (req: Request, res: Response) => {
   try {

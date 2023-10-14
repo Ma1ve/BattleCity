@@ -21,13 +21,13 @@ export class Topic extends Model<Topic> {
     type: DataType.STRING,
     allowNull: false,
   })
-  author: string
+  content: string
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  content: string
+  author: string
 
   // Отношение один ко многим с моделью Comment
   @HasMany(() => Comment)
