@@ -5,12 +5,14 @@ dotenv.config()
 import express from 'express'
 import { createClientAndConnect, dbConnect } from './db'
 import topicsRouter from './src/routes/topicsRouter'
+import commentsRouter from './src/routes/commentsRouter'
+import repliesRouter from './src/routes/repliesRouter'
 
 const app = express()
 
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: '*',
     // Allow follow-up middleware to override this CORS for options
     preflightContinue: true,
   })
@@ -22,6 +24,9 @@ createClientAndConnect()
 dbConnect()
 
 app.use('/topics', topicsRouter)
+app.use('/comments', commentsRouter)
+app.use('/replies', repliesRouter)
+
 app.use('/', (_, res) => {
   res.json('hello')
 })
