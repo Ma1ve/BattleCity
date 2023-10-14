@@ -6,7 +6,6 @@ export const setTheme = async (
     request: Request, 
     response: Response
   ) => {
-    console.log(request.body)
     const { theme, id } = request.body;
     
     try {
@@ -17,7 +16,6 @@ export const setTheme = async (
 
         response.status(201).json('ok');
     } catch (error) {
-        console.log(error)
         response.status(500).json(
           { error: "Не удалось сменить тему" }
         );
