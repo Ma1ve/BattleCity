@@ -44,10 +44,7 @@
     "lerna": "^5.4.3",
     "lint-staged": "^14.0.0",
     "sinon": "^15.2.0",
-    "ts-sinon": "^2.0.2",
-    "sequelize-typescript": "2.1.5",
-    "reflect-metadata": "0.1.13",
-    "sequelize": "6.33.0"
+    "ts-sinon": "^2.0.2"
   },
   "dependencies": {
     "classnames": "^2.3.2"
