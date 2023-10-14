@@ -1,0 +1,9 @@
+.root {
+  width: 200px;
+  height: 200px;
+  background-color: rgb(27, 27, 27);
+  border-radius: 10px;
+  position: absolute;
+  bottom: 35px;
+  border: 2px solid var(--main-filter-color);
+}

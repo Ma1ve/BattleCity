@@ -1,0 +1,15 @@
+.root {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 90%;
+  transition: scale 300ms 0ms;
+}
+
+.icon:hover {
+  scale: 1.05;
+}
