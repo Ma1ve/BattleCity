@@ -6,6 +6,8 @@ import { setTheme, getTheme } from '../server/controllers/controllerTheme'
 dotenv.config()
 import bodyParser from 'body-parser'
 import topicsRouter from './src/routes/topicsRouter'
+import commentsRouter from './src/routes/commentsRouter'
+import repliesRouter from './src/routes/repliesRouter'
 
 async function startServer() {
   const app = express()
@@ -23,6 +25,8 @@ async function startServer() {
   app.post('/theme', setTheme)
 
   app.use('/topics', topicsRouter)
+  app.use('/comments', commentsRouter)
+  app.use('/replies', repliesRouter)
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
