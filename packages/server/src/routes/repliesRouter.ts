@@ -23,7 +23,6 @@ router.post(
         commentId,
       })
 
-      //  успешный ответ с созданным ответом
       res.status(201).json(newReply)
     } catch (error) {
       console.error('Ошибка при создании ответа:', error)
@@ -31,5 +30,21 @@ router.post(
     }
   }
 )
+
+router.get('/:commentId', async (req: Request, res: Response) => {
+  try {
+    const commentId = req.params.commentId // id комментария из параметров запроса
+
+    // все реплаи с фильтрацией по commentId
+    const replies = await Reply.findAll({
+      where: { commentId: commentId },
+    })
+
+    res.status(200).json(replies)
+  } catch (error) {
+    console.error('Ошибка при получении реплаев:', error)
+    res.status(500).json({ error: 'Ошибка сервера' })
+  }
+})
 
 export default router

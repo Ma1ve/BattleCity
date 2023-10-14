@@ -19,10 +19,25 @@ router.post('/:topicId/comments', async (req: Request, res: Response) => {
       topicId,
     })
 
-    // успешный ответ с созданным комментарием
     res.status(201).json(newComment)
   } catch (error) {
     console.error('Ошибка при создании комментария:', error)
+    res.status(500).json({ error: 'Ошибка сервера' })
+  }
+})
+
+router.get('/:topicId', async (req: Request, res: Response) => {
+  try {
+    const topicId = req.params.topicId // id топика из параметров запроса
+
+    // все комменты с фильтрацией по topicId
+    const comments = await Comment.findAll({
+      where: { topicId: topicId },
+    })
+
+    res.status(200).json(comments)
+  } catch (error) {
+    console.error('Ошибка при получении комментариев:', error)
     res.status(500).json({ error: 'Ошибка сервера' })
   }
 })
