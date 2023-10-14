@@ -30,7 +30,7 @@ export const userSlice = createSlice({
       state: IUserState,
       action: PayloadAction<{ theme: string } | null>
     ) => {
-      state.theme = action.payload?.theme ?? null
+      state.theme = action.payload?.theme ?? ETheme.DARK
     },
   },
 })
@@ -44,7 +44,6 @@ export const selectTheme = (state: RootState) => state.user.theme
 export const selectUserInfo = createSelector(
   [selectUser],
   (userInfo: IUserState) => userInfo,
-  (theme: string) => theme
 )
 
 export const selectUserTheme = createSelector(
@@ -53,3 +52,4 @@ export const selectUserTheme = createSelector(
 )
 
 export default userSlice.reducer
+

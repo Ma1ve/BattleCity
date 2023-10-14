@@ -65,7 +65,7 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
       const currentTheme = await AuthAPI.getTheme(userInfo.id)
       actions.setTheme(currentTheme?.data)
     }
-  }, [])
+  }, [userInfo])
 
   useEffect(() => {
     if (authCode) {

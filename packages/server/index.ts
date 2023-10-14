@@ -1,28 +1,35 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
-dotenv.config()
-
 import express from 'express'
-import { createClientAndConnect } from './db'
+import { createSequelizeConnection } from './db'
+import { setTheme, getTheme } from '../server/controllers/controllerTheme'
+dotenv.config()
+import bodyParser from 'body-parser'
 
-const app = express()
-app.use(cors())
-const port = Number(process.env.SERVER_PORT) || 3001
+async function startServer() {
+  const app = express()
+  app.use(cors())
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json())
+  const port = Number(process.env.SERVER_PORT) || 3001
 
-createClientAndConnect()
+  app.get('/', (_, res) => {
+    res.json('👋 Howdy from the server :)')
+  })
 
-app.get('/', (_, res) => {
-  res.json('👋 Howdy from the server :)')
-})
+  app.get('/theme', getTheme)
 
-app.get('/theme', (_, res) => {
-  res.json({ theme: 'light' })
-})
+  app.post('/theme', setTheme)
+  
+  app.listen(port, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  })
+}
 
-app.post('/theme', (_, res) => {
-  res.json('ok')
-})
+async function start() {
+  await createSequelizeConnection()
+  await startServer()
+}
 
-app.listen(port, () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
-})
+start()
+

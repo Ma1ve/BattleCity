@@ -92,7 +92,7 @@ class AuthApi {
   getTheme = async (id: number) => {
     try {
       const response = await this.instance.get(
-        `http://localhost:3001/theme?${id}`
+        `http://localhost:3001/theme?id=${id}`
       )
       return response
     } catch (error: unknown) {
@@ -114,3 +114,4 @@ class AuthApi {
 }
 
 export const AuthAPI = new AuthApi()
+
