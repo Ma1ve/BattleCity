@@ -1,23 +1,25 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css'
+import classNames from 'classnames'
+import { ToastContainer } from 'react-toastify'
 
 import Auth from '../../features/ui/Auth'
 import Footer from '../../entities/ui/Footer/Footer'
 import Header from '../../entities/ui/Header/Header'
-
 import { useActionCreators, useAppSelector } from '../hooks/reducer'
-import { selectUserInfo, userActions } from '../store/reducers/UserSlice'
+import {
+  selectUserInfo,
+  selectUserTheme,
+  userActions,
+} from '../store/reducers/UserSlice'
 import { FullscreenButton } from '../../features/ui/FullscreenButton'
 import { AuthAPI } from '../../shared/api/AuthApi'
-
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-
-import styles from '../styles/rootLayout.module.css'
-import '../styles/index.css'
-
 import { BackgroundAudioArea } from '../../features/ui/BackgroundAudioArea'
-// import { redirectUri } from '../../shared/api/consts'
+import { TUserProfileData } from '../models/IUser'
+import { Theme } from '../models/types'
+import '../styles/index.css'
+import styles from '../styles/rootLayout.module.css'
 
 interface IRootLayout {
   children?: React.ReactElement
@@ -37,7 +39,8 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
     }
   }, [initialized])
 
-  const userInfo = useAppSelector(selectUserInfo)
+  const theme: string = useAppSelector(selectUserTheme)
+  const userInfo: TUserProfileData = useAppSelector(selectUserInfo)
   const actions = useActionCreators(userActions)
   const authCode =
     typeof window !== 'undefined'
@@ -57,6 +60,13 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
     actions.setUserInfo(userData ?? null)
   }, [])
 
+  const getTheme = useCallback(async () => {
+    if (userInfo) {
+      const currentTheme = await AuthAPI.getTheme(userInfo.id)
+      actions.setTheme(currentTheme?.data)
+    }
+  }, [userInfo])
+
   useEffect(() => {
     if (authCode) {
       OAuth(authCode)
@@ -67,34 +77,26 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
     auth()
   }, [auth])
 
-  // const userInfo = useAppSelector(selectUserInfo)
-  // const actions = useActionCreators(userActions)
-  // const authCode = new URLSearchParams(window.location.search).get('code')
+  useEffect(() => {
+    getTheme()
+  }, [userInfo])
 
-  // const OAuth = useCallback(async (code: string) => {
-  //   await AuthAPI.sendAuthCode(code, redirectUri)
-  //   auth()
-  // }, [])
-
-  // const auth = useCallback(async () => {
-  //   const userData = await AuthAPI.getUserData()
-  //   actions.setUserInfo(userData ?? null)
-  // }, [])
-
-  // useEffect(() => {
-  //   if (authCode) {
-  //     OAuth(authCode)
-  //   }
-  // }, [authCode])
-
-  // useEffect(() => {
-  //   auth()
-  // }, [])
+  useEffect(() => {
+    if (userInfo) {
+      AuthAPI.setTheme(userInfo.id, theme);
+      return;
+    } 
+    localStorage.setItem('theme', theme);
+  }, [theme])
 
   return (
     <div className={styles.wrapperLayout}>
       <Header />
-      <main className={styles.mainLayout}>
+      <main
+        className={classNames(styles.mainLayout, {
+          [styles.dark]: theme === Theme.DARK,
+          [styles.light]: theme === Theme.LIGHT,
+        })}>
         <Auth {...{ userInfo }}>{children ?? <Outlet />}</Auth>
       </main>
       <Footer />

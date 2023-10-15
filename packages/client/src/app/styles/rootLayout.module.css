@@ -4,6 +4,14 @@
   min-width: 950px;
 }
 
+.dark {
+  background: url('../../shared/images/pageBackground.png');
+}
+
+.light {
+  background: url('../../shared/images/pageBackground_light.png');
+}
+
 .mainLayout {
   color: red;
   height: calc(
@@ -15,6 +23,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('../../shared/images/pageBackground.png');
   opacity: 0.95;
 }

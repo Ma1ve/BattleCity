@@ -13,3 +13,8 @@ export enum ERoutes {
   ERROR404 = 'error404',
   ERROR500 = 'error500',
 }
+
+export enum Theme {
+  DARK = 'dark',
+  LIGHT = 'light',
+}

@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { toast } from 'react-toastify'
 
 import {
@@ -7,6 +7,8 @@ import {
   TUserProfileData,
 } from '../../app/models/IUser'
 import { AUTH_URL, OAUTH_URL } from './consts'
+
+const { BASE_URL } = import.meta.env
 
 class AuthApi {
   private instance: AxiosInstance
@@ -88,6 +90,28 @@ class AuthApi {
       toast.error(`Ошибка при отправке кода авторизации`)
     }
   }
+
+  getTheme = async (id: number) => {
+    try {
+      const response = await this.instance.get(`${BASE_URL}/theme?id=${id}`)
+      return response
+    } catch (error: unknown) {
+      toast.error(`Ошибка при получении темы`)
+    }
+  }
+
+  setTheme = async (id: number, theme: string) => {
+    try {
+      const response = await this.instance.post(`${BASE_URL}/theme`, {
+        id,
+        theme,
+      })
+      return response
+    } catch (error: unknown) {
+      toast.error(`Ошибка при cмене темы`)
+    }
+  }
 }
 
 export const AuthAPI = new AuthApi()
+
