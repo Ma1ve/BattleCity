@@ -83,9 +83,10 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
 
   useEffect(() => {
     if (userInfo) {
-      return AuthAPI.setTheme(userInfo.id, theme)
+      AuthAPI.setTheme(userInfo.id, theme);
+      return;
     } 
-    return localStorage.setItem('theme', theme)
+    localStorage.setItem('theme', theme);
   }, [theme])
 
   return (
