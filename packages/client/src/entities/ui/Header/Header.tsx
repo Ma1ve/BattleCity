@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useActionCreators, useAppSelector } from '../../../app/hooks/reducer'
 
-import { ERoutes, ETheme } from '../../../app/models/types'
+import { ERoutes, Theme } from '../../../app/models/types'
 import {
   selectUserTheme,
   userActions,
@@ -14,9 +14,9 @@ const Header = () => {
   const theme = useAppSelector(selectUserTheme)
   const actions = useActionCreators(userActions)
 
-  const changedTheme = () => {
+  const changeTheme = () => {
     actions.setTheme({
-      theme: `${theme === ETheme.DARK ? ETheme.LIGHT : ETheme.DARK}`,
+      theme: `${theme === Theme.DARK ? Theme.LIGHT : Theme.DARK}`,
     })
   }
 
@@ -105,8 +105,8 @@ const Header = () => {
       <img
         alt="Changed theme"
         src={themeIcon}
-        className={styles.changedTheme}
-        onClick={() => changedTheme()}
+        className={styles.changeTheme}
+        onClick={changeTheme}
         title="Сменить тему"
       />
     </header>

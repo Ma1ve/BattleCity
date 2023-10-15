@@ -14,7 +14,7 @@ export const setTheme = async (
           userId: id
         });
 
-        response.status(201).json('ok');
+        response.status(201).json({ theme });
     } catch (error) {
         response.status(500).json(
           { error: "Не удалось сменить тему" }
@@ -30,7 +30,7 @@ export const getTheme = async (
 
     try {
         const theme = await (Themes as any).findOne({
-            where: { userId: userId }
+            where: { userId }
         });
 
         response.status(201).json(

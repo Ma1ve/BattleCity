@@ -4,7 +4,7 @@ const { createSlice, createSelector } = toolkitRaw.default ?? toolkitRaw
 
 import { TUserProfileData } from '../../models/IUser'
 import { RootState } from '..'
-import { ETheme } from '../../models/types'
+import { Theme } from '../../models/types'
 
 export interface IUserState {
   userInfo: TUserProfileData | null
@@ -13,7 +13,7 @@ export interface IUserState {
 
 const initialState: IUserState = {
   userInfo: null,
-  theme: localStorage.getItem('theme') ?? ETheme.DARK,
+  theme: localStorage.getItem('theme') ?? Theme.DARK,
 }
 
 export const userSlice = createSlice({
@@ -30,7 +30,7 @@ export const userSlice = createSlice({
       state: IUserState,
       action: PayloadAction<{ theme: string } | null>
     ) => {
-      state.theme = action.payload?.theme ?? ETheme.DARK
+      state.theme = action.payload?.theme ?? Theme.DARK
     },
   },
 })

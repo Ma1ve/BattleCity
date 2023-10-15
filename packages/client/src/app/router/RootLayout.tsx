@@ -17,7 +17,7 @@ import { FullscreenButton } from '../../features/ui/FullscreenButton'
 import { AuthAPI } from '../../shared/api/AuthApi'
 import { BackgroundAudioArea } from '../../features/ui/BackgroundAudioArea'
 import { TUserProfileData } from '../models/IUser'
-import { ETheme } from '../models/types'
+import { Theme } from '../models/types'
 import '../styles/index.css'
 import styles from '../styles/rootLayout.module.css'
 
@@ -83,10 +83,9 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
 
   useEffect(() => {
     if (userInfo) {
-      AuthAPI.setTheme(userInfo.id, theme)
-    } else {
-      localStorage.setItem('theme', theme)
-    }
+      return AuthAPI.setTheme(userInfo.id, theme)
+    } 
+    return localStorage.setItem('theme', theme)
   }, [theme])
 
   return (
@@ -94,8 +93,8 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
       <Header />
       <main
         className={classNames(styles.mainLayout, {
-          [styles.dark]: theme === ETheme.DARK,
-          [styles.light]: theme === ETheme.LIGHT,
+          [styles.dark]: theme === Theme.DARK,
+          [styles.light]: theme === Theme.LIGHT,
         })}>
         <Auth {...{ userInfo }}>{children ?? <Outlet />}</Auth>
       </main>

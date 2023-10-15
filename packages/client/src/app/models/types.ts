@@ -14,7 +14,7 @@ export enum ERoutes {
   ERROR500 = 'error500',
 }
 
-export enum ETheme {
+export enum Theme {
   DARK = 'dark',
   LIGHT = 'light',
 }

@@ -2,15 +2,20 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import Themes from './models/Themes'
 import Users from './models/Users'
 
-const {  POSTGRES_PORT } =
-  process.env
+const { 
+  POSTGRES_PORT, 
+  POSTGRES_DB, 
+  POSTGRES_PASSWORD, 
+  POSTGRES_USER,
+  POSTGRES_HOST
+} = process.env
 
 const sequelizeOptions: SequelizeOptions = {
     dialect: 'postgres',
-    host: 'localhost',
-    username: 'postgres',
-    password: 'postgres',
-    database: 'postgres',
+    host: POSTGRES_HOST,
+    username: POSTGRES_USER,
+    password: POSTGRES_PASSWORD,
+    database: POSTGRES_DB,
     port: Number(POSTGRES_PORT),
     models: [Themes, Users],
 }
