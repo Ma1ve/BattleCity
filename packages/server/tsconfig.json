@@ -10,6 +10,8 @@
     "declarationMap": true,
     "removeComments": true,
     "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitOverride": true,
@@ -19,6 +21,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
     "lib": [
       "es2019",
       "esnext.asynciterable"
