@@ -1,2 +1,4 @@
-dist
+Dockerfile
 node_modules
+.git
+.gitignore
