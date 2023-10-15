@@ -12,10 +12,6 @@ export const EmojiWindow = () => {
     if (emojiData) setEmoji(prevArg => [...prevArg, ...emojiData])
   }, [emojiData])
 
-  useEffect(() => {
-    console.log(data)
-  }, [])
-
   return (
     <div className={styles.root}>
       {Object.values(data.emoji).map((emoji: string) => {
