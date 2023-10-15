@@ -33,9 +33,7 @@ router.post(
         topicId,
       })
 
-      console.log('newComment', newComment)
-
-      res.status(200).json(newComment)
+      res.status(201).json(newComment)
     } catch (error) {
       console.error('Ошибка при создании комментария:', error)
       res.status(500).json({ error: 'Ошибка сервера' })

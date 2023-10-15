@@ -21,7 +21,7 @@ router.post('/', createTopicSchema, async (req: Request, res: Response) => {
     // @ts-ignore
     const newTopic = await Topic.create({ title, author, content })
 
-    res.status(200).json(newTopic)
+    res.status(201).json(newTopic)
   } catch (error) {
     console.error('Ошибка при создании топика:', error)
     res.status(500).json({ error: 'Ошибка сервера' })
