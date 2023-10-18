@@ -6,7 +6,6 @@ export enum ERoutes {
   GAME = 'game',
   LEADERBOARD = 'leaderboard',
   FORUM = 'forum',
-  TOPIC = 'topic',
   ENDGAME = 'endgame',
   GAMETOSTART = 'loading',
   ERROR400 = 'error400',

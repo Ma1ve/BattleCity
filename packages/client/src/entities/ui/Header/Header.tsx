@@ -74,13 +74,6 @@ const Header = () => {
           forum
         </NavLink>
         <NavLink
-          to={ERoutes.TOPIC}
-          className={({ isActive }) =>
-            isActive ? styles.active : styles.inactive
-          }>
-          topic
-        </NavLink>
-        <NavLink
           to={ERoutes.ERROR400}
           className={({ isActive }) =>
             isActive ? styles.active : styles.inactive
