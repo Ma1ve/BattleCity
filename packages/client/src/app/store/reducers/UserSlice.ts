@@ -2,6 +2,8 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import * as toolkitRaw from '@reduxjs/toolkit'
 const { createSlice, createSelector } = toolkitRaw.default ?? toolkitRaw
 
+// import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit'
+
 import { TUserProfileData } from '../../models/IUser'
 import { RootState } from '..'
 import { Theme } from '../../models/types'
@@ -13,7 +15,10 @@ export interface IUserState {
 
 const initialState: IUserState = {
   userInfo: null,
-  theme: localStorage.getItem('theme') ?? Theme.DARK,
+  theme:
+    typeof window !== 'undefined'
+      ? localStorage.getItem('theme') ?? Theme.DARK
+      : null,
 }
 
 export const userSlice = createSlice({
@@ -43,7 +48,7 @@ export const selectTheme = (state: RootState) => state.user.theme
 // Создание мемоизированного селектора с использованием createSelector
 export const selectUserInfo = createSelector(
   [selectUser],
-  (userInfo: IUserState) => userInfo,
+  (userInfo: IUserState) => userInfo
 )
 
 export const selectUserTheme = createSelector(
@@ -52,4 +57,3 @@ export const selectUserTheme = createSelector(
 )
 
 export default userSlice.reducer
-

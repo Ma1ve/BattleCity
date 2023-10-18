@@ -1,0 +1,5 @@
+{
+  "watch": ["src"],
+  "ext": "ts,tsx,css",
+  "exec": "yarn build:ssr && NODE_ENV=production node server.js"
+}

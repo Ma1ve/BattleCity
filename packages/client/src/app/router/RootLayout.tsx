@@ -19,6 +19,7 @@ import { BackgroundAudioArea } from '../../features/ui/BackgroundAudioArea'
 import { TUserProfileData } from '../models/IUser'
 import { Theme } from '../models/types'
 import '../styles/index.css'
+
 import styles from '../styles/rootLayout.module.css'
 
 interface IRootLayout {
@@ -83,10 +84,12 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
 
   useEffect(() => {
     if (userInfo) {
-      AuthAPI.setTheme(userInfo.id, theme);
-      return;
-    } 
-    localStorage.setItem('theme', theme);
+      AuthAPI.setTheme(userInfo.id, theme)
+      return
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme)
+    }
   }, [theme])
 
   return (

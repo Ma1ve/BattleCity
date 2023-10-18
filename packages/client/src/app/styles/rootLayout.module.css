@@ -13,7 +13,6 @@
 }
 
 .mainLayout {
-  color: red;
   height: calc(
     100vh - var(--header-height) - var(--header-height)
   ); /* Вычитаем высоту хедера и футера. */
