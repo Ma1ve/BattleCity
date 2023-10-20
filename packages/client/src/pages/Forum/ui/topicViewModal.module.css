@@ -1,0 +1,22 @@
+.topicViewModalWrapper {
+	min-height: 300px;
+	max-height: 450px;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+
+.topicViewModalWrapper::-webkit-scrollbar {
+	width: var(--scrollbar-width);
+  }
+  
+  .topicViewModalWrapper::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-thumb-color);
+  }
+  
+  .topicViewModalWrapper::-webkit-scrollbar-track {
+	background-color: var(--scrollbar-track-color);
+  }
+  

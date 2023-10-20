@@ -8,8 +8,7 @@ import Main from '../../pages/Main'
 import Login from '../../pages/Login/ui'
 import Registration from '../../pages/Registration/ui'
 import Profile from '../../pages/Profile'
-import Forum from '../../pages/Forum'
-import TopicForum from '../../pages/TopicForum'
+import { Forum } from '../../pages/Forum/index'
 import Game from '../../pages/Game'
 import EndGame from '../../pages/EndGame'
 import GameToStart from '../../pages/GameToStart'
@@ -26,7 +25,6 @@ export const routes = createRoutesFromElements(
     <Route path={ERoutes.REGISTRATION} element={<Registration />} />
     <Route path={ERoutes.PROFILE} element={<Profile />} />
     <Route path={ERoutes.FORUM} element={<Forum />} />
-    <Route path={ERoutes.TOPIC} element={<TopicForum />} />
     <Route path={ERoutes.GAME} element={<Game />} />
     <Route path={ERoutes.ENDGAME} element={<EndGame />} />
     <Route path={ERoutes.GAMETOSTART} element={<GameToStart />} />
