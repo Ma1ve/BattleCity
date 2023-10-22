@@ -8,8 +8,6 @@ import {
 } from '../../app/models/IUser'
 import { AUTH_URL, OAUTH_URL } from './consts'
 
-const { BASE_URL } = import.meta.env
-
 class AuthApi {
   private instance: AxiosInstance
 
@@ -93,7 +91,9 @@ class AuthApi {
 
   getTheme = async (id: number) => {
     try {
-      const response = await this.instance.get(`${BASE_URL}/theme?id=${id}`)
+      const response = await this.instance.get(
+        `http://localhost:3001/theme?id=${id}`
+      )
       return response
     } catch (error: unknown) {
       toast.error(`Ошибка при получении темы`)
@@ -102,7 +102,7 @@ class AuthApi {
 
   setTheme = async (id: number, theme: string) => {
     try {
-      const response = await this.instance.post(`${BASE_URL}/theme`, {
+      const response = await this.instance.post(`http://localhost:3001/theme`, {
         id,
         theme,
       })
@@ -114,4 +114,3 @@ class AuthApi {
 }
 
 export const AuthAPI = new AuthApi()
-

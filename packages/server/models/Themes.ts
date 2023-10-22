@@ -1,48 +1,47 @@
-import { 
-  Table, 
-  Model, 
-  Column, 
-  DataType, 
-  ForeignKey, 
-  BelongsTo 
-} from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript'
 
-import Users from "./Users";
+import Users from './Users'
 
 export enum ETheme {
-    DARK = "dark",
-    LIGHT = "light"
+  DARK = 'dark',
+  LIGHT = 'light',
 }
 
 @Table({
-    tableName: 'themes'
+  tableName: 'themes',
 } as Record<string, string>)
-
 class Themes extends Model {
-    @Column({
-        type: DataType.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    })
-    override id!: number;
+  @Column({
+    type: DataType.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  })
+  override id!: number
 
-    @Column(DataType.ENUM(ETheme.DARK, ETheme.LIGHT))
-    theme!: ETheme;
+  @Column(DataType.ENUM(ETheme.DARK, ETheme.LIGHT))
+  theme!: ETheme
 
-    @ForeignKey(() => {
-        return Users;
-    })
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-        unique: true
-    })
-    userId!: number;
+  @ForeignKey(() => {
+    return Users
+  })
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    unique: true,
+  })
+  userId!: number
 
-    @BelongsTo(() => {
-        return Users;
-    })
-    user!: Users;
+  @BelongsTo(() => {
+    return Users
+  })
+  user!: Users
 }
 
-export default Themes;
+export default Themes

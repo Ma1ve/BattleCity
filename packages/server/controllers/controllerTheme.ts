@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 
+import Users from '../models/Users'
 import Themes from '../models/Themes'
 
 export const setTheme = async (request: Request, response: Response) => {
@@ -24,8 +25,21 @@ export const getTheme = async (request: Request, response: Response) => {
     const theme = await (Themes as any).findOne({
       where: { userId },
     })
+    let newTheme = null
 
-    response.status(201).json({ theme })
+    if (!theme) {
+      await Users.create({
+        id: userId,
+      })
+      newTheme = await Themes.create({
+        userId,
+        theme: 'dark',
+      })
+    }
+
+    response
+      .status(201)
+      .json({ theme: theme?.theme ?? (newTheme?.theme as any)?.theme })
   } catch (error) {
     response.status(500).json({ error: 'Не удалось получить тему' })
   }
