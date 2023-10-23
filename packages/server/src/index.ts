@@ -11,7 +11,11 @@ import repliesRouter from './routes/repliesRouter'
 
 async function startServer() {
   const app = express()
-  app.use(cors())
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }
+  app.use(cors(corsOptions))
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
   const port = Number(process.env.SERVER_PORT) || 3001
