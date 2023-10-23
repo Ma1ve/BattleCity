@@ -15,10 +15,7 @@ export interface IUserState {
 
 const initialState: IUserState = {
   userInfo: null,
-  theme:
-    typeof window !== 'undefined'
-      ? localStorage.getItem('theme') ?? Theme.DARK
-      : null,
+  theme: null,
 }
 
 export const userSlice = createSlice({

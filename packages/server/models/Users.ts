@@ -1,22 +1,21 @@
-import { Table, Model, Column, DataType, HasOne } from "sequelize-typescript";
-import Themes from "./Themes";
+import { Table, Model, Column, DataType, HasOne } from 'sequelize-typescript'
+import Themes from './Themes'
 
 @Table({
-  tableName: "users"
+  tableName: 'users',
 } as Record<string, string>)
-
 class Users extends Model {
   @Column({
-      type: DataType.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+    type: DataType.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
   })
-  override id!: number;
+  override id!: number
 
   @HasOne(() => {
-    return Themes;
+    return Themes
   })
-  theme!: Themes;
+  theme!: Themes
 }
 
-export default Users;
+export default Users

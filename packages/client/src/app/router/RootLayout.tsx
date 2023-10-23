@@ -65,6 +65,8 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
     if (userInfo) {
       const currentTheme = await AuthAPI.getTheme(userInfo.id)
       actions.setTheme(currentTheme?.data)
+    } else {
+      actions.setTheme({ theme: localStorage.getItem('theme') ?? Theme.DARK })
     }
   }, [userInfo])
 
@@ -83,11 +85,10 @@ const RootLayout: FC<IRootLayout> = ({ children }) => {
   }, [userInfo])
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && theme) {
       AuthAPI.setTheme(userInfo.id, theme)
-      return
     }
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && theme) {
       localStorage.setItem('theme', theme)
     }
   }, [theme])

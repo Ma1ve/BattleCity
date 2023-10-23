@@ -21,7 +21,6 @@ async function startServer() {
   })
 
   app.get('/theme', getTheme)
-
   app.post('/theme', setTheme)
 
   app.use('/topics', topicsRouter)
