@@ -1,5 +1,4 @@
 import {
-  battleCitySpriteWidth,
   canvasHeight,
   canvasWidth,
   canvasWidthWithoutScale,

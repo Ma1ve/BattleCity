@@ -1,4 +1,6 @@
+import { store } from '../../../entry-client'
 import { canvasHeight, canvasWidth } from '../shared/config/gameConstants'
+import { DestroyedTank } from '../shared/types'
 import { CanvasTextDrawer } from './CanvasTextDrawer'
 import { gameUI } from './GameUI'
 
@@ -6,10 +8,10 @@ export class GameOverMenu {
   public ctx
   public positionY
   private canvasTextDrawer
-  private tanksInfo
+  private tanksInfo: DestroyedTank[]
   private lastY
-  private totalNumberOfDestroyedTanks
-  private totalScoreIPlayer
+  private totalNumberOfDestroyedTanks: number | undefined
+  private totalScoreIPlayer: number | undefined
 
   private indentCanvasScoreByX
   private startLineByX
@@ -23,29 +25,7 @@ export class GameOverMenu {
 
     this.canvasTextDrawer = new CanvasTextDrawer(this.ctx)
 
-    // В дальнейшем будем получать массив всех танков, которые уничтожил пользователь
-    this.tanksInfo = [
-      {
-        score: 100,
-        countTanks: 3,
-        spriteTank: gameUI.images.tanks.silver.basic.up[0],
-      },
-      {
-        score: 200,
-        countTanks: 2,
-        spriteTank: gameUI.images.tanks.silver.fast.up[0],
-      },
-      {
-        score: 300,
-        countTanks: 3,
-        spriteTank: gameUI.images.tanks.silver.powerful.up[0],
-      },
-      {
-        score: 200,
-        countTanks: 1,
-        spriteTank: gameUI.images.tanks.silver.armored.up[0],
-      },
-    ]
+    this.tanksInfo = []
 
     // Задаем начальный отступ первого объекта в массиве tanksInfo, в дальнейшем,
     // чтобы каждый следующий объект имел отступ на 70 больше предыдущего
@@ -61,17 +41,48 @@ export class GameOverMenu {
     // Начальная позиция отрисовки объекта в массиве tanksInfo по Y
     this.startDrawingPositionTanksInfo = 300
 
-    // Подсчитываем общее количество уничтоженных таноков
+    this.initializeData()
+
+    // Подписываемся на изменения состояния Redux
+    store.subscribe(() => {
+      // При каждом изменении состояния Redux вызываем функцию для обновления данных
+      this.initializeData()
+    })
+  }
+
+  private initializeData() {
+    // Группируем танки по tankColor и tankType
+    const groupedTanks = this.groupTanksByColorAndType(
+      store.getState().tanks.destroyedTanks
+    )
+
+    // Обновляем this.tanksInfo
+    this.tanksInfo = Object.values(groupedTanks)
+
+    // Другие обновления свойств, которые зависят от состояния Redux
     this.totalNumberOfDestroyedTanks = this.tanksInfo.reduce(
       (total, { countTanks }) => total + countTanks,
       0
     )
-
-    // Подсчитываем общий счёт игрока он будет находится под I-PLAYER
     this.totalScoreIPlayer = this.tanksInfo.reduce(
       (total, { score, countTanks }) => total + score * countTanks,
       0
     )
+  }
+
+  public groupTanksByColorAndType(tanks: DestroyedTank[]) {
+    const groupedTanks: Record<string, DestroyedTank> = {}
+
+    tanks.forEach((tank: DestroyedTank) => {
+      const key = `${tank.tankColor}-${tank.tankType}`
+      if (!groupedTanks[key]) {
+        groupedTanks[key] = { ...tank, countTanks: 0, score: 0 }
+      }
+      groupedTanks[key].countTanks++
+      groupedTanks[key].score = tank.score
+    })
+
+    return groupedTanks
   }
 
   public drawGameOver() {

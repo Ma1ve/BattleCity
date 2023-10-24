@@ -99,3 +99,13 @@ export type OnFire = ({
   tankDirection,
   tankId,
 }: OnFireParams) => void
+
+export type DestroyedTank = {
+  sprites: Record<string, number>
+  tankColor: string
+  tankId: string
+  tankType: string
+  score: number
+  countTanks: number
+  spriteTank: Record<string, number>[]
+}
