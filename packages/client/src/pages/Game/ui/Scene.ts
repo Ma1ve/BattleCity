@@ -25,6 +25,9 @@ import { SpriteAnimator } from './SpriteAnimator'
 import { v4 as uuidv4 } from 'uuid'
 import { GameController } from '../controllers/GameController'
 
+import { destroyedTanksActions } from '../../../app/store/reducers/TanksSlice'
+import { store } from '../../../entry-client'
+
 export class Scene {
   public sceneConfig: SceneConfig
   public ctx: CanvasRenderingContext2D
@@ -66,8 +69,25 @@ export class Scene {
       onFire: this.onFire.bind(this),
     })
 
+    const enemy1 = new Tank<'enemy'>({
+      tankType: TankType.basic,
+      tankColor: TankColor.silver,
+      initialDirection: MovementDirection.down,
+      initialPosition: { x: 4 * blockWidth, y: 1 * blockWidth },
+      sceneBlockPositions: this.sceneConfig.blocks,
+      onFire: this.onFire.bind(this),
+    })
+    const enemy2 = new Tank<'enemy'>({
+      tankType: TankType.fast,
+      tankColor: TankColor.red,
+      initialDirection: MovementDirection.down,
+      initialPosition: { x: 4 * blockWidth, y: 2 * blockWidth },
+      sceneBlockPositions: this.sceneConfig.blocks,
+      onFire: this.onFire.bind(this),
+    })
+
     this.tanks.player = [player]
-    this.tanks.enemy = [enemy]
+    this.tanks.enemy = [enemy, enemy1, enemy2]
   }
 
   private onFire({ tankPosition, tankDirection, tankId }: OnFireParams) {
@@ -158,9 +178,32 @@ export class Scene {
             tank => tank.position !== intersectedBlockCoords
           )
 
-          this.tanks.enemy = this.tanks.enemy.filter(
-            tank => tank.position !== intersectedBlockCoords
-          )
+          this.tanks.enemy = this.tanks.enemy.filter(tank => {
+            if (tank.position === intersectedBlockCoords) {
+              const scoreInfo = {
+                basic: 100,
+                fast: 200,
+                powerful: 300,
+                armored: 400,
+              }
+
+              store.dispatch(
+                destroyedTanksActions.addDestroyedTank({
+                  sprites: tank.sprites,
+                  tankColor: tank.tankColor /* silver */,
+                  tankId: tank.tankId,
+                  tankType: tank.tankType /* armored */,
+                  score: scoreInfo[tank.tankType],
+                  countTanks: 1,
+                  spriteTank:
+                    gameUI.images.tanks[`${tank.tankColor}`][`${tank.tankType}`]
+                      .up[0],
+                })
+              )
+              return false
+            }
+            return true
+          })
 
           const explosionId = uuidv4()
           const spriteAnimator = new SpriteAnimator()

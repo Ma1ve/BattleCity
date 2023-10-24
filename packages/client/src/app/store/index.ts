@@ -3,14 +3,14 @@ const { configureStore } = toolkitRaw.default ?? toolkitRaw
 
 import { combineReducers } from 'redux'
 
-// import { combineReducers } from '@reduxjs/toolkit'
-
 import { store } from '../../entry-client'
 import userReducer from './reducers/UserSlice'
+import tanksReducer from './reducers/TanksSlice'
 import { emojiAPI } from './api/emojiAPI'
 
 const rootReducer = combineReducers({
   user: userReducer,
+  tanks: tanksReducer,
   [emojiAPI.reducerPath]: emojiAPI.reducer,
 })
 
