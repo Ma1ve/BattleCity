@@ -37,6 +37,8 @@ export class Scene {
   public explosions: { [k in string]: { coords: Coords; draw: () => void } } =
     {}
 
+  public totalScore: number
+
   constructor({
     ctx,
     sceneConfig,
@@ -48,6 +50,8 @@ export class Scene {
     this.ctx = ctx
     this.bullets = {}
     this.gameController = new GameController(ctx)
+
+    this.totalScore = 0
 
     const player = new Tank<'player'>({
       tankType: TankType.basic,
@@ -99,6 +103,16 @@ export class Scene {
 
   public render() {
     if (!this.sceneConfig.blocks.eagle) {
+      if (!this.gameController.isGameOver) {
+        const tanksArray = store.getState().tanks
+
+        this.totalScore = tanksArray.destroyedTanks.reduce(
+          (total: number, tank: { score: number }) => total + tank.score,
+          0
+        )
+
+        this.gameController.setGameOver(true, this.totalScore)
+      }
       this.gameController.drawGameOverMenu()
 
       return

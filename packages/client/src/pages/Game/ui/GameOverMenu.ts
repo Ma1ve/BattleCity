@@ -171,9 +171,9 @@ export class GameOverMenu {
       color: '#fff',
       width: 3,
       moveToX: this.startLineByX,
-      moveToY: this.lastY + 20,
+      moveToY: this.lastY === 0 ? 270 : this.lastY + 20,
       lineToX: this.endLineByX,
-      lineToY: this.lastY + 20,
+      lineToY: this.lastY === 0 ? 270 : this.lastY + 20,
     })
 
     // Измеряем measureText для того, чтобы смещать totalNumberOfDestroyedTanks если, кол-во танков превышвет 9
@@ -187,7 +187,7 @@ export class GameOverMenu {
       fontSize: 20,
       color: '#fff',
       x: 180 - textWidthScorePts,
-      y: this.lastY + 50,
+      y: this.lastY === 0 ? 305 : this.lastY + 55,
     })
   }
 }

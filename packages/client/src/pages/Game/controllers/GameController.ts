@@ -29,8 +29,7 @@ export class GameController {
     this.ctx = ctx
 
     this.isGameStart = false
-    //! Пока всегда getGameOver() будет true, нужно потом как то соединить это с уничтожением флага
-    this.isGameOver = true
+    this.isGameOver = false
     this.isGameLoaded = false
     this.isShowGameScore = false
     this.isLoadingLevel = false
