@@ -9,6 +9,7 @@ import { scenesConfig } from './shared/config/sceneConfig'
 import { GameController } from './controllers/GameController'
 
 import './game.module.css'
+import { useNavigate } from 'react-router-dom'
 
 const Game = () => {
   let reqId = 0
@@ -17,19 +18,29 @@ const Game = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     const canvas = canvasRef.current!
     const ctx = canvas.getContext('2d')!
 
-    const scene = new Scene({ ctx, sceneConfig: scenesConfig[1] })
-
     const gameController = new GameController(ctx)
+
+    const scene = new Scene({
+      ctx,
+      sceneConfig: scenesConfig[1],
+    })
 
     const animate = () => {
       const now = performance.now()
 
       //60fps animation condition
       if (now - lastTimestamp >= frameInterval) {
+        if (scene.gameControllerScene.restartGame) {
+          navigate('/')
+          navigate(0)
+        }
+
         if (gameController.gameStart) {
           ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Title } from '../../shared/ui'
 import styles from './main.module.css'
 
@@ -7,6 +8,8 @@ type IMenuItem = {
 }
 
 const Main = () => {
+  const navigate = useNavigate()
+
   const menuItems: IMenuItem[] = [
     {
       id: 1,
@@ -32,7 +35,10 @@ const Main = () => {
       <div className={styles.menu}>
         {menuItems.map((item: IMenuItem) => {
           return (
-            <div className={styles.menuItem} key={item.id}>
+            <div
+              onClick={() => navigate('/game')}
+              className={styles.menuItem}
+              key={item.id}>
               {item.text}
             </div>
           )

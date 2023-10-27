@@ -49,6 +49,7 @@ export class Scene {
     this.sceneConfig = sceneConfig
     this.ctx = ctx
     this.bullets = {}
+
     this.gameController = new GameController(ctx)
 
     this.totalScore = 0
@@ -283,5 +284,9 @@ export class Scene {
         y: this.getItemPosition({ spritePosition: y, size: blockHeight }),
       },
     })
+  }
+
+  get gameControllerScene() {
+    return this.gameController
   }
 }
