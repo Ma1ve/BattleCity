@@ -13,6 +13,7 @@ export class GameController {
   public isGameLoaded
   public isShowGameScore
   public isLoadingLevel
+  public isRestartGame
 
   public levelLoadingStage
   public startGameMenu
@@ -25,6 +26,8 @@ export class GameController {
   private animationGameOver
   private animationShowScore
 
+  private static instance: GameController | null = null
+
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
 
@@ -34,6 +37,8 @@ export class GameController {
     this.isShowGameScore = false
     this.isLoadingLevel = false
 
+    this.isRestartGame = false
+
     this.timeAnimation = 0
 
     this.levelLoadingStage = new LevelLoadingStage(this.ctx, 1)
@@ -42,8 +47,8 @@ export class GameController {
 
     this.animationStartGame = 80
     this.animationLoadingLevel = 150
-    this.animationGameOver = 230
-    this.animationShowScore = 300
+    this.animationGameOver = 160
+    this.animationShowScore = 250
 
     this.keyPressHandler = new KeyPressSubscription(keyCode => {
       // В этой функции вы можете выполнить необходимую логику на основе keyCode
@@ -56,6 +61,13 @@ export class GameController {
     })
 
     this.keyPressHandler.subscribe()
+  }
+
+  public static getInstance(ctx: CanvasRenderingContext2D) {
+    if (GameController.instance === null) {
+      GameController.instance = new GameController(ctx)
+    }
+    return GameController.instance
   }
 
   public drawStartGame() {
@@ -83,7 +95,7 @@ export class GameController {
       if (this.timeAnimation < this.animationShowScore) {
         this.timeAnimation++
       } else {
-        this.reload()
+        this.setRestartGame(true)
       }
     } else {
       this.gameOverMenu.drawGameOver()
@@ -96,9 +108,12 @@ export class GameController {
     }
   }
 
-  // Перезагрузка страницы
-  public reload() {
-    document.location.reload()
+  public setRestartGame(value: boolean) {
+    this.isRestartGame = value
+  }
+
+  get restartGame() {
+    return this.isRestartGame
   }
 
   public setGameStart(value: boolean) {
