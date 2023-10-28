@@ -1,6 +1,22 @@
 version: '3.9'
 
 services:
+  nginx:
+    container_name: tanki-nginx
+    image: tanki-nginx
+    build: ./nginx
+    ports:
+      - '80:80'
+    # volumes:
+    #   - ./packages/client/dist/client:/usr/share/nginx/html
+    networks:
+      - tanki-net
+    depends_on:
+      - client
+      - server
+      - postgres
+      - pgadmin
+
   client:
     container_name: tanki-client
     image: tanki-client
@@ -15,9 +31,9 @@ services:
       - '${CLIENT_PORT}:${CLIENT_PORT}'
     env_file:
       - .env
-    volumes:
-      - ./:/app
-      - /app/node_modules
+    # volumes:
+    #   - ./:/app
+    #   - /app/node_modules
     networks:
       - tanki-net
     depends_on:
@@ -67,7 +83,7 @@ services:
     restart: always
     user: root
     ports:
-      - '${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}'
+      - '${PGADMIN_LISTEN_PORT_OUTPUT}:${PGADMIN_LISTEN_PORT}'
     env_file:
       - .env
     environment:
