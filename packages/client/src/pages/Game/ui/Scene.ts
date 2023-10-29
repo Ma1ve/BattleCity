@@ -102,19 +102,31 @@ export class Scene {
     this.bullets[tankId] = new Bullet({ tankPosition, tankDirection })
   }
 
+  public getTotalScoreDestroyedTanks() {
+    const tanksArray = store.getState().tanks
+
+    this.totalScore = tanksArray.destroyedTanks.reduce(
+      (total: number, tank: { score: number }) => total + tank.score,
+      0
+    )
+  }
+
   public render() {
     if (!this.sceneConfig.blocks.eagle) {
       if (!this.gameController.isGameOver) {
-        const tanksArray = store.getState().tanks
-
-        this.totalScore = tanksArray.destroyedTanks.reduce(
-          (total: number, tank: { score: number }) => total + tank.score,
-          0
-        )
+        this.getTotalScoreDestroyedTanks()
 
         this.gameController.setGameOver(true, this.totalScore)
       }
       this.gameController.drawGameOverMenu()
+
+      return
+    }
+
+    if (!this.tanks.enemy.length) {
+      this.getTotalScoreDestroyedTanks()
+
+      this.gameController.drawScoreGameOver()
 
       return
     }

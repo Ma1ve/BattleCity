@@ -2,8 +2,6 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import * as toolkitRaw from '@reduxjs/toolkit'
 const { createSlice, createSelector } = toolkitRaw.default ?? toolkitRaw
 
-// import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit'
-
 import { TUserProfileData } from '../../models/IUser'
 import { RootState } from '..'
 import { Theme } from '../../models/types'
@@ -42,6 +40,7 @@ export const userActions = userSlice.actions
 // Создание селектора для получения данных пользователя
 export const selectUser = (state: RootState) => state.user.userInfo
 export const selectTheme = (state: RootState) => state.user.theme
+
 // Создание мемоизированного селектора с использованием createSelector
 export const selectUserInfo = createSelector(
   [selectUser],

@@ -90,13 +90,7 @@ export class GameController {
 
   public drawGameOverMenu() {
     if (this.isShowGameScore) {
-      this.gameOverMenu.drawGameOverScore()
-
-      if (this.timeAnimation < this.animationShowScore) {
-        this.timeAnimation++
-      } else {
-        this.setRestartGame(true)
-      }
+      this.drawScoreGameOver()
     } else {
       this.gameOverMenu.drawGameOver()
 
@@ -105,6 +99,16 @@ export class GameController {
       } else {
         this.setShowScoreGameOver(true)
       }
+    }
+  }
+
+  public drawScoreGameOver() {
+    this.gameOverMenu.drawGameOverScore()
+
+    if (this.timeAnimation < this.animationShowScore) {
+      this.timeAnimation++
+    } else {
+      this.setRestartGame(true)
     }
   }
 

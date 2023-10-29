@@ -12,7 +12,7 @@ const initialState: ITanksState = {
 }
 
 export const destroyedTanksSlice = createSlice({
-  name: 'user',
+  name: 'destroyedTanks',
   initialState,
   reducers: {
     addDestroyedTank: (
