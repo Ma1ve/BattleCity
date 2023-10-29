@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { Title } from '../../shared/ui'
 import styles from './main.module.css'
+import { useActionCreators } from '../../app/hooks/reducer'
+import { userActions } from '../../app/store/reducers/UserSlice'
 
 type IMenuItem = {
   id: number
@@ -8,6 +10,8 @@ type IMenuItem = {
 }
 
 const Main = () => {
+  const actions = useActionCreators(userActions)
+
   const navigate = useNavigate()
 
   const menuItems: IMenuItem[] = [
@@ -23,10 +27,6 @@ const Main = () => {
       id: 3,
       text: 'Option 3',
     },
-    {
-      id: 4,
-      text: 'Option 4',
-    },
   ]
 
   return (
@@ -36,7 +36,10 @@ const Main = () => {
         {menuItems.map((item: IMenuItem) => {
           return (
             <div
-              onClick={() => navigate('/game')}
+              onClick={() => {
+                actions.setLevel({ level: item.id })
+                navigate('/game')
+              }}
               className={styles.menuItem}
               key={item.id}>
               {item.text}

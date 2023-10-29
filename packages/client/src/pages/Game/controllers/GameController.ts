@@ -21,6 +21,8 @@ export class GameController {
   public timeAnimation
   public keyPressHandler
 
+  public levelState
+
   private animationStartGame
   private animationLoadingLevel
   private animationGameOver
@@ -41,7 +43,9 @@ export class GameController {
 
     this.timeAnimation = 0
 
-    this.levelLoadingStage = new LevelLoadingStage(this.ctx, 1)
+    this.levelState = store.getState().user.selectedLevel
+
+    this.levelLoadingStage = new LevelLoadingStage(this.ctx, this.levelState)
     this.startGameMenu = new StartGameMenu(this.ctx)
     this.gameOverMenu = new GameOverMenu(this.ctx)
 

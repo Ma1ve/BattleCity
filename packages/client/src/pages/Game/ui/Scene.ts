@@ -126,6 +126,10 @@ export class Scene {
     if (!this.tanks.enemy.length) {
       this.getTotalScoreDestroyedTanks()
 
+      if (!this.gameController.isGameOver) {
+        this.gameController.setGameOver(true, this.totalScore)
+      }
+
       this.gameController.drawScoreGameOver()
 
       return
