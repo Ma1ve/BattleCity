@@ -6,23 +6,28 @@ import {
   LeaderboardData,
 } from '../../shared/api/LeaderboardApi'
 import { toast } from 'react-toastify'
+import Spinner from '../../shared/ui/Spinner/Spinner'
 
 const Leaderboard = () => {
   const [leaderboardInfo, setLeaderboardInfo] = useState<LeaderboardData[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  const getLeaderboard = async () => {
+    try {
+      setIsLoading(true)
+      const res = await LeaderboardAPI.getLeaderboard()
+
+      const leaderboardData = res.map(el => el.data)
+
+      setLeaderboardInfo(leaderboardData)
+    } catch (e: any) {
+      toast.error(e?.response?.data?.reason)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const getLeaderboard = async () => {
-      try {
-        const res = await LeaderboardAPI.getLeaderboard()
-
-        const leaderboardData = res.map(el => el.data)
-
-        setLeaderboardInfo(leaderboardData)
-      } catch (e: any) {
-        toast.error(e?.response?.data?.reason)
-      }
-    }
-
     getLeaderboard()
   }, [])
 
@@ -30,24 +35,28 @@ const Leaderboard = () => {
     <div className={styles.leaderboardPage}>
       <Title>Leaderboard</Title>
       <div className={styles.leaderboardTable}>
-        <table>
-          <thead>
-            <tr>
-              <td>Rank</td>
-              <td>Player</td>
-              <td>Score</td>
-            </tr>
-          </thead>
-          <tbody>
-            {leaderboardInfo.map((el: LeaderboardData, index: number) => (
-              <tr key={el.id}>
-                <td> {index + 1}</td>
-                <td>{el.name}</td>
-                <td>{el.veisaScore}</td>
+        {!isLoading ? (
+          <table>
+            <thead>
+              <tr>
+                <td>Rank</td>
+                <td>Player</td>
+                <td>Score</td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {leaderboardInfo.map((el: LeaderboardData, index: number) => (
+                <tr key={el.id}>
+                  <td> {index + 1}</td>
+                  <td>{el.name}</td>
+                  <td>{el.veisaScore}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <Spinner />
+        )}
       </div>
     </div>
   )

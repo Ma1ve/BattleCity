@@ -51,7 +51,10 @@ const Profile = () => {
         <div className={styles.profileInfo}>
           <img
             className={styles.profileAvatar}
-            src={user.avatar || avatarStub}
+            src={
+              `https://ya-praktikum.tech/api/v2/resources/${user.avatar}` ||
+              avatarStub
+            }
             onClick={() => setShowChangeAvatarModal(!showChangeAvatarModal)}
             alt="Change avatar"
           />

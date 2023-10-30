@@ -1,6 +1,7 @@
 .profileWrapper {
   background-color: var(--content-bg-color);
   width: var(--content-width);
+  height: var(--content-height);
 }
 
 .profileInfo {

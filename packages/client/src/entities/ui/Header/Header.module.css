@@ -13,12 +13,19 @@
 
 .active {
   color: var(--primary-text-color);
+  text-transform: uppercase;
+}
+
+.menuLayout {
+  align-items: center;
+  display: flex;
 }
 
 .menuLayout a {
-  font-size: 9px;
+  font-size: 10px;
   margin-right: 10px;
   text-decoration: none;
+  transition: 0.3s all;
 }
 
 .menuLayout a:hover {
@@ -27,4 +34,10 @@
 
 .changeTheme {
   cursor: pointer;
+  margin-left: 20px;
+  transition: 0.3s all;
+}
+
+.changeTheme:hover {
+  transform: scale(105%);
 }
