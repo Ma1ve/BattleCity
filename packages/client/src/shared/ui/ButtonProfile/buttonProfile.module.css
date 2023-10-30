@@ -6,8 +6,9 @@
   filter: drop-shadow(2px 2px 2px var(--main-filter-color));
   border-radius: 5px;
   margin-bottom: 24px;
+  transition: 0.2s all;
 }
 
 .profileChangePasswordButton:hover {
-  transform: scale(104%);
+  transform: scale(105%);
 }

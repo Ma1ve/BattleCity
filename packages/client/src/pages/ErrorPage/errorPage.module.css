@@ -31,4 +31,5 @@
   display: block;
   transform: scale(103%);
   color: var(--primary-text-color);
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
 }

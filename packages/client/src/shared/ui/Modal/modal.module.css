@@ -12,13 +12,13 @@
   max-width: 800px;
   min-width: 400px;
   max-height: 800px;
-  min-height: 300px;
+  min-height: 230px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 30;
-  box-shadow: 0px 5px 40px -0.5px var(--main-filter-color);
+  box-shadow: 0 5px 355px -60.5px var(--main-filter-color);
   text-align: center;
   padding: 20px;
   border-radius: 20px;
@@ -30,18 +30,20 @@
   height: 36px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
 .modalTitle {
-  font-size: 24px;
+  font-size: 17px;
   filter: drop-shadow(5px 5px 5px var(--main-filter-color));
   color: var(--primary-text-color);
   text-decoration: underline;
 }
 
 .modalCloseButton {
+  position: absolute;
+  right: 20px;
   width: 20px;
   height: 36px;
   cursor: pointer;

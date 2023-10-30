@@ -23,4 +23,6 @@
 
 .menuItem:hover {
   color: var(--link-text-color);
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
+  transform: scale(105%);
 }

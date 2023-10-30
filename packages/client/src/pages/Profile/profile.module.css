@@ -29,8 +29,11 @@
   width: 100px;
   border-radius: 50%;
   cursor: pointer;
+  transition: 0.2s all;
+  filter: drop-shadow(0px 0px 10px #000000);
 }
 
 .profileAvatar:hover {
-  transform: scale(104%);
+  transform: scale(105%);
+  filter: drop-shadow(0px 0px 15px #000000);
 }
