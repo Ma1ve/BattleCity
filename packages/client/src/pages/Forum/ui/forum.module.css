@@ -1,8 +1,8 @@
 .forumPage {
-	width: var(--content-width);
-	height: var(--content-height);
-	background-color: var(--content-bg-color);
-	position: relative;
+  width: var(--content-width);
+  height: var(--content-height);
+  background-color: var(--content-bg-color);
+  position: relative;
 }
 
 .forumWrapper {
@@ -34,23 +34,27 @@
 }
 
 .forumAddNewButton {
-	background-color: var(--additional-text-color);
-	text-align: center;
-	margin: 0 auto;
-	border-radius: 50px;
-	width: 42px;
-	height: 42px;
-	font-size: 40px;
-	position: absolute;
-	left: 40px;
-	top: 40px;
-	z-index: 10;
-	cursor: pointer;
+  background-color: var(--additional-text-color);
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 50px;
+  width: 42px;
+  height: 42px;
+  font-size: 27px;
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s all;
 }
 
 .forumAddNewButton:hover {
-	filter: drop-shadow(5px 5px 5px var(--additional-text-color));
-	transform: scale(103%);
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
+  transform: scale(103%);
 }
 
 .forum:hover {
@@ -58,7 +62,7 @@
 }
 
 .forumAuthor {
-	font-size: 10px;
+  font-size: 10px;
 }
 
 .forumTitle {
@@ -67,66 +71,66 @@
 }
 
 .forumContent {
-	position: absolute;
-	bottom: -20px;
-	width: 510px;
-	display: flex;
-	justify-content: end;
-	filter: drop-shadow(5px 5px 5px var(--main-filter-color));
+  position: absolute;
+  bottom: -20px;
+  width: 510px;
+  display: flex;
+  justify-content: end;
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
 }
 
 .forumContentWrapper {
-	position: relative;
-	/* display: flex; */
-	/* justify-content: space-between; */
-	padding: 5px 15px;
-	background: var(--forum-bg-color);
-		right: 0;
-	border-radius: 5px;
-	cursor: pointer;
-	transition: 0.3s;
+  position: relative;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  padding: 5px 15px;
+  background: var(--forum-bg-color);
+  right: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .forumContentWrapper:hover {
-	background: var(--main-filter-color);
-	filter: drop-shadow(5px 5px 5px var(--additional-text-color));
-	transform: scale(103%);
+  background: var(--main-filter-color);
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
+  transform: scale(103%);
 }
 
 .forumAnswers {
-	color: var(--additional-text-color);
-	margin-left: 20px;
-	padding: 5px 15px;
-	background: var(--forum-bg-color);
-	border-radius: 5px;
+  color: var(--additional-text-color);
+  margin-left: 20px;
+  padding: 5px 15px;
+  background: var(--forum-bg-color);
+  border-radius: 5px;
 }
 
 .forumContentText {
-  	color: var(--additional-text-color);
+  color: var(--additional-text-color);
 }
 
 .forumContentIcon {
-	position: absolute;
-	right: -8px;
-	color: var(--additional-text-color);
+  position: absolute;
+  right: -8px;
+  color: var(--additional-text-color);
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-	color: var(--forum-bg-color);
-	border-radius: 100%;
-	background-color: var(--additional-text-color);
+  color: var(--forum-bg-color);
+  border-radius: 100%;
+  background-color: var(--additional-text-color);
 }
 
 .forumWrapper::-webkit-scrollbar {
-  	width: var(--scrollbar-width);
+  width: var(--scrollbar-width);
 }
 
 .forumWrapper::-webkit-scrollbar-thumb {
-  	background-color: var(--scrollbar-thumb-color);
+  background-color: var(--scrollbar-thumb-color);
 }
 
 .forumWrapper::-webkit-scrollbar-track {
-  	background-color: var(--scrollbar-track-color);
+  background-color: var(--scrollbar-track-color);
 }

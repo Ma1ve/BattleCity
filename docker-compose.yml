@@ -1,6 +1,33 @@
 version: '3.9'
 
 services:
+  nginx:
+    container_name: tanki-nginx
+    image: tanki-nginx
+    build: ./nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./ssl:/ssl
+      - ./ssl/certbot/conf:/etc/letsencrypt
+      - ./ssl/certbot/www:/var/www/certbot
+    networks:
+      - tanki-net
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+    depends_on:
+      - client
+      - server
+      - postgres
+      - pgadmin
+
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./ssl/certbot/conf:/etc/letsencrypt
+      - ./ssl/certbot/www:/var/www/certbot
+
   client:
     container_name: tanki-client
     image: tanki-client
@@ -67,7 +94,7 @@ services:
     restart: always
     user: root
     ports:
-      - '${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}'
+      - '${PGADMIN_LISTEN_PORT_OUTPUT}:${PGADMIN_LISTEN_PORT}'
     env_file:
       - .env
     environment:

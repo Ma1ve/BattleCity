@@ -1,7 +1,7 @@
-ARG SERVER_PORT=3001
+ARG CLIENT_PORT=3000
 ARG NODE_VERSION=18
-
-FROM node:$NODE_VERSION
+# Этап 1: Сборка приложения
+FROM node:$NODE_VERSION AS build
 
 WORKDIR /app
 
@@ -12,6 +12,13 @@ RUN yarn install
 COPY . .
 
 RUN yarn lerna bootstrap && yarn build:server
+
+# Этап 2: Конечный контейнер
+FROM node:$NODE_VERSION
+
+WORKDIR /app
+
+COPY --from=build /app /app
 
 EXPOSE $SERVER_PORT
 

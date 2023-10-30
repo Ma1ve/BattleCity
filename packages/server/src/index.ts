@@ -11,16 +11,31 @@ import repliesRouter from './routes/repliesRouter'
 
 async function startServer() {
   const app = express()
-  const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true,
-  }
-  app.use(cors(corsOptions))
+
+  app.use(
+    cors({
+      credentials: true,
+      origin: [
+        'http://localhost',
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'https://localhost:3000',
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:3001',
+        'https://127.0.0.1:3000',
+        'https://veisa.ru',
+      ],
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    })
+  )
+
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
   const port = Number(process.env.SERVER_PORT) || 3001
 
-  app.get('/', (_, res) => {
+  app.get('/server', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
 

@@ -10,8 +10,12 @@ import { GameController } from './controllers/GameController'
 
 import './game.module.css'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../app/hooks/reducer'
+import { selectUserLevel } from '../../app/store/reducers/UserSlice'
 
 const Game = () => {
+  const level: number = useAppSelector(selectUserLevel)
+
   let reqId = 0
 
   let lastTimestamp = 0
@@ -28,7 +32,7 @@ const Game = () => {
 
     const scene = new Scene({
       ctx,
-      sceneConfig: scenesConfig[1],
+      sceneConfig: scenesConfig[level],
     })
 
     const animate = () => {
