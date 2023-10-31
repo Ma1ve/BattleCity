@@ -36,12 +36,18 @@ export const NewTopicModal = ({ onClose, onReload }: INewTopicModalProps) => {
 
   const user = useAppSelector<TUserProfileData>(selectUserInfo)
 
-  const onSubmit = ({ title }: TNewTopicValues) => {
+  const onSubmit = async ({ title }: TNewTopicValues) => {
     try {
-      ForumAPI.createTopic({ title, author: user?.first_name } as {
+      await ForumAPI.createTopic({
+        title,
+        author: user?.first_name,
+        content: title,
+      } as {
         title: string
         author: string
+        content: string
       })
+
       onReload()
       onClose()
     } catch (e: any) {

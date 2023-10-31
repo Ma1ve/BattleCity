@@ -45,7 +45,7 @@ const Header = () => {
           }>
           game
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to={ERoutes.ENDGAME}
           className={({ isActive }) =>
             isActive ? styles.active : styles.inactive
@@ -58,7 +58,7 @@ const Header = () => {
             isActive ? styles.active : styles.inactive
           }>
           game to start
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to={ERoutes.LEADERBOARD}
           className={({ isActive }) =>
@@ -73,7 +73,7 @@ const Header = () => {
           }>
           forum
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to={ERoutes.ERROR400}
           className={({ isActive }) =>
             isActive ? styles.active : styles.inactive
@@ -93,15 +93,15 @@ const Header = () => {
             isActive ? styles.active : styles.inactive
           }>
           page500
-        </NavLink>
+        </NavLink> */}
+        <img
+          alt="Changed theme"
+          src={themeIcon}
+          className={styles.changeTheme}
+          onClick={changeTheme}
+          title="Сменить тему"
+        />
       </menu>
-      <img
-        alt="Changed theme"
-        src={themeIcon}
-        className={styles.changeTheme}
-        onClick={changeTheme}
-        title="Сменить тему"
-      />
     </header>
   )
 }

@@ -32,7 +32,7 @@ class ForumApi {
 
   protected createAxiosInstance(): AxiosInstance {
     return axios.create({
-      baseURL: BASE_URL,
+      baseURL: `http://localhost:3001/`,
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
       responseType: 'json',
@@ -62,19 +62,22 @@ class ForumApi {
   createTopic = async ({
     title,
     author,
+    content,
   }: {
     title: string
     author: string
+    content: string
   }) => {
     try {
       const response = await this.instance.post(`topics`, {
         title,
         author,
+        content,
       })
       return response
     } catch (error: any) {
       console.error(error?.response?.data?.reason)
-	  throw error
+      throw error
     }
   }
 
@@ -103,7 +106,7 @@ class ForumApi {
       return response
     } catch (error: any) {
       console.error(error?.response?.data?.reason)
-	  throw error
+      throw error
     }
   }
 
@@ -114,7 +117,7 @@ class ForumApi {
       return response
     } catch (error: any) {
       console.error(error?.response?.data?.reason)
-	  throw error
+      throw error
     }
   }
 
@@ -141,7 +144,7 @@ class ForumApi {
       return response
     } catch (error: any) {
       console.error(error?.response?.data?.reason)
-	  throw error
+      throw error
     }
   }
 
@@ -160,7 +163,7 @@ class ForumApi {
       return response
     } catch (error: any) {
       console.error(error?.response?.data?.reason)
-	  return error
+      return error
     }
   }
 }

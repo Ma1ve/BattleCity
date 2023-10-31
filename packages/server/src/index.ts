@@ -23,7 +23,7 @@ async function startServer() {
         'http://127.0.0.1:3000',
         'http://127.0.0.1:3001',
         'https://127.0.0.1:3000',
-        'https://veisa.ru',
+        'https://veisa.ya-praktikum.tech.ru',
       ],
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       preflightContinue: false,
