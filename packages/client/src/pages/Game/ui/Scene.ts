@@ -72,27 +72,49 @@ export class Scene {
       initialPosition: { x: 4 * blockWidth, y: 0 },
       sceneBlockPositions: this.sceneConfig.blocks,
       onFire: this.onFire.bind(this),
+      duration: 40,
     })
 
     const enemy1 = new Tank<'enemy'>({
       tankType: TankType.basic,
       tankColor: TankColor.silver,
       initialDirection: MovementDirection.down,
-      initialPosition: { x: 4 * blockWidth, y: 1 * blockWidth },
+      initialPosition: { x: 5 * blockWidth, y: 9 * blockWidth },
       sceneBlockPositions: this.sceneConfig.blocks,
       onFire: this.onFire.bind(this),
+      duration: 50,
     })
     const enemy2 = new Tank<'enemy'>({
       tankType: TankType.fast,
       tankColor: TankColor.red,
       initialDirection: MovementDirection.down,
-      initialPosition: { x: 4 * blockWidth, y: 2 * blockWidth },
+      initialPosition: { x: 10 * blockWidth, y: 3 * blockWidth },
       sceneBlockPositions: this.sceneConfig.blocks,
       onFire: this.onFire.bind(this),
+      duration: 70,
+    })
+    const enemy3 = new Tank<'enemy'>({
+      tankType: TankType.powerful,
+      tankColor: TankColor.red,
+      initialDirection: MovementDirection.down,
+      initialPosition: { x: 10 * blockWidth, y: 9 * blockWidth },
+      sceneBlockPositions: this.sceneConfig.blocks,
+      onFire: this.onFire.bind(this),
+      duration: 70,
+    })
+
+    const enemy4 = new Tank<'enemy'>({
+      tankType: TankType.armored,
+      tankColor: TankColor.red,
+      initialDirection: MovementDirection.down,
+      initialPosition: { x: 2 * blockWidth, y: 2 * blockWidth },
+      sceneBlockPositions: this.sceneConfig.blocks,
+      onFire: this.onFire.bind(this),
+      duration: 90,
     })
 
     this.tanks.player = [player]
-    this.tanks.enemy = [enemy, enemy1, enemy2]
+    this.tanks.enemy = [enemy, enemy1, enemy2, enemy3, enemy4]
   }
 
   private onFire({ tankPosition, tankDirection, tankId }: OnFireParams) {
@@ -112,7 +134,7 @@ export class Scene {
   }
 
   public render() {
-    if (!this.sceneConfig.blocks.eagle) {
+    if (!this.sceneConfig.blocks.eagle || !this.tanks.player.length) {
       if (!this.gameController.isGameOver) {
         this.getTotalScoreDestroyedTanks()
 

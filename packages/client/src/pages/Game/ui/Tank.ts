@@ -31,6 +31,7 @@ interface ITankProps<O extends TankOwner> {
   fireKey?: string
   sceneBlockPositions: SceneBlocks
   onFire: OnFire
+  duration?: number
 }
 
 type TankTypeKey = keyof typeof TankType
@@ -57,6 +58,12 @@ export class Tank<O extends TankOwner> {
   private keyUpSubscription?: (event: KeyboardEvent) => void
   private spriteAnimator = new SpriteAnimator()
 
+  //Enemy
+  public moveEnemyPositionAnimate
+  public choseRandomMovenemt
+  public movementTank: Record<number, 'up' | 'right' | 'down' | 'left'>
+  public duration
+
   constructor({
     initialPosition,
     initialDirection,
@@ -66,6 +73,7 @@ export class Tank<O extends TankOwner> {
     fireKey,
     onFire,
     sceneBlockPositions,
+    duration,
   }: ITankProps<O>) {
     this.tankColor = tankColor
     if (controlKeys) {
@@ -93,6 +101,21 @@ export class Tank<O extends TankOwner> {
     this.sprites = this.tankVariants[tankType][this.direction]
 
     this.sceneBlockPositions = sceneBlockPositions
+
+    // Enemy
+
+    this.duration = duration
+
+    this.moveEnemyPositionAnimate = 0
+
+    this.choseRandomMovenemt = 0
+
+    this.movementTank = {
+      0: 'up',
+      1: 'left',
+      2: 'down',
+      3: 'right',
+    }
 
     this.subscribe()
   }
@@ -210,16 +233,105 @@ export class Tank<O extends TankOwner> {
     }
   }
 
-  public render() {
-    this.move()
+  public getRandomNumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min) + min)
+  }
 
-    return {
-      spritePosition: this.spriteAnimator.animate({
-        frameCount: 4,
-        sprites: this.sprites,
-        disabled: !this.directionKeyPressed,
-      }),
-      canvasPosition: this.position,
+  private moveEnemyTank() {
+    let { x: newX, y: newY } = this.position
+
+    if (this.moveEnemyPositionAnimate === this.duration) {
+      this.choseRandomMovenemt = this.getRandomNumber(4, 0)
+
+      this.moveEnemyPositionAnimate = 0
+    } else {
+      this.moveEnemyPositionAnimate++
+    }
+
+    // Здесь изменяем направление перед стрельбой
+    this.direction = this.movementTank[this.choseRandomMovenemt]
+
+    // Вызываем стрельбу после изменения направления
+
+    this.onFire({
+      tankId: this.tankId,
+      tankDirection: this.direction,
+      tankPosition: this.position,
+    })
+
+    this.activeSpriteIndex = this.activeSpriteIndex === 0 ? 1 : 0
+
+    switch (this.direction) {
+      case MovementDirection.up: {
+        newY = this.position.y - tankSpeed[this.tankType]
+        break
+      }
+      case MovementDirection.right: {
+        newX = this.position.x + tankSpeed[this.tankType]
+        break
+      }
+      case MovementDirection.down: {
+        newY = this.position.y + tankSpeed[this.tankType]
+        break
+      }
+      case MovementDirection.left: {
+        newX = this.position.x - tankSpeed[this.tankType]
+        break
+      }
+    }
+
+    if (newX + blockWidth > canvasWidth) {
+      newX = canvasWidth - blockWidth
+    }
+
+    if (newY + blockHeight > canvasHeight) {
+      newY = canvasHeight - blockHeight
+    }
+
+    if (newX < 0) {
+      newX = 0
+    }
+
+    if (newY < 0) {
+      newY = 0
+    }
+
+    const { hasIntersection } = gameUI.checkSceneBlockIntersection({
+      movedItemCoords: { x: newX, y: newY },
+      sceneBlockPositions: this.sceneBlockPositions,
+      movementDirection: this.direction,
+    })
+
+    if (!hasIntersection) {
+      this.position.y = newY
+      this.position.x = newX
+    }
+
+    this.sprites = this.tankVariants[this.tankType][this.direction]
+  }
+
+  public render() {
+    if (this.tankColor === 'yellow') {
+      this.move()
+
+      return {
+        spritePosition: this.spriteAnimator.animate({
+          frameCount: 4,
+          sprites: this.sprites,
+          disabled: !this.directionKeyPressed,
+        }),
+        canvasPosition: this.position,
+      }
+    } else {
+      this.moveEnemyTank()
+
+      return {
+        spritePosition: this.spriteAnimator.animate({
+          frameCount: 4,
+          sprites: this.sprites,
+        }),
+        canvasPosition: this.position,
+      }
     }
   }
 }
