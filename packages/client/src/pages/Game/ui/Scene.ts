@@ -24,6 +24,7 @@ import { isCoordsArray } from '../shared/utils/isCoordsArray'
 import { SpriteAnimator } from './SpriteAnimator'
 import { v4 as uuidv4 } from 'uuid'
 import { GameController } from '../controllers/GameController'
+import vzryv from '../../../shared/sounds/vzryv.mp3'
 
 import { destroyedTanksActions } from '../../../app/store/reducers/TanksSlice'
 import { store } from '../../../entry-client'
@@ -115,6 +116,12 @@ export class Scene {
 
     this.tanks.player = [player]
     this.tanks.enemy = [enemy, enemy1, enemy2, enemy3, enemy4]
+  }
+
+  // Звук взрыва танка противника.
+  private playBlastSound() {
+    const audio = new Audio(vzryv)
+    audio.play()
   }
 
   private onFire({ tankPosition, tankDirection, tankId }: OnFireParams) {
@@ -233,6 +240,8 @@ export class Scene {
 
           this.tanks.enemy = this.tanks.enemy.filter(tank => {
             if (tank.position === intersectedBlockCoords) {
+              this.playBlastSound()
+
               const scoreInfo = {
                 basic: 100,
                 fast: 200,

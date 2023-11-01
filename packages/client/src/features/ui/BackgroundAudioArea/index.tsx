@@ -31,7 +31,11 @@ export const BackgroundAudioArea = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    if (audioRef.current) {
+    if (
+      audioRef.current &&
+      // Проверяем localstorage для исключения непроизвольного включения при обновлении страницы.
+      localStorage.getItem('audioIsPlaying') !== 'false'
+    ) {
       // Автозапуск.
       const handleAutoPlay = () => {
         if (audioRef.current) {
@@ -86,9 +90,15 @@ export const BackgroundAudioArea = () => {
   /** Переключатель для кнопки Отключения/Включения фоновой музыки. */
   const togglePlayPause = useCallback(() => {
     if (isPlaying) {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('audioIsPlaying', 'false')
+      }
       handleAudioActionApply(EAudioAreaActions.PAUSE)
       setIsPlaying(false)
     } else {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('audioIsPlaying', 'true')
+      }
       handleAudioActionApply(EAudioAreaActions.PLAY)
       setIsPlaying(true)
     }
