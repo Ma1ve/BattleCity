@@ -7,14 +7,7 @@ import { NewTopicModal } from './NewTopicModal'
 import styles from './forum.module.css'
 import Spinner from '../../../shared/ui/Spinner/Spinner'
 
-const stubValue: ITopic[] = [
-  {
-    id: 1,
-    title: 'Отзывы',
-    author: 'ivan',
-    commentCount: 1233,
-  },
-]
+const stubValue: ITopic[] = []
 
 /** Компонент форума. */
 export const Forum = () => {
