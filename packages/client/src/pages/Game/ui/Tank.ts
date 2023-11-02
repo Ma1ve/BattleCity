@@ -201,6 +201,7 @@ export class Tank<O extends TankOwner> {
             tankId: this.tankId,
             tankDirection: this.direction,
             tankPosition: this.position,
+            isPlayerFire: true,
           })
         }
       }
@@ -261,6 +262,7 @@ export class Tank<O extends TankOwner> {
       tankId: this.tankId,
       tankDirection: this.direction,
       tankPosition: this.position,
+      isPlayerFire: false,
     })
 
     this.activeSpriteIndex = this.activeSpriteIndex === 0 ? 1 : 0

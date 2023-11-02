@@ -7,6 +7,7 @@ import {
   TankOwner,
   Coords,
   OnFireParams,
+  ScoreInfoTanks,
 } from '../shared/types'
 import { gameUI } from './GameUI'
 import {
@@ -42,6 +43,8 @@ export class Scene {
 
   public totalScore: number
   public playerTankColor: TankColor
+
+  public playerBullet: Bullet | null
 
   constructor({
     ctx,
@@ -121,6 +124,8 @@ export class Scene {
 
     this.tanks.player = [player]
     this.tanks.enemy = [enemy, enemy1, enemy2, enemy3, enemy4]
+
+    this.playerBullet = null
   }
 
   private playSound(sound: string) {
@@ -128,14 +133,25 @@ export class Scene {
     audio.play()
   }
 
-  private onFire({ tankPosition, tankDirection, tankId }: OnFireParams) {
+  private onFire({
+    tankPosition,
+    tankDirection,
+    tankId,
+    isPlayerFire,
+  }: OnFireParams) {
     if (this.bullets[tankId]) {
       return
     }
     this.bullets[tankId] = new Bullet({ tankPosition, tankDirection })
 
-    // Звук выстрела танков
-    this.playSound(vystrel)
+    // Так поставим звук выстрела на все танки
+    // this.playSound(vystrel)
+
+    if (isPlayerFire) {
+      this.playerBullet = this.bullets[tankId]
+      // Звук выстрела только танка игрока
+      this.playSound(vystrel)
+    }
   }
 
   public getTotalScoreDestroyedTanks() {
@@ -236,6 +252,31 @@ export class Scene {
         position.x > canvasWidth ||
         position.y > canvasHeight
       ) {
+        // Сравниваем tankId пули и если она совпадает с tankId пули игрока
+        if (this.bullets[tankId] === this.playerBullet) {
+          if (sceneBlockKey === 'tanks' && intersectedBlockCoords) {
+            this.tanks.enemy.forEach(tank => {
+              if (tank.position === intersectedBlockCoords) {
+                // Сохраняем уничтоженный танк в store
+                store.dispatch(
+                  destroyedTanksActions.addDestroyedTank({
+                    sprites: tank.sprites,
+                    tankColor: tank.tankColor /* silver */,
+                    tankId: tank.tankId,
+                    tankType: tank.tankType /* armored */,
+                    score: ScoreInfoTanks[tank.tankType],
+                    countTanks: 1,
+                    spriteTank:
+                      gameUI.images.tanks[`${tank.tankColor}`][
+                        `${tank.tankType}`
+                      ].up[0],
+                  })
+                )
+              }
+            })
+          }
+        }
+
         delete this.bullets[tankId]
       }
 
@@ -250,26 +291,6 @@ export class Scene {
               // Звук взрыва танка противника
               this.playSound(vzryv)
 
-              const scoreInfo = {
-                basic: 100,
-                fast: 200,
-                powerful: 300,
-                armored: 400,
-              }
-
-              store.dispatch(
-                destroyedTanksActions.addDestroyedTank({
-                  sprites: tank.sprites,
-                  tankColor: tank.tankColor /* silver */,
-                  tankId: tank.tankId,
-                  tankType: tank.tankType /* armored */,
-                  score: scoreInfo[tank.tankType],
-                  countTanks: 1,
-                  spriteTank:
-                    gameUI.images.tanks[`${tank.tankColor}`][`${tank.tankType}`]
-                      .up[0],
-                })
-              )
               return false
             }
             return true

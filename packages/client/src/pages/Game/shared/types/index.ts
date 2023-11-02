@@ -69,13 +69,21 @@ export enum MovementDirection {
   right = 'right',
 }
 
+export enum ScoreInfoTanks {
+  basic = 100,
+  fast = 200,
+  powerful = 300,
+  armored = 400,
+}
+
 export type DirectionKey = keyof typeof MovementDirection
 
 export type SceneTankBlocks = Record<string, Coords>
 
 export type SceneConfig = {
   blocks: {
-    brick: Coords[]
+    brick?: Coords[]
+    forest?: Coords[]
     eagle: Coords
     tanks: Coords[]
   }
@@ -92,6 +100,7 @@ export type OnFireParams = {
   tankPosition: Coords
   tankDirection: DirectionKey
   tankId: string
+  isPlayerFire: boolean
 }
 
 export type OnFire = ({
