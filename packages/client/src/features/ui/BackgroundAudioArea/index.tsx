@@ -149,6 +149,7 @@ export const BackgroundAudioArea = () => {
             onChange={handleVolumeChange}
           />
           <GiNextButton
+            className={styles.giNextButton}
             fill="#a23dff"
             fillOpacity={0.8}
             onClick={changeTrack}

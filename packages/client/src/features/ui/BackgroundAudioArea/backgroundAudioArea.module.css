@@ -48,3 +48,13 @@ input[type='range']::-webkit-slider-thumb {
   cursor: ew-resize;
   box-shadow: 0 0 2px 0 #555;
 }
+
+.giNextButton {
+  transition: 0.3s all;
+  cursor: pointer;
+}
+
+.giNextButton:hover {
+  transform: scale(110%);
+  filter: drop-shadow(3px 3px 5px var(--additional-text-color));
+}

@@ -60,7 +60,7 @@ export const scenesConfig: Record<number, SceneConfig> = {
   },
   2: {
     blocks: {
-      brick: [
+      forest: [
         { x: 0, y: 3 },
         { x: 0, y: 11 },
         { x: 1, y: 3 },
@@ -119,33 +119,33 @@ export const scenesConfig: Record<number, SceneConfig> = {
   },
   3: {
     blocks: {
-      brick: [
-        { x: 0, y: 2 },
-
-        { x: 0, y: 11 },
-        { x: 1, y: 2 },
+      forest: [
         { x: 1, y: 4 },
         { x: 1, y: 5 },
-        { x: 1, y: 6 },
         { x: 1, y: 7 },
         { x: 1, y: 8 },
-
         { x: 1, y: 10 },
         { x: 2, y: 4 },
         { x: 2, y: 8 },
-        { x: 3, y: 4 },
         { x: 3, y: 6 },
-        { x: 3, y: 8 },
         { x: 3, y: 11 },
         { x: 4, y: 4 },
-
         { x: 4, y: 8 },
-
         { x: 5, y: 4 },
         { x: 5, y: 5 },
-        { x: 5, y: 6 },
         { x: 5, y: 7 },
         { x: 5, y: 8 },
+        { x: 9, y: 10 },
+        { x: 10, y: 2 },
+        { x: 10, y: 10 },
+        { x: 11, y: 1 },
+        { x: 11, y: 2 },
+        { x: 11, y: 10 },
+      ],
+      brick: [
+        { x: 0, y: 2 },
+        { x: 0, y: 11 },
+        { x: 1, y: 2 },
         { x: 5, y: 11 },
         { x: 5, y: 12 },
         { x: 6, y: 2 },
@@ -153,7 +153,6 @@ export const scenesConfig: Record<number, SceneConfig> = {
         { x: 7, y: 2 },
         { x: 7, y: 4 },
         { x: 7, y: 5 },
-        { x: 7, y: 6 },
         { x: 7, y: 7 },
         { x: 7, y: 8 },
         { x: 7, y: 11 },
@@ -163,23 +162,14 @@ export const scenesConfig: Record<number, SceneConfig> = {
         { x: 8, y: 8 },
         { x: 9, y: 4 },
         { x: 9, y: 6 },
-        { x: 9, y: 8 },
-        { x: 9, y: 10 },
         { x: 9, y: 12 },
-        { x: 10, y: 2 },
         { x: 10, y: 4 },
         { x: 10, y: 8 },
-        { x: 10, y: 10 },
-        { x: 11, y: 1 },
-        { x: 11, y: 2 },
         { x: 11, y: 4 },
         { x: 11, y: 5 },
         { x: 11, y: 6 },
         { x: 11, y: 7 },
         { x: 11, y: 8 },
-
-        { x: 11, y: 10 },
-
         { x: 12, y: 12 },
       ],
       eagle: { x: 6, y: 12 },
