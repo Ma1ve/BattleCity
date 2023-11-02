@@ -48,11 +48,9 @@ class UserApi {
    */
   changeAvatar = async (data: FormData) => {
     try {
-      const response = await this.instance.put(
-        `user/profile/avatar`,
-        { data },
-        { headers: { 'Content-Type': 'multipart/form-data' } }
-      )
+      const response = await this.instance.put(`user/profile/avatar`, data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       toast.success('Аватар изменён')
       return response
     } catch (error: any) {

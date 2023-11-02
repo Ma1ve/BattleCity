@@ -8,24 +8,12 @@ import styles from './forum.module.css'
 import Spinner from '../../../shared/ui/Spinner/Spinner'
 
 const stubValue: ITopic[] = [
-  // {
-  //   id: 1,
-  //   title: 'Отзывы',
-  //   author: 'ivan',
-  //   commentCount: 1233,
-  // },
-  // {
-  //   id: 2,
-  //   title: 'Претензии',
-  //   author: 'gleb',
-  //   commentCount: 32,
-  // },
-  // {
-  //   id: 3,
-  //   title: 'Предоления о сотрудничестве',
-  //   author: 'Sasha',
-  //   commentCount: 1,
-  // },
+  {
+    id: 1,
+    title: 'Отзывы',
+    author: 'ivan',
+    commentCount: 1233,
+  },
 ]
 
 /** Компонент форума. */

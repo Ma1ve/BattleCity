@@ -23,17 +23,7 @@ interface ITopicViewModal {
 
 type ITopicViewModalProps = ITopicViewModal & ITopic
 
-const stubValue: IComment[] = [
-  // {
-  //   id: 1,
-  //   content: 'text text text',
-  //   author: 'ivan',
-  //   topicId: 1,
-  //   createdAt: '2023-10-14T17:38:27.655Z',
-  //   updatedAt: '2023-10-14T17:38:27.655Z',
-  // },
-  // {
-]
+const stubValue: IComment[] = []
 
 type TNewCommentValues = Pick<ITopicCreate, 'content'>
 
@@ -43,6 +33,15 @@ export const TopicViewModal = ({
   title,
   id,
 }: ITopicViewModalProps) => {
+  const stubDataComment = {
+    id: -1,
+    content: 'Тут будут ваши сообщения: Пожалуйста напишите что-то ',
+    author: 'Admin',
+    topicId: -1,
+    createdAt: 'null',
+    updatedAt: 'null',
+  }
+
   const [comments, setComments] = useState<IComment[]>(stubValue)
 
   const getComments = async () => {
@@ -87,14 +86,14 @@ export const TopicViewModal = ({
   }
 
   return (
-    <Modal close={onClose} width={800} title={title}>
+    <Modal close={onClose} width={640} title={title}>
       <div className={styles.topicViewModalWrapper}>
         {comments.length !== 0 ? (
           comments?.map(comment => {
             return <Comment data={comment} />
           })
         ) : (
-          <h1 className={styles.commentMessage}>Тут будут ваши сообщения:</h1>
+          <Comment data={stubDataComment} />
         )}
       </div>
       <Formik {...{ onSubmit, initialValues }}>

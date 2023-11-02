@@ -11,7 +11,11 @@
 .error {
   color: var(--danger-color);
   font-size: 9px;
-  padding: 8px;
+  padding: 10px 0px 0px 8px;
+}
+
+.error_10 {
+  padding: 10px 0px 0px 0px;
 }
 
 .inputWrapper {

@@ -20,7 +20,7 @@ import {
   CoordsWithSize,
   OnFire,
 } from '../shared/types'
-import vystrel from '../../../shared/sounds/vystrel.mp3'
+
 import { SpriteAnimator } from './SpriteAnimator'
 
 interface ITankProps<O extends TankOwner> {
@@ -58,6 +58,7 @@ export class Tank<O extends TankOwner> {
   private keyDownSubscription?: (event: KeyboardEvent) => void
   private keyUpSubscription?: (event: KeyboardEvent) => void
   private spriteAnimator = new SpriteAnimator()
+  public canPlaySound
 
   //Enemy
   public moveEnemyPositionAnimate
@@ -102,6 +103,8 @@ export class Tank<O extends TankOwner> {
     this.sprites = this.tankVariants[tankType][this.direction]
 
     this.sceneBlockPositions = sceneBlockPositions
+
+    this.canPlaySound = false
 
     // Enemy
 
@@ -184,12 +187,6 @@ export class Tank<O extends TankOwner> {
     this.sprites = this.tankVariants[this.tankType][this.direction]
   }
 
-  // Звук выстрела танка игрока.
-  private playShotSound() {
-    const audio = new Audio(vystrel)
-    audio.play()
-  }
-
   private subscribe() {
     if (!this.controlKeys) {
       return
@@ -200,7 +197,6 @@ export class Tank<O extends TankOwner> {
 
       if (keyCode === this.fireKey) {
         if (this.onFire) {
-          this.playShotSound()
           this.onFire({
             tankId: this.tankId,
             tankDirection: this.direction,

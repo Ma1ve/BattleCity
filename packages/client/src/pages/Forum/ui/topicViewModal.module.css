@@ -1,6 +1,6 @@
 .topicViewModalWrapper {
   min-height: 100px;
-  max-height: 325px;
+  max-height: 425px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -9,6 +9,7 @@
 
 .topicViewModalWrapper::-webkit-scrollbar {
   width: var(--scrollbar-width);
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
 }
 
 .topicViewModalWrapper::-webkit-scrollbar-thumb {
@@ -21,10 +22,16 @@
 
 .inputWrapperForm {
   margin-top: 15px;
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .commentMessage {
   font-size: 18px;
   filter: drop-shadow(5px 5px 5px var(--additional-text-color));
+}
+
+.input {
+  height: 35px;
+  color: var(--text-input-color);
+  padding: 12px 16px;
 }

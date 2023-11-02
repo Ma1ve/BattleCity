@@ -24,7 +24,7 @@
 
 .changeAvatarLabel {
   color: var(--link-text-color);
-  margin: 40px 0 40px 0;
+  margin: 40px 0 15px 0;
   border: 1px dotted var(--secondary-text-color);
   padding: 10px;
   cursor: pointer;
