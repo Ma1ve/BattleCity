@@ -20,6 +20,7 @@ import {
   CoordsWithSize,
   OnFire,
 } from '../shared/types'
+
 import { SpriteAnimator } from './SpriteAnimator'
 
 interface ITankProps<O extends TankOwner> {
@@ -57,6 +58,7 @@ export class Tank<O extends TankOwner> {
   private keyDownSubscription?: (event: KeyboardEvent) => void
   private keyUpSubscription?: (event: KeyboardEvent) => void
   private spriteAnimator = new SpriteAnimator()
+  public canPlaySound
 
   //Enemy
   public moveEnemyPositionAnimate
@@ -101,6 +103,8 @@ export class Tank<O extends TankOwner> {
     this.sprites = this.tankVariants[tankType][this.direction]
 
     this.sceneBlockPositions = sceneBlockPositions
+
+    this.canPlaySound = false
 
     // Enemy
 

@@ -1,0 +1,4 @@
+.wrapperInputTopic {
+  padding: 0 30px;
+  filter: drop-shadow(15px 15px 25px var(--additional-text-color));
+}

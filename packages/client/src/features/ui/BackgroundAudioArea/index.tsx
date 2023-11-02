@@ -4,51 +4,53 @@ import styles from './backgroundAudioArea.module.css'
 import bg_sound_1 from '../../../shared/sounds/bg_sound_1.mp3'
 import bg_sound_2 from '../../../shared/sounds/bg_sound_2.mp3'
 import bg_sound_3 from '../../../shared/sounds/bg_sound_3.mp3'
-
 /** Начальная позиция уровня громкости. */
 const DEFAULT_VOLUME = 0.2
-
 /** Список треков. */
 const bgSoundsList: HTMLAudioElement[] =
   typeof window !== 'undefined'
     ? [new Audio(bg_sound_1), new Audio(bg_sound_2), new Audio(bg_sound_3)]
     : []
-
 enum EAudioAreaActions {
   PLAY = 'PLAY',
   STOP = 'STOP',
   PAUSE = 'PAUSE',
 }
-
 export const BackgroundAudioArea = () => {
   const [isReady, setIsReady] = useState(false)
   // Признак проигрывания трека.
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(
+    typeof window !== 'undefined'
+      ? localStorage.getItem('audioIsPlaying') !== 'false'
+      : false
+  )
   // Текущий индекс трека в bgSoundsList.
   const [currentSoundIndex, setCurrentSoundIndex] = useState(0)
   const [volume, setVolume] = useState(DEFAULT_VOLUME)
-
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     if (audioRef.current) {
-      // Автозапуск.
-      const handleAutoPlay = () => {
-        if (audioRef.current) {
-          handleAudioActionApply(EAudioAreaActions.PLAY)
+      if (
+        audioRef.current &&
+        // Проверяем localstorage для исключения непроизвольного включения при обновлении страницы.
+        localStorage.getItem('audioIsPlaying') !== 'false'
+      ) {
+        // Автозапуск.
+        const handleAutoPlay = () => {
+          if (audioRef.current) {
+            handleAudioActionApply(EAudioAreaActions.PLAY)
+          }
+          setIsPlaying(true)
         }
-        setIsPlaying(true)
+        audioRef.current.play().catch(e => {
+          // Обход политик автозапуска.
+          document.addEventListener('click', handleAutoPlay, { once: true })
+        })
+        return document.removeEventListener('click', handleAutoPlay)
       }
-
-      audioRef.current.play().catch(e => {
-        // Обход политик автозапуска.
-        document.addEventListener('click', handleAutoPlay, { once: true })
-      })
-
-      return document.removeEventListener('click', handleAutoPlay)
     }
   }, [])
-
   /** Play, Stop, Pause. */
   const handleAudioActionApply = useCallback(
     (action: EAudioAreaActions) => {
@@ -65,7 +67,6 @@ export const BackgroundAudioArea = () => {
     },
     [audioRef]
   )
-
   /** Смена трека. */
   const changeTrack = useCallback(() => {
     if (audioRef.current && isPlaying) {
@@ -74,26 +75,28 @@ export const BackgroundAudioArea = () => {
       if (index > bgSoundsList.length - 1) {
         index = 0
       }
-
       setCurrentSoundIndex(index)
-
       handleAudioActionApply(EAudioAreaActions.PAUSE)
       audioRef.current.src = bgSoundsList[index].src
       handleAudioActionApply(EAudioAreaActions.PLAY)
     }
   }, [currentSoundIndex, audioRef, isPlaying])
-
   /** Переключатель для кнопки Отключения/Включения фоновой музыки. */
   const togglePlayPause = useCallback(() => {
     if (isPlaying) {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('audioIsPlaying', 'false')
+      }
       handleAudioActionApply(EAudioAreaActions.PAUSE)
       setIsPlaying(false)
     } else {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('audioIsPlaying', 'true')
+      }
       handleAudioActionApply(EAudioAreaActions.PLAY)
       setIsPlaying(true)
     }
   }, [isPlaying])
-
   const handleVolumeChange = useCallback(
     (e: any) => {
       const volumeValue = e.currentTarget.valueAsNumber
@@ -103,11 +106,9 @@ export const BackgroundAudioArea = () => {
     },
     [volume, audioRef]
   )
-
   const handleCanPlay = () => {
     setIsReady(true)
   }
-
   return (
     <div className={styles.audioButtonsArea}>
       <audio
@@ -118,7 +119,6 @@ export const BackgroundAudioArea = () => {
         loop>
         <source src={bgSoundsList[currentSoundIndex]?.src} type="audio/mpeg" />
       </audio>
-
       {isReady ? (
         <>
           <div onClick={togglePlayPause} className={styles.togglePlayPause}>
@@ -136,7 +136,6 @@ export const BackgroundAudioArea = () => {
           ...
         </div>
       )}
-
       {isPlaying && isReady && (
         <>
           <input

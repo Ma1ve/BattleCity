@@ -4,11 +4,10 @@ import { Modal, Button, Input } from './../../../shared/ui'
 import { ForumAPI, ITopicCreate } from '../../../shared/api/ForumApi'
 import { TUserProfileData } from '../../../app/models/IUser'
 import { toast } from 'react-toastify'
-import {
-  userSlice,
-  selectUserInfo,
-} from '../../../app/store/reducers/UserSlice'
+import { selectUserInfo } from '../../../app/store/reducers/UserSlice'
 import { useAppSelector } from '../../../app/hooks/reducer'
+
+import styles from './newTopicModal.module.css'
 
 export const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -56,9 +55,9 @@ export const NewTopicModal = ({ onClose, onReload }: INewTopicModalProps) => {
   }
 
   return (
-    <Modal close={onClose} width={800} title={'New topic'}>
+    <Modal close={onClose} width={640} title={'New topic'}>
       <Formik {...{ onSubmit, initialValues, validationSchema }}>
-        <Form>
+        <Form className={styles.wrapperInputTopic}>
           <Input name="title" placeholder="Title" />
           <Button type="submit">Confirm</Button>
         </Form>

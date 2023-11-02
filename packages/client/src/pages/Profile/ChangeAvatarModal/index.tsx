@@ -3,6 +3,12 @@ import { Modal, Button } from './../../../shared/ui'
 import { UserAPI } from '../../../shared/api/UserApi'
 import avatarStub from './../../../shared/images/avatarStub.png'
 import styles from './changeAvatarModal.module.css'
+import { useActionCreators, useAppSelector } from '../../../app/hooks/reducer'
+import {
+  selectUserInfo,
+  userActions,
+} from '../../../app/store/reducers/UserSlice'
+import { IUser } from '../../../app/models/IUser'
 
 /**
  * @prop onClose Обработчик закрытия модального окна.
@@ -13,23 +19,29 @@ interface IChangeAvatardModal {
 
 /** Компонент модального окна смены аватара. */
 const ChangeAvatarModal = ({ onClose }: IChangeAvatardModal) => {
+  const user: IUser | null = useAppSelector(selectUserInfo)
+
   const [file, setFile] = useState<File>()
+
+  const actions = useActionCreators(userActions)
 
   const handleChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      console.log('file', e.target.files)
       setFile(e.target.files[0])
     }
   }
 
-  const handleSubmitAvatar = () => {
+  const handleSubmitAvatar = async () => {
     if (!file) {
       return
     }
+
     const formData = new FormData()
     formData.append('avatar', file, file.name)
 
-    UserAPI.changeAvatar(formData)
+    const userData = await UserAPI.changeAvatar(formData)
+
+    actions.setUserInfo(userData ?? null)
 
     onClose()
   }
@@ -39,7 +51,11 @@ const ChangeAvatarModal = ({ onClose }: IChangeAvatardModal) => {
       <div className={styles.changeAvatarModalBody}>
         <img
           className={styles.changeAvatarImage}
-          src={(file && URL.createObjectURL(file)) || avatarStub}
+          src={
+            user?.avatar
+              ? `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`
+              : avatarStub
+          }
           alt="Change avatar"
         />
         <label className={styles.changeAvatarLabel}>

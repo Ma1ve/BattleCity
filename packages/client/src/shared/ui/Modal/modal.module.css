@@ -20,9 +20,9 @@
   z-index: 30;
   box-shadow: 0 5px 355px -60.5px var(--main-filter-color);
   text-align: center;
-  padding: 20px;
   border-radius: 20px;
   background-color: rgb(27, 27, 27);
+  padding: 20px 20px 30px 20px;
 }
 
 .modalHeaderWrapper {

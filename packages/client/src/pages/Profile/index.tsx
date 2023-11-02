@@ -11,23 +11,13 @@ import { ERoutes } from '../../app/models/types'
 import { useActionCreators, useAppSelector } from '../../app/hooks/reducer'
 import avatarStub from './../../shared/images/avatarStub.png'
 import styles from './profile.module.css'
-
-interface IUserInfo {
-  id: number
-  first_name: string
-  second_name: string
-  display_name: string
-  login: string
-  avatar: string
-  phone: string
-  email: string
-}
+import { IUser } from '../../app/models/IUser'
 
 /** Тип данных для вывода на странице профиля. */
-type TDisplayUserInfo = Omit<IUserInfo, 'id' | 'avatar'>
+type TDisplayUserInfo = Omit<IUser, 'id' | 'avatar'>
 
 const Profile = () => {
-  const user = useAppSelector(selectUserInfo)
+  const user: IUser | null = useAppSelector(selectUserInfo)
   const actions = useActionCreators(userActions)
   const navigate = useNavigate()
 
@@ -52,8 +42,9 @@ const Profile = () => {
           <img
             className={styles.profileAvatar}
             src={
-              `https://ya-praktikum.tech/api/v2/resources/${user.avatar}` ||
-              avatarStub
+              user.avatar
+                ? `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`
+                : avatarStub
             }
             onClick={() => setShowChangeAvatarModal(!showChangeAvatarModal)}
             alt="Change avatar"

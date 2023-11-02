@@ -28,6 +28,9 @@ import { GameController } from '../controllers/GameController'
 import { destroyedTanksActions } from '../../../app/store/reducers/TanksSlice'
 import { store } from '../../../entry-client'
 
+import vzryv from '../../../shared/sounds/vzryv.mp3'
+import vystrel from '../../../shared/sounds/vystrel.mp3'
+
 export class Scene {
   public sceneConfig: SceneConfig
   public ctx: CanvasRenderingContext2D
@@ -38,6 +41,7 @@ export class Scene {
     {}
 
   public totalScore: number
+  public playerTankColor: TankColor
 
   constructor({
     ctx,
@@ -64,6 +68,8 @@ export class Scene {
       sceneBlockPositions: this.sceneConfig.blocks,
       onFire: this.onFire.bind(this),
     })
+
+    this.playerTankColor = player.tankColor
 
     const enemy = new Tank<'enemy'>({
       tankType: TankType.basic,
@@ -117,11 +123,19 @@ export class Scene {
     this.tanks.enemy = [enemy, enemy1, enemy2, enemy3, enemy4]
   }
 
+  private playSound(sound: string) {
+    const audio = new Audio(sound)
+    audio.play()
+  }
+
   private onFire({ tankPosition, tankDirection, tankId }: OnFireParams) {
     if (this.bullets[tankId]) {
       return
     }
     this.bullets[tankId] = new Bullet({ tankPosition, tankDirection })
+
+    // Звук выстрела танков
+    this.playSound(vystrel)
   }
 
   public getTotalScoreDestroyedTanks() {
@@ -233,6 +247,9 @@ export class Scene {
 
           this.tanks.enemy = this.tanks.enemy.filter(tank => {
             if (tank.position === intersectedBlockCoords) {
+              // Звук взрыва танка противника
+              this.playSound(vzryv)
+
               const scoreInfo = {
                 basic: 100,
                 fast: 200,

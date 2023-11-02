@@ -9,6 +9,11 @@ import {
 } from '../shared/types'
 import { TankControlKeys, tankSpeed } from '../shared/config/gameConstants'
 
+// Заглушка для импорта аудиофайла vystrel.mp3
+jest.mock('../../../shared/sounds/vystrel.mp3', () => {
+  return {}
+})
+
 describe('Tank Class', () => {
   it('should create an instance of Tank with correct initial values', () => {
     const initialPosition = { x: 100, y: 100 }

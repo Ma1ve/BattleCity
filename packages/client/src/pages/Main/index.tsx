@@ -17,15 +17,15 @@ const Main = () => {
   const menuItems: IMenuItem[] = [
     {
       id: 1,
-      text: 'Option 1',
+      text: 'Level 1',
     },
     {
       id: 2,
-      text: 'Option 2',
+      text: 'Level 2',
     },
     {
       id: 3,
-      text: 'Option 3',
+      text: 'Level 3',
     },
   ]
 
