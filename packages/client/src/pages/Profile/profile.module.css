@@ -38,3 +38,7 @@
   transform: scale(105%);
   filter: drop-shadow(0px 0px 15px #000000);
 }
+
+.profileSpinner {
+  height: 100px;
+}

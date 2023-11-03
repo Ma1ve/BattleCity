@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 
-import { BASE_URL } from './consts'
+import { BASE_URL, SERVER_URL } from './consts'
 
 export interface ITopic {
   id: number | string
@@ -32,7 +32,7 @@ class ForumApi {
 
   protected createAxiosInstance(): AxiosInstance {
     return axios.create({
-      baseURL: `http://localhost:3001/`,
+      baseURL: SERVER_URL,
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
       responseType: 'json',

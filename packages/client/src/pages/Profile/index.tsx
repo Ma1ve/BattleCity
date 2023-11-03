@@ -12,6 +12,7 @@ import { useActionCreators, useAppSelector } from '../../app/hooks/reducer'
 import avatarStub from './../../shared/images/avatarStub.png'
 import styles from './profile.module.css'
 import { IUser } from '../../app/models/IUser'
+import Spinner from '../../shared/ui/Spinner/Spinner'
 
 /** Тип данных для вывода на странице профиля. */
 type TDisplayUserInfo = Omit<IUser, 'id' | 'avatar'>
@@ -20,6 +21,8 @@ const Profile = () => {
   const user: IUser | null = useAppSelector(selectUserInfo)
   const actions = useActionCreators(userActions)
   const navigate = useNavigate()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const logout = () => {
     AuthAPI.logout().then(() => actions.setUserInfo(null))
@@ -39,16 +42,22 @@ const Profile = () => {
       <Title>Profile</Title>
       {user && (
         <div className={styles.profileInfo}>
-          <img
-            className={styles.profileAvatar}
-            src={
-              user.avatar
-                ? `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`
-                : avatarStub
-            }
-            onClick={() => setShowChangeAvatarModal(!showChangeAvatarModal)}
-            alt="Change avatar"
-          />
+          {isLoading ? (
+            <div className={styles.profileSpinner}>
+              <Spinner />
+            </div>
+          ) : (
+            <img
+              className={styles.profileAvatar}
+              src={
+                user.avatar
+                  ? `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`
+                  : avatarStub
+              }
+              onClick={() => setShowChangeAvatarModal(!showChangeAvatarModal)}
+              alt="Change avatar"
+            />
+          )}
           {Object.entries(
             omitObject(user, ['id', 'avatar']) as TDisplayUserInfo
           ).map((val, i) => {
@@ -68,8 +77,12 @@ const Profile = () => {
           <ButtonProfile onClick={logout}>Logout</ButtonProfile>
         </div>
       )}
+
       {showChangeAvatarModal && (
-        <ChangeAvatarModal onClose={() => setShowChangeAvatarModal(false)} />
+        <ChangeAvatarModal
+          setIsLoading={setIsLoading}
+          onClose={() => setShowChangeAvatarModal(false)}
+        />
       )}
       {showChangePasswordModal && (
         <ChangePasswordModal

@@ -15,10 +15,11 @@ import { IUser } from '../../../app/models/IUser'
  */
 interface IChangeAvatardModal {
   onClose: () => void
+  setIsLoading: (isLoading: boolean) => void
 }
 
 /** Компонент модального окна смены аватара. */
-const ChangeAvatarModal = ({ onClose }: IChangeAvatardModal) => {
+const ChangeAvatarModal = ({ onClose, setIsLoading }: IChangeAvatardModal) => {
   const user: IUser | null = useAppSelector(selectUserInfo)
 
   const [file, setFile] = useState<File>()
@@ -32,9 +33,13 @@ const ChangeAvatarModal = ({ onClose }: IChangeAvatardModal) => {
   }
 
   const handleSubmitAvatar = async () => {
+    setIsLoading(true)
+
     if (!file) {
       return
     }
+
+    onClose()
 
     const formData = new FormData()
     formData.append('avatar', file, file.name)
@@ -43,7 +48,7 @@ const ChangeAvatarModal = ({ onClose }: IChangeAvatardModal) => {
 
     actions.setUserInfo(userData ?? null)
 
-    onClose()
+    setIsLoading(false)
   }
 
   return (

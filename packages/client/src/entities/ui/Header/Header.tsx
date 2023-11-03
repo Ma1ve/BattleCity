@@ -45,20 +45,6 @@ const Header = () => {
           }>
           game
         </NavLink>
-        {/* <NavLink
-          to={ERoutes.ENDGAME}
-          className={({ isActive }) =>
-            isActive ? styles.active : styles.inactive
-          }>
-          end game
-        </NavLink>
-        <NavLink
-          to={ERoutes.GAMETOSTART}
-          className={({ isActive }) =>
-            isActive ? styles.active : styles.inactive
-          }>
-          game to start
-        </NavLink> */}
         <NavLink
           to={ERoutes.LEADERBOARD}
           className={({ isActive }) =>
@@ -73,27 +59,6 @@ const Header = () => {
           }>
           forum
         </NavLink>
-        {/* <NavLink
-          to={ERoutes.ERROR400}
-          className={({ isActive }) =>
-            isActive ? styles.active : styles.inactive
-          }>
-          page400
-        </NavLink>
-        <NavLink
-          to={ERoutes.ERROR404}
-          className={({ isActive }) =>
-            isActive ? styles.active : styles.inactive
-          }>
-          page404
-        </NavLink>
-        <NavLink
-          to={ERoutes.ERROR500}
-          className={({ isActive }) =>
-            isActive ? styles.active : styles.inactive
-          }>
-          page500
-        </NavLink> */}
         <img
           alt="Changed theme"
           src={themeIcon}
