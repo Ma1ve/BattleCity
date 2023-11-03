@@ -6,4 +6,25 @@
   position: absolute;
   bottom: 35px;
   border: 2px solid var(--main-filter-color);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.emojiContainer {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji {
+  width: 25px;
+  height: 25px;
+  transition: scale 300ms 0ms;
+}
+
+.emoji:hover {
+  transform: scale(1.05);
 }

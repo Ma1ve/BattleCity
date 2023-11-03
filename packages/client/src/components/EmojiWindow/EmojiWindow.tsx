@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import styles from './index.module.css'
 import { useGetAllEmojiQuery } from '../../app/store/api/emojiAPI'
-import data from './testData.json'
 
-export const EmojiWindow = () => {
+type IProps = {
+  onSelectEmoji: (code: string) => void
+}
+
+export const EmojiWindow = ({ onSelectEmoji }: IProps) => {
   const [emoji, setEmoji] = useState<string[]>([])
 
   const { data: emojiData, isLoading, isError } = useGetAllEmojiQuery('')
@@ -14,11 +17,15 @@ export const EmojiWindow = () => {
 
   return (
     <div className={styles.root}>
-      {Object.values(data.emoji).map((emoji: string) => {
+      {emoji.map((code: string) => {
         return (
-          <span role="img" aria-label="Reaction">
-            {emoji}
-          </span>
+          <div
+            className={styles.emojiContainer}
+            onClick={() => onSelectEmoji(code)}>
+            <span className={styles.emoji} role="img" aria-label="Reaction">
+              {code}
+            </span>
+          </div>
         )
       })}
       {isLoading ? 'Загрузка...' : null}
