@@ -4,9 +4,7 @@ import Emoji from '../src/models/forum/emoji'
 
 export const getAllEmoji = async (_: any, response: Response) => {
   try {
-    const emoji = await Emoji.findAll({
-      where: {},
-    })
+    const emoji = await Emoji.findAll()
 
     if (!emoji || !emoji.length) {
       const data = Object.values(emojiData)

@@ -58,7 +58,7 @@ export const NewTopicModal = ({ onClose, onReload }: INewTopicModalProps) => {
     <Modal close={onClose} width={640} title={'New topic'}>
       <Formik {...{ onSubmit, initialValues, validationSchema }}>
         <Form className={styles.wrapperInputTopic}>
-          <Input name="title" placeholder="Title" />
+          <Input name="title" placeholder="Title" isEmoji={true} />
           <Button type="submit">Confirm</Button>
         </Form>
       </Formik>

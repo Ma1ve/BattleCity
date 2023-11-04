@@ -2,17 +2,18 @@ import React, { useRef, useState } from 'react'
 import { useField } from 'formik'
 
 import styles from './input.module.css'
-import { EmojiButton } from '../../../components/EmojiButton/EmojiButton'
+import { EmojiButton } from '../EmojiButton/EmojiButton'
 
 interface IInput {
   name: string
   label?: string
   type?: string
   placeholder?: string
+  isEmoji?: boolean
 }
 
 export const Input = (props: IInput): JSX.Element => {
-  const { type, name, label, ...rest } = props
+  const { type, name, label, isEmoji = false, ...rest } = props
 
   const [field, { error, touched }] = useField(props)
   const [caretPosition, setCaretPosition] = useState<number>(0)
@@ -74,7 +75,7 @@ export const Input = (props: IInput): JSX.Element => {
             onKeyUp={setPosition}
             ref={inputRef}
           />
-          <EmojiButton onSelectEmoji={onSelectEmoji} />
+          {isEmoji ? <EmojiButton onSelectEmoji={onSelectEmoji} /> : null}
         </div>
         {touched && error ? (
           <span className={styles.error}>{error}</span>

@@ -1,7 +1,7 @@
-import { Ref, useState } from 'react'
+import { useState } from 'react'
 import styles from './index.module.css'
 import { EmojiWindow } from '../EmojiWindow/EmojiWindow'
-import emojiIcon from '../../shared/images/emojiButton.svg'
+import emojiIcon from '../../images/emojiButton.svg'
 
 type IProps = {
   onSelectEmoji: (code: string) => void

@@ -7,11 +7,11 @@ import Users from '../models/Users'
 import Emoji from './models/forum/emoji'
 
 const {
-  POSTGRES_PORT = 5432,
-  POSTGRES_DB = 'battle-city',
-  POSTGRES_PASSWORD = 'newPassword',
-  POSTGRES_USER = 'postgres',
-  POSTGRES_HOST = 'localhost',
+  POSTGRES_PORT,
+  POSTGRES_DB,
+  POSTGRES_PASSWORD,
+  POSTGRES_USER,
+  POSTGRES_HOST,
 } = process.env
 
 const sequelizeOptions: SequelizeOptions = {

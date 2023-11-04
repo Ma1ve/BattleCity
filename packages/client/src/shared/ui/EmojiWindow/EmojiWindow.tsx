@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './index.module.css'
-import { useGetAllEmojiQuery } from '../../app/store/api/emojiAPI'
-import Spinner from '../../shared/ui/Spinner/Spinner'
+import { useGetAllEmojiQuery } from '../../../app/store/api/emojiAPI'
+import Spinner from '../Spinner/Spinner'
 
 type IProps = {
   onSelectEmoji: (code: string) => void

@@ -98,7 +98,11 @@ export const TopicViewModal = ({
       </div>
       <Formik {...{ onSubmit, initialValues }}>
         <Form className={styles.inputWrapperForm}>
-          <Input name="content" placeholder="Enter the text...." />
+          <Input
+            name="content"
+            placeholder="Enter the text...."
+            isEmoji={true}
+          />
           <Button type="submit">Send</Button>
         </Form>
       </Formik>
