@@ -1,14 +1,15 @@
 .root {
-  width: 200px;
-  height: 200px;
-  background-color: rgb(27, 27, 27);
+  width: 130px;
+  height: 130px;
+  padding: 0 3px;
+  background-color: #141414;
   border-radius: 10px;
   position: absolute;
   bottom: 35px;
-  border: 2px solid var(--main-filter-color);
   display: flex;
   flex-wrap: wrap;
-  align-content: flex-start;
+  align-content: space-around;
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
 }
 
 .emojiContainer {
@@ -22,9 +23,16 @@
 .emoji {
   width: 25px;
   height: 25px;
-  transition: scale 300ms 0ms;
+  transition: 0.3s all;
+  user-select: none;
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
 }
 
 .emoji:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  filter: drop-shadow(1px 1px 2px #fff);
+}
+
+.emojiError {
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
 }

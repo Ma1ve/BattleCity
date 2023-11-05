@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './index.module.css'
 import { useGetAllEmojiQuery } from '../../app/store/api/emojiAPI'
+import Spinner from '../../shared/ui/Spinner/Spinner'
 
 type IProps = {
   onSelectEmoji: (code: string) => void
@@ -28,8 +29,10 @@ export const EmojiWindow = ({ onSelectEmoji }: IProps) => {
           </div>
         )
       })}
-      {isLoading ? 'Загрузка...' : null}
-      {isError ? 'Что-то пошло не так' : null}
+      {isLoading ? <Spinner /> : null}
+      {isError ? (
+        <div className={styles.emojiError}>Что-то пошло не так</div>
+      ) : null}
     </div>
   )
 }

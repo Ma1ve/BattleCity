@@ -47,6 +47,7 @@
   width: 20px;
   height: 36px;
   cursor: pointer;
+  transition: 0.2s all;
 }
 
 .modalCloseButton::before {
