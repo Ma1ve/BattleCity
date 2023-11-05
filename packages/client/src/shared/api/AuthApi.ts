@@ -6,7 +6,7 @@ import {
   TLoginData,
   TUserProfileData,
 } from '../../app/models/IUser'
-import { AUTH_URL, OAUTH_URL } from './consts'
+import { AUTH_URL, OAUTH_URL, SERVER_URL } from './consts'
 
 class AuthApi {
   private instance: AxiosInstance
@@ -91,9 +91,7 @@ class AuthApi {
 
   getTheme = async (id: number) => {
     try {
-      const response = await this.instance.get(
-        `http://localhost:3001/theme?id=${id}`
-      )
+      const response = await this.instance.get(`${SERVER_URL}theme?id=${id}`)
       return response
     } catch (error: unknown) {
       toast.error(`Ошибка при получении темы`)
@@ -102,7 +100,7 @@ class AuthApi {
 
   setTheme = async (id: number, theme: string) => {
     try {
-      const response = await this.instance.post(`http://localhost:3001/theme`, {
+      const response = await this.instance.post(`${SERVER_URL}theme`, {
         id,
         theme,
       })

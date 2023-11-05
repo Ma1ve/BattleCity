@@ -26,19 +26,19 @@ export const Forum = () => {
 
   const getTopics = useCallback(async () => {
     try {
-      setIsLoading(true)
       const res = await ForumAPI.getTopics()
       setTopics([...stubValue, ...(res || [])])
     } catch (e: any) {
       toast.error(e?.response?.data?.reason)
       setTopics(stubValue)
-    } finally {
-      setIsLoading(false)
     }
   }, [])
 
   useEffect(() => {
+    setIsLoading(true)
     getTopics()
+      .then(() => setIsLoading(false))
+      .catch(() => setIsLoading(false))
   }, [])
 
   const handleTopicOpen = useCallback(

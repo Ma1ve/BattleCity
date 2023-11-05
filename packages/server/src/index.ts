@@ -36,16 +36,16 @@ async function startServer() {
   app.use(bodyParser.json())
   const port = Number(process.env.SERVER_PORT) || 3001
 
-  app.get('/server', (_, res) => {
+  app.get('/api/server', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
 
-  app.get('/theme', getTheme)
-  app.post('/theme', setTheme)
+  app.get('/api/theme', getTheme)
+  app.post('/api/theme', setTheme)
 
-  app.use('/topics', topicsRouter)
-  app.use('/comments', commentsRouter)
-  app.use('/replies', repliesRouter)
+  app.use('/api/topics', topicsRouter)
+  app.use('/api/comments', commentsRouter)
+  app.use('/api/replies', repliesRouter)
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)

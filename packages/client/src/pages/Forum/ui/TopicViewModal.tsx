@@ -13,6 +13,7 @@ import { Formik, Form } from 'formik'
 import { useAppSelector } from '../../../app/hooks/reducer'
 import { TUserProfileData } from '../../../app/models/IUser'
 import { selectUserInfo } from '../../../app/store/reducers/UserSlice'
+import Spinner from '../../../shared/ui/Spinner/Spinner'
 
 /**
  * @prop onClose Обработчик закрытия модального окна.
@@ -44,13 +45,18 @@ export const TopicViewModal = ({
 
   const [comments, setComments] = useState<IComment[]>(stubValue)
 
+  const [isLoadingComments, setIsLoadingComments] = useState(false)
+
   const getComments = async () => {
     try {
+      setIsLoadingComments(true)
       const res = await ForumAPI.getAllComments({ topicId: id as string })
       setComments([...stubValue, ...(res?.data || [])])
     } catch (e: any) {
       toast.error(e?.response?.data?.reason)
       setComments(stubValue)
+    } finally {
+      setIsLoadingComments(false)
     }
   }
 
@@ -88,12 +94,18 @@ export const TopicViewModal = ({
   return (
     <Modal close={onClose} width={640} title={title}>
       <div className={styles.topicViewModalWrapper}>
-        {comments.length !== 0 ? (
-          comments?.map(comment => {
-            return <Comment data={comment} />
-          })
+        {isLoadingComments ? (
+          <Spinner />
         ) : (
-          <Comment data={stubDataComment} />
+          <>
+            {comments.length !== 0 ? (
+              comments?.map(comment => {
+                return <Comment data={comment} />
+              })
+            ) : (
+              <Comment data={stubDataComment} />
+            )}
+          </>
         )}
       </div>
       <Formik {...{ onSubmit, initialValues }}>
