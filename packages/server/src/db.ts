@@ -4,6 +4,7 @@ import { Reply } from './models/forum/reply'
 import { Comment } from './models/forum/comment'
 import Themes from '../models/Themes'
 import Users from '../models/Users'
+import Emoji from './models/forum/emoji'
 
 const {
   POSTGRES_PORT,
@@ -20,12 +21,12 @@ const sequelizeOptions: SequelizeOptions = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   port: Number(POSTGRES_PORT),
-  models: [Themes, Users],
+  models: [Themes, Users, Emoji],
 }
 
 export async function createSequelizeConnection() {
   const sequelize = new Sequelize(sequelizeOptions)
-  sequelize.addModels([Themes, Users, Topic, Comment, Reply])
+  sequelize.addModels([Themes, Users, Topic, Comment, Reply, Emoji])
 
   try {
     await sequelize.authenticate()

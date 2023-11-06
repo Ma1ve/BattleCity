@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import styles from './index.module.css'
 import { EmojiWindow } from '../EmojiWindow/EmojiWindow'
-import emojiIcon from '../../shared/images/emojiButton.svg'
+import emojiIcon from '../../images/emojiButton.svg'
 
-export const EmojiButton = () => {
+type IProps = {
+  onSelectEmoji: (code: string) => void
+}
+
+export const EmojiButton = ({ onSelectEmoji }: IProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const onOpenEmojiWindow = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -19,7 +23,7 @@ export const EmojiButton = () => {
         src={emojiIcon}
         onClick={onOpenEmojiWindow}
       />
-      {isOpen ? <EmojiWindow /> : null}
+      {isOpen ? <EmojiWindow onSelectEmoji={onSelectEmoji} /> : null}
     </div>
   )
 }

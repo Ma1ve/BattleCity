@@ -3,6 +3,7 @@ import cors from 'cors'
 import express from 'express'
 import { createSequelizeConnection } from './db'
 import { setTheme, getTheme } from '../controllers/controllerTheme'
+import { getAllEmoji } from '../controllers/controllerEmoji'
 dotenv.config()
 import bodyParser from 'body-parser'
 import topicsRouter from './routes/topicsRouter'
@@ -46,6 +47,8 @@ async function startServer() {
   app.use('/api/topics', topicsRouter)
   app.use('/api/comments', commentsRouter)
   app.use('/api/replies', repliesRouter)
+
+  app.get('/emoji', getAllEmoji)
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)

@@ -3,29 +3,29 @@ import pkg from '@reduxjs/toolkit/dist/query/react/index.js'
 const { fetchBaseQuery } = pkg
 
 // For development
-// import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+//import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import * as toolkitRaw from '@reduxjs/toolkit/dist/query/react'
 const { createApi } = toolkitRaw.default ?? toolkitRaw
 
 import { EmojiResponseData } from '../../models/IEmoji'
 
-const { BASE_URL } = import.meta.env
-
 export const emojiAPI = createApi({
   reducerPath: 'emojiAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/emoji` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://localhost:3001/emoji` }),
   tagTypes: ['Emoji'],
   endpoints: builder => ({
     getAllEmoji: builder.query({
       query: () => {
         return {
-          url: `/get`,
+          url: ``,
           method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
         }
       },
       transformResponse: (response: EmojiResponseData): string[] => {
-        return Object.values(response.emoji)
+        const emojiArray = response.emoji
+        return emojiArray.map(emoji => emoji.code)
       },
       keepUnusedDataFor: 60,
       providesTags: ['Emoji'],

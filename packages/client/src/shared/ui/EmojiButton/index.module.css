@@ -1,12 +1,14 @@
 .root {
-  position: relative;
+  position: absolute;
   width: 30px;
   height: 30px;
   cursor: pointer;
+  right: 10px;
+  display: flex;
 }
 
 .icon {
-  width: 90%;
+  width: 85%;
   transition: scale 300ms 0ms;
 }
 
