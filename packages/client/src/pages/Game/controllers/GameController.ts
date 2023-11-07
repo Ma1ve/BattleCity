@@ -56,10 +56,7 @@ export class GameController {
 
     this.keyPressHandler = new KeyPressSubscription(keyCode => {
       // В этой функции вы можете выполнить необходимую логику на основе keyCode
-      if (
-        keyCode === 'Enter' &&
-        this.timeAnimation <= this.animationStartGame
-      ) {
+      if (keyCode !== 'Tab' && this.timeAnimation <= this.animationStartGame) {
         this.setLoadingLevel(true)
       }
     })

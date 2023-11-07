@@ -3,6 +3,7 @@ import { useField } from 'formik'
 
 import styles from './input.module.css'
 import { EmojiButton } from '../EmojiButton/EmojiButton'
+import classNames from 'classnames'
 
 interface IInput {
   name: string
@@ -65,7 +66,9 @@ export const Input = (props: IInput): JSX.Element => {
       <span className={styles.inputWrapper}>
         <div className={styles.inputLine}>
           <input
-            className={styles.input}
+            className={classNames(styles.input, {
+              [styles.emojiInput]: isEmoji,
+            })}
             type={type || 'text'}
             id={name}
             onKeyDown={handleKeyDown}
