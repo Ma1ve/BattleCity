@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
-import Users from '../models/Users'
-import Themes from '../models/Themes'
+import Users from '../src/models/user/Users'
+import Themes from '../src/models/theme/Themes'
 
 export const setTheme = async (request: Request, response: Response) => {
   const { theme, id } = request.body

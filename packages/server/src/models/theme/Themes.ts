@@ -7,7 +7,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript'
 
-import Users from './Users'
+import Users from '../user/Users'
 
 export enum ETheme {
   DARK = 'dark',

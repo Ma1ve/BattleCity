@@ -9,7 +9,7 @@ import {
   OnFireParams,
   ScoreInfoTanks,
 } from '../shared/types'
-import { gameUI } from './GameUI'
+
 import {
   blockHeight,
   blockHeightQuarter,
@@ -19,6 +19,7 @@ import {
   canvasWidth,
   TankControlKeys,
 } from '../shared/config/gameConstants'
+
 import { Tank } from './Tank'
 import { Bullet } from './Bullet'
 import { isCoordsArray } from '../shared/utils/isCoordsArray'
@@ -28,6 +29,7 @@ import { GameController } from '../controllers/GameController'
 
 import { destroyedTanksActions } from '../../../app/store/reducers/TanksSlice'
 import { store } from '../../../entry-client'
+import { gameUI } from './GameUI'
 
 import vzryv from '../../../shared/sounds/vzryv.mp3'
 import vystrel from '../../../shared/sounds/vystrel.mp3'
@@ -42,8 +44,6 @@ export class Scene {
     {}
 
   public totalScore: number
-  public playerTankColor: TankColor
-
   public playerBullet: Bullet | null
 
   constructor({
@@ -54,6 +54,7 @@ export class Scene {
     sceneConfig: SceneConfig
   }) {
     this.sceneConfig = sceneConfig
+
     this.ctx = ctx
     this.bullets = {}
 
@@ -71,8 +72,6 @@ export class Scene {
       sceneBlockPositions: this.sceneConfig.blocks,
       onFire: this.onFire.bind(this),
     })
-
-    this.playerTankColor = player.tankColor
 
     const enemy = new Tank<'enemy'>({
       tankType: TankType.basic,
@@ -170,6 +169,7 @@ export class Scene {
 
         this.gameController.setGameOver(true, this.totalScore)
       }
+
       this.gameController.drawGameOverMenu()
 
       return

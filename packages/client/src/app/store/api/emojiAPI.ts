@@ -9,10 +9,11 @@ import * as toolkitRaw from '@reduxjs/toolkit/dist/query/react'
 const { createApi } = toolkitRaw.default ?? toolkitRaw
 
 import { EmojiResponseData } from '../../models/IEmoji'
+import { SERVER_URL } from '../../../shared/api/consts'
 
 export const emojiAPI = createApi({
   reducerPath: 'emojiAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: `http://localhost:3001/emoji` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${SERVER_URL}emoji` }),
   tagTypes: ['Emoji'],
   endpoints: builder => ({
     getAllEmoji: builder.query({

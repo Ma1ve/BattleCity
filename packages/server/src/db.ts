@@ -2,8 +2,8 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Topic } from './models/forum/topic'
 import { Reply } from './models/forum/reply'
 import { Comment } from './models/forum/comment'
-import Themes from '../models/Themes'
-import Users from '../models/Users'
+import Themes from './models/theme/Themes'
+import Users from './models/user/Users'
 import Emoji from './models/forum/emoji'
 
 const {
