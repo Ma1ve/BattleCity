@@ -86,12 +86,47 @@ https://cloud.mail.ru/home/videocideo.mp4
 
 `docker compose up` - запустит 6 сервисов
 
-1.  **_nginx_**, раздающий клиентскую статику (client)
-2.  **_certbot_**, инструмент для получения SSL-сертификатов.
-3.  **_client_**, клиентская часть приложения
-4.  **_server_**, ваш сервер
-5.  **_postgres_**, СУБД, используемая для хранения данных.
-6.  **_pgadmin_**, инструмент для администрирования баз данных PostgreSQL.
+1. **_nginx_**, раздающий клиентскую статику (client)
+
+2. **_certbot_**, инструмент для получения SSL-сертификатов.
+3. **_client_**, клиентская часть приложения
+4. **_server_**, ваш сервер
+5. **_postgres_**, СУБД, используемая для хранения данных.
+6. **_pgadmin_**, инструмент для администрирования баз данных PostgreSQL.
 
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`
+
+Вы должны увидеть следующие **_сообщения в консоли_**:
+
+<p align="center">
+  <img src="./assets/client-log.png" alt="client-log">
+  <img src="./assets/server-log.png" alt="client-log">
+  <img src="./assets/postrgres-log.png" alt="client-log">
+  <img src="./assets/pgadmin-log.png" alt="client-log">
+</p>
+
+Если все работает корректно и без ошибок, вы должны зайти в pgAdmin и создать там вашу БД:
+
+1. Перейдите по **_localhost:5555_**, перед вами откроется начальная страница **_pgAdmin_**, <span style="color: red;">вы должны заполнить поля в соответствии с вашими **_env переменными_**,</span> если вы ничего не изменяли, то для входа в систему вы должны прописать:
+
+- login: admin@admin.ru
+- password: secret
+<p align="center">
+ <img src="./assets/pgAdmin-entry.png" alt="client-log">
+</p>
+
+2. После успешного входа, создайте вашу БД, **_нажмите на Add New Server_**
+ <p align="center">
+   <img src="./assets/pgAdmin-create-bd.png" alt="client-log">
+</p>
+
+3. Заполните поля во вкладке **_general и connection_**, если вы также ничего не изменяли в файле env, **_заполните все существующие поля, за исключением пароля, напишите postgres, пароль: password_** и нажмите на кнопку Save
+<p align="center">
+  <img src="./assets/pgAdmin-general-bd.png" alt="client-log">
+</p>
+<p align="center">
+  <img src="./assets/pgAdmin-connection-bd.png" alt="client-log">
+</p>
+
+4. После успешного создания вашей БД ( которую вы можете посмотреть слева в Servers ), **перезапустите ваш** `docker-compose` и у вас должно все работать.
