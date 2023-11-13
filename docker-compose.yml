@@ -42,9 +42,6 @@ services:
       - '${CLIENT_PORT}:${CLIENT_PORT}'
     env_file:
       - .env
-    volumes:
-      - ./:/app
-      - /app/node_modules
     networks:
       - tanki-net
     depends_on:
@@ -65,9 +62,6 @@ services:
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       NODE_ENV: development
-    volumes:
-      - ./:/app
-      - /app/node_modules
     networks:
       - tanki-net
     depends_on:
@@ -79,7 +73,7 @@ services:
     ports:
       - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     volumes:
-      - ./postgresdata:/var/lib/postgresql/data
+      - ./tmp/pgdata/:/var/lib/postgresql/data
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -102,7 +96,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
     volumes:
-      - ./tmp/pgadmin:/var/lib/pgadmin
+      - ./tmp/pgadmin/:/var/lib/pgadmin
     networks:
       - tanki-net
     depends_on:

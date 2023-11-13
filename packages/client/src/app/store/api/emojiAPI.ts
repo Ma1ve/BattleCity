@@ -1,9 +1,11 @@
+// В зависимости от сборки вам следует использовать один из следующих импортов ниже
+
 // For production
 import pkg from '@reduxjs/toolkit/dist/query/react/index.js'
 const { fetchBaseQuery } = pkg
 
 // For development
-//import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+// import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import * as toolkitRaw from '@reduxjs/toolkit/dist/query/react'
 const { createApi } = toolkitRaw.default ?? toolkitRaw

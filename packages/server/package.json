@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest .",
-    "dev": "cross-env NODE_ENV=development nodemon -L"
+    "dev": "cross-env NODE_ENV=development nodemon -L",
+    "prod": "cross-env NODE_ENV=production ts-node ./src/index.ts"
   },
   "dependencies": {
     "celebrate": "^15.0.1",

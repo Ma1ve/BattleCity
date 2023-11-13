@@ -36,7 +36,7 @@ async function startServer() {
   app.use(bodyParser.json())
   const port = Number(process.env.SERVER_PORT) || 3001
 
-  app.get('/api/server', (_, res) => {
+  app.get('/', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
 
