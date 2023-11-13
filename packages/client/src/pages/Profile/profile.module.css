@@ -1,0 +1,44 @@
+.profileWrapper {
+  background-color: var(--content-bg-color);
+  width: var(--content-width);
+  height: var(--content-height);
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.profileInfoItem {
+  margin-top: 20px;
+}
+
+.profileInfoItem:nth-child(7) {
+  margin-bottom: 40px;
+}
+
+.profileInfoItemValue {
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
+  color: var(--primary-text-color);
+}
+
+.profileAvatar {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s all;
+  filter: drop-shadow(0px 0px 10px #000000);
+}
+
+.profileAvatar:hover {
+  transform: scale(105%);
+  filter: drop-shadow(0px 0px 15px #000000);
+}
+
+.profileSpinner {
+  height: 100px;
+}

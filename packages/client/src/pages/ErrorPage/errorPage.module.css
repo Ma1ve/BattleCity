@@ -1,0 +1,35 @@
+.errorPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.errorPageWrapper {
+  color: white;
+  text-align: center;
+}
+
+.errorNumber {
+  font-size: 80px;
+  margin-bottom: 25px;
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
+}
+
+.errorText {
+  font-size: 30px;
+  margin-bottom: 25px;
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
+}
+
+.errorLink {
+  color: var(--link-text-color);
+  transition: 0.3s;
+}
+
+.errorLink:hover {
+  display: block;
+  transform: scale(103%);
+  color: var(--primary-text-color);
+  filter: drop-shadow(5px 5px 5px var(--main-filter-color));
+}

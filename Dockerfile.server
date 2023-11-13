@@ -1,27 +1,25 @@
-ARG NODE_VERSION=16
-ARG SERVER_PORT=3001
-
-FROM node:$NODE_VERSION-buster as base
+ARG CLIENT_PORT=3000
+ARG NODE_VERSION=18
+# Этап 1: Сборка приложения
+FROM node:$NODE_VERSION AS build
 
 WORKDIR /app
 
-FROM base as builder
+COPY package*.json ./
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 COPY . .
 
-RUN yarn lerna bootstrap
-RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
+RUN yarn lerna bootstrap && yarn build:server
 
+# Этап 2: Конечный контейнер
+FROM node:$NODE_VERSION
 
-FROM node:$NODE_VERSION-buster-slim as production
 WORKDIR /app
 
-COPY --from=builder /app/packages/server/dist/ /app/
-COPY --from=builder /app/packages/server/package.json /app/package.json
-RUN yarn install --production=true
+COPY --from=build /app /app
 
 EXPOSE $SERVER_PORT
-CMD [ "node", "/app/index.js" ]
+
+CMD [ "yarn", "run", "start:server" ]

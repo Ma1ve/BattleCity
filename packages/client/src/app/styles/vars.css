@@ -1,0 +1,49 @@
+:root {
+  /* content-area (область в которой содержится контент). */
+  --min-contentarea-height: 640px; /* Минимальная высота "рабочей" области (используется в layout). */
+  --content-height: var(
+    --min-contentarea-height
+  ); /* Высота контента, соответствует минимальной высоте рабочей области. */
+  --content-width: var(
+    --min-contentarea-height
+  ); /* Ширина контента, соответствует минимальной высоте рабочей области. */
+  /* TODO: Определиться с минимальной высотой рабочей области чтобы контент не выезжал за ее пределы. */
+  --content-bg-color: rgba(27, 27, 27, 0.9);
+  --danger-color: #ff0011;
+
+  /* text colors */
+  --primary-text-color: #edeef0; /* Основной цвет текста. */
+  --secondary-text-color: #858080; /* Второстепенный цвет текста. */
+  --additional-text-color: #000; /* Дополнительный цвет текста. */
+
+  --link-text-color: #a23dff; /* Цвет ссылки на на стриницах 4** и 5** */
+  --main-filter-color: #a23dff;
+
+  /* header */
+  --header-height: 40px; /* Высота хедера. */
+  --header-layout-color: #000;
+
+  /* footer */
+  --footer-height: 40px; /* Высота футера. */
+  --footer-layout-color: #000;
+
+  /* leaderbord */
+  --first-leaderboard-color: #fff;
+  --second-leaderboard-color: #d6a9ff;
+
+  /* button */
+  --border-button-color: #fff;
+  --background-button-color: #000;
+  --hover-text-color: #a23dff;
+
+  /* input */
+  --text-input-color: #000;
+
+  /* Forum */
+  --forum-bg-color: #fff;
+
+  /* Scrollbar */
+  --scrollbar-width: 4px; /* Ширина scrollbar */
+  --scrollbar-thumb-color: #9e9e9e; /* Задний фон scrollbar */
+  --scrollbar-track-color: #f1f1f1; /* Полоса прокрутки scrollbar */
+}

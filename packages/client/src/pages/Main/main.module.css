@@ -1,0 +1,28 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--content-bg-color);
+  width: var(--content-width);
+  height: var(--content-height);
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuItem {
+  margin-bottom: 15px;
+  transition: color 150ms linear;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  color: var(--link-text-color);
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
+  transform: scale(105%);
+}

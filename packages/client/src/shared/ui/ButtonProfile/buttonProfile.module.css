@@ -1,0 +1,15 @@
+.profileChangePasswordButton {
+  color: var(--additional-text-color);
+  height: 30px;
+  border: 1px solid var(--secondary-text-color);
+  cursor: pointer;
+  filter: drop-shadow(2px 2px 2px var(--main-filter-color));
+  border-radius: 5px;
+  margin-bottom: 24px;
+  transition: 0.2s all;
+  padding: 0 10px;
+}
+
+.profileChangePasswordButton:hover {
+  transform: scale(105%);
+}

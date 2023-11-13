@@ -1,0 +1,36 @@
+.changeAvatarModalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.changeAvatarImage {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 0px 40px var(--additional-text-color));
+}
+
+.fileName {
+  position: relative;
+  top: 15px;
+  font-size: 8px;
+  color: var(--link-text-color);
+}
+
+.changeAvatarInput {
+  display: none;
+}
+
+.changeAvatarLabel {
+  color: var(--link-text-color);
+  margin: 40px 0 15px 0;
+  border: 1px dotted var(--secondary-text-color);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.changeAvatarLabel:hover {
+  transform: scale(104%);
+}

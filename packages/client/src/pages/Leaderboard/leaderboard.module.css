@@ -1,0 +1,50 @@
+.leaderboardPage {
+  width: var(--content-width);
+  height: var(--content-height);
+  background-color: var(--content-bg-color);
+}
+
+.leaderboardTable {
+  height: 462.5px;
+  width: 600px;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+.leaderboardTable table {
+  background-color: var(--first-leaderboard-color);
+  filter: drop-shadow(5px 5px 5px var(--main-color));
+  margin-top: 20px;
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.leaderboardTable th,
+.leaderboardTable td {
+  padding: 10px;
+  text-align: center;
+  color: var(--additional-text-color);
+}
+.leaderboardTable th {
+  background-color: var(--second-leaderboard-color);
+}
+.leaderboardTable tr:nth-child(even) {
+  background-color: var(--second-leaderboard-color);
+}
+
+.leaderboardTable thead {
+  border-bottom: 1px solid black;
+}
+
+.leaderboardTable::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+.leaderboardTable::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+}
+
+.leaderboardTable::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+}

@@ -1,0 +1,26 @@
+.wrapperLayout {
+  display: flex;
+  flex-direction: column;
+  min-width: 950px;
+}
+
+.dark {
+  background: url('../../shared/images/pageBackground.png');
+}
+
+.light {
+  background: url('../../shared/images/pageBackground_light.png');
+}
+
+.mainLayout {
+  height: calc(
+    100vh - var(--header-height) - var(--header-height)
+  ); /* Вычитаем высоту хедера и футера. */
+  min-height: var(
+    --min-contentarea-height
+  ); /* Соответствует высоте контента. */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.95;
+}

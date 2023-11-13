@@ -1,0 +1,8 @@
+.fullScreenButton {
+  position: absolute;
+  right: 30px;
+  bottom: 70px;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}

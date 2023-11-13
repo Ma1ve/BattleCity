@@ -1,0 +1,37 @@
+.topicViewModalWrapper {
+  min-height: 100px;
+  max-height: 425px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topicViewModalWrapper::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
+}
+
+.topicViewModalWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+}
+
+.topicViewModalWrapper::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+}
+
+.inputWrapperForm {
+  margin-top: 15px;
+  padding: 0 20px;
+}
+
+.commentMessage {
+  font-size: 18px;
+  filter: drop-shadow(5px 5px 5px var(--additional-text-color));
+}
+
+.input {
+  height: 35px;
+  color: var(--text-input-color);
+  padding: 12px 16px;
+}

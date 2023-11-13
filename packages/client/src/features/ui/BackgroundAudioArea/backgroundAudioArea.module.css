@@ -1,0 +1,60 @@
+.audioButtonsArea {
+  width: 80px;
+  height: 88px;
+  position: absolute;
+  left: 30px;
+  bottom: 70px;
+  background-color: inherit;
+  border: none;
+  background-color: var(--content-bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.audio {
+  display: none;
+}
+
+.loadingTrack {
+  font-size: 8px;
+  text-align: center;
+}
+
+.togglePlayPause {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+
+.volumeInput {
+  width: 80px;
+  height: 1px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid var(--secondary-text-color);
+  border-radius: 10px/100%;
+  margin: 10px 0;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: var(--link-text-color);
+  cursor: ew-resize;
+  box-shadow: 0 0 2px 0 #555;
+}
+
+.giNextButton {
+  transition: 0.3s all;
+  cursor: pointer;
+}
+
+.giNextButton:hover {
+  transform: scale(110%);
+  filter: drop-shadow(3px 3px 5px var(--additional-text-color));
+}

@@ -1,0 +1,15 @@
+.loginPage {
+  width: var(--content-width);
+
+  background-color: var(--content-bg-color);
+  padding: 36px 0 76px;
+}
+
+.loginWrapper {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.loginSpinner {
+  height: 298.78px;
+}
