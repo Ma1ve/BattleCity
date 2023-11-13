@@ -13,13 +13,13 @@
 ### Этапы сборки проекта: подробная демонстрация пошагового процесса:
 
 Ссылка на первое видео с демонстрацией работоспособности и функциональности приложения:
-[https://cloud.mail.ru/public/aufs/ZLTNGpKE9](https://cloud.mail.ru/home/DEMO_TANKS.mp4)
+https://cloud.mail.ru/public/Yt4o/UYkGGXSk6
 
 Ссылка на второе видео с демонстрацией работоспособности и функциональности приложения:
 https://cloud.mail.ru/public/tka2/JXMdTwgVC
 
 **Демонстрация полностью законченного проекта:**:
-https://cloud.mail.ru/home/videocideo.mp4
+https://cloud.mail.ru/public/jNQ5/CyQhP9bFa
 
 ### Как запускать?
 
