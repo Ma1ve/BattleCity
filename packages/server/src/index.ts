@@ -24,7 +24,6 @@ async function startServer() {
         'http://127.0.0.1:3000',
         'http://127.0.0.1:3001',
         'https://127.0.0.1:3000',
-        'http://veisa.ya-praktikum.tech',
         'https://veisa.ya-praktikum.tech',
       ],
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -37,18 +36,18 @@ async function startServer() {
   app.use(bodyParser.json())
   const port = Number(process.env.SERVER_PORT) || 3001
 
-  app.get('/api/server', (_, res) => {
+  app.get('/', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
 
   app.get('/api/theme', getTheme)
+  app.get('/api/emoji', getAllEmoji)
+
   app.post('/api/theme', setTheme)
 
   app.use('/api/topics', topicsRouter)
   app.use('/api/comments', commentsRouter)
   app.use('/api/replies', repliesRouter)
-
-  app.get('/emoji', getAllEmoji)
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)

@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest .",
-    "dev": "cross-env NODE_ENV=development nodemon -L"
+    "dev": "cross-env NODE_ENV=development nodemon -L",
+    "prod": "cross-env NODE_ENV=production ts-node ./src/index.ts"
   },
   "dependencies": {
     "celebrate": "^15.0.1",
@@ -17,12 +18,13 @@
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
     "express": "^4.18.1",
+    "http-proxy-middleware": "^2.0.6",
     "joi": "^17.11.0",
     "pg": "^8.8.0",
     "prettier": "^2.7.1",
-    "sequelize-typescript": "2.1.5",
     "reflect-metadata": "0.1.13",
-    "sequelize": "6.33.0"
+    "sequelize": "6.33.0",
+    "sequelize-typescript": "2.1.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

@@ -14,7 +14,7 @@
     "build:ssr": "yarn build:client && yarn build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr src/entry-server.tsx",
-    "prod:ssr": "NODE_ENV=production node server.js",
+    "prod:ssr": "yarn build:ssr && NODE_ENV=production node server.js",
     "prod": "nodemon -L"
   },
   "dependencies": {

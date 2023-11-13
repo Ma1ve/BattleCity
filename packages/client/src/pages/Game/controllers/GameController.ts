@@ -51,8 +51,8 @@ export class GameController {
 
     this.animationStartGame = 80
     this.animationLoadingLevel = 150
-    this.animationGameOver = 160
-    this.animationShowScore = 250
+    this.animationGameOver = 250
+    this.animationShowScore = 360
 
     this.keyPressHandler = new KeyPressSubscription(keyCode => {
       // В этой функции вы можете выполнить необходимую логику на основе keyCode

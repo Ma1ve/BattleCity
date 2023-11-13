@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import * as toolkitRaw from '@reduxjs/toolkit'
 import { DestroyedTank } from '../../../pages/Game/shared/types'
+
 const { createSlice, createSelector } = toolkitRaw.default ?? toolkitRaw
 
 export interface ITanksState {

@@ -1,17 +1,17 @@
+import { useEffect, useRef } from 'react'
+import { Scene } from './ui/Scene'
+import { scenesConfig } from './shared/config/sceneConfig'
+import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../app/hooks/reducer'
+import { selectUserLevel } from '../../app/store/reducers/UserSlice'
+
 import {
   canvasHeight,
   canvasWidth,
   frameInterval,
 } from './shared/config/gameConstants'
-import { useEffect, useRef } from 'react'
-import { Scene } from './ui/Scene'
-import { scenesConfig } from './shared/config/sceneConfig'
-import { GameController } from './controllers/GameController'
 
 import './game.module.css'
-import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks/reducer'
-import { selectUserLevel } from '../../app/store/reducers/UserSlice'
 
 const Game = () => {
   const level: number = useAppSelector(selectUserLevel)
@@ -28,8 +28,6 @@ const Game = () => {
     const canvas = canvasRef.current!
     const ctx = canvas.getContext('2d')!
 
-    const gameController = new GameController(ctx)
-
     const scene = new Scene({
       ctx,
       sceneConfig: scenesConfig[level],
@@ -45,7 +43,7 @@ const Game = () => {
           navigate(0)
         }
 
-        if (gameController.gameStart) {
+        if (scene.gameControllerScene.gameStart) {
           ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
           ctx.fillStyle = '#000'
@@ -53,7 +51,7 @@ const Game = () => {
 
           scene.render()
         } else {
-          gameController.drawStartGame()
+          scene.gameControllerScene.drawStartGame()
         }
 
         reqId = requestAnimationFrame(animate)

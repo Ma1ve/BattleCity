@@ -1,18 +1,21 @@
+// В зависимости от сборки вам следует использовать один из следующих импортов ниже
+
 // For production
 import pkg from '@reduxjs/toolkit/dist/query/react/index.js'
 const { fetchBaseQuery } = pkg
 
 // For development
-//import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+// import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import * as toolkitRaw from '@reduxjs/toolkit/dist/query/react'
 const { createApi } = toolkitRaw.default ?? toolkitRaw
 
 import { EmojiResponseData } from '../../models/IEmoji'
+import { SERVER_URL } from '../../../shared/api/consts'
 
 export const emojiAPI = createApi({
   reducerPath: 'emojiAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: `http://localhost:3001/emoji` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${SERVER_URL}emoji` }),
   tagTypes: ['Emoji'],
   endpoints: builder => ({
     getAllEmoji: builder.query({

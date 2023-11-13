@@ -1,5 +1,5 @@
 import { Table, Model, Column, DataType, HasOne } from 'sequelize-typescript'
-import Themes from './Themes'
+import Themes from '../theme/Themes'
 
 @Table({
   tableName: 'users',

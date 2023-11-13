@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { createStore } from './app/store'
-import { routes } from './app/router/routes'
 import { Store } from 'redux'
+import { routes } from './app/router/routes'
 
 declare global {
   interface Window {
